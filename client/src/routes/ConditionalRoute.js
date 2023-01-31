@@ -26,6 +26,7 @@ const DefaulRoutes = ()=>{
     <Routes>
         <Route path="/" element={ <GettingStarted/> } />
         <Route path="/roles" element={ <Roles/> } />
+        <Route path="/register" element={ <Register/> } />
     </Routes>
   )
 }
