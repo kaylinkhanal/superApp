@@ -1,9 +1,10 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import "./authForm.css"
+
 import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
 
 const vehicleType = ['Bike', 'Car', 'Van']
-
 const RegisterSchema = Yup.object().shape({
   fullName: Yup.string()
     .min(5, 'Too Short')
@@ -52,7 +53,7 @@ const Register = () => {
 
 
   return (
-    <div>
+    <div className="form">
       <form onSubmit={formik.handleSubmit}>
         <h1> Register Form </h1>
         <Grid
@@ -164,7 +165,6 @@ const Register = () => {
         </Grid >
       </form>
     </div>
-
   );
 }
 

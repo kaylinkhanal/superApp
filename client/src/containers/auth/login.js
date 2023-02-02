@@ -1,7 +1,8 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import "./login.css"
+import "./authForm.css"
 
+import {Link} from "react-router-dom"
 // Creating schema
 const LoginSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -33,7 +34,7 @@ const Login =()=> {
           handleBlur,
           handleSubmit,
         }) => (
-          <div className="login">
+          <div className="authForm">
             <div className="form">
            {/* Passing handleSubmit parameter tohtml form onSubmit property */}
               <form noValidate onSubmit={handleSubmit}>
@@ -70,6 +71,7 @@ const Login =()=> {
                 {/* Click on submit button to submit the form */}
                 <button type="submit">Login</button>
               </form>
+              <Link to='/register'>Don't have an account yet?</Link>
             </div>
           </div>
         )}
@@ -79,4 +81,7 @@ const Login =()=> {
 }
 
 export default Login;
+
+
+
 
