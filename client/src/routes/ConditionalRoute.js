@@ -11,21 +11,30 @@ import Register from "../containers/auth/register"
 import {useSelector} from 'react-redux';
 
 const ConditionalRoute = ()=> {
-  const {userRole} = useSelector(state=> state.user)
+  const {userRole, firstTimeUser} = useSelector(state=> state.user)
   if(userRole === 'rider') {
     return <RiderRoutes/>
   }else if(userRole === 'user'){
     return <UserRoutes/>
-  }else{
+  }else if(firstTimeUser){
+    return <FirstUserRoutes/>
+  }else {
     return <DefaulRoutes/>
   }
+}
+
+const FirstUserRoutes = ()=> {
+  return(
+    <Routes>
+    <Route path="/" element={ <GettingStarted/> } />
+    </Routes>
+  )
 }
 
 const DefaulRoutes = ()=>{
   return (
     <Routes>
-        <Route path="/" element={ <GettingStarted/> } />
-        <Route path="/roles" element={ <Roles/> } />
+        <Route path="/" element={ <Roles/> } />
     </Routes>
   )
 }
