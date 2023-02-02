@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  userRole: ''
+  userRole: '',
+  firstTimeUser: true,
 };
 
 //What is createSlice in Redux Toolkit?
@@ -15,9 +16,11 @@ const userSlice = createSlice({
     assignUserRole: (state, actions) => {
       state.userRole = actions.payload
     },
-  
+    setIsFirstTimeUser: (state, actions) => {
+      state.firstTimeUser = false
+    },
   }
 });
 
-export const { assignUserRole } = userSlice.actions;
+export const { assignUserRole,setIsFirstTimeUser } = userSlice.actions;
 export default userSlice.reducer;
