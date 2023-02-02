@@ -33,7 +33,7 @@ const DefaulRoutes = ()=>{
 const UserRoutes = ()=> {
   return (
       <Routes>
-        <Route path="/home" element={ <Home/> } />
+        <Route path="/" element={ <Home/> } />
         <Route path="/send-orders" element={ <SendOrders/> } />
       </Routes>
   )
@@ -43,7 +43,7 @@ const UserRoutes = ()=> {
 const RiderRoutes = ()=> {
   return (
       <Routes>
-        <Route path="/home" element={ <Login/> } />
+        <Route path="/" element={ <Login/> } />
         <Route path="/register" element={<Register/>} />
       </Routes>
   )

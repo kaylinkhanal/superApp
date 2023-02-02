@@ -5,7 +5,7 @@ const Home =()=> {
   const navigate = useNavigate()
   const dispatch = useDispatch() 
   const assignRole = (role) => {
-    navigate('/home')
+    navigate('/')
     dispatch(assignUserRole(role))
   }
   const {userRole} = useSelector(state => state.user)
