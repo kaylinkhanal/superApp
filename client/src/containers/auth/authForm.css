@@ -2,8 +2,9 @@
 body {
     background: linear-gradient(90deg, #eaecf0 0%,  #eaecf0  100%);
   }
-  
+
   .login {
+   
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
@@ -16,11 +17,20 @@ body {
     background: #d6d7e7;
     border-radius: 10px;
     max-width: 360px;
-    margin: 0 auto 100px;
+    margin: 100px auto 0;
     padding: 45px;
     text-align: center;
   }
-  
+  .form1{
+    position: relative;
+    z-index: 1;
+    background: #d6d7e7;
+    border-radius: 10px;
+    max-width: 360px;
+    margin: 50px auto 0;
+    padding: 45px;
+    text-align: center;
+  }
   .form input {
     outline: 0;
     background: #f2f2f2;
