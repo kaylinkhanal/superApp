@@ -32,8 +32,8 @@ const SendOrders = () => {
   return (
     <div>
       <DynamicForm
-        orderDetailsFields={orderDetailsFields}
-        receiverDetailsFields={receiverDetailsFields}
+        firstPageFields={orderDetailsFields}
+        secondPageFields={receiverDetailsFields}
       />
     </div>
   );
