@@ -3,7 +3,7 @@ import GettingStarted from "../containers/gettingStarted"
 import Home from "../containers/home"
 import Roles from "../containers/roles"
 import SendOrders from "../containers/sendOrders"
-import RiderHome from "../containers/rider/riderHome"
+// import RiderHome from "../containers/rider/riderHome"
 import Login from "../containers/auth/login"
 import Register from "../containers/auth/register"
 
