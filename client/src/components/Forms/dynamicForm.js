@@ -34,7 +34,7 @@ import React, {useState} from 'react';
          return (
            <>
            <InputLabel id="vehicleTypeLabel">{item.label}</InputLabel>
-           <Select  labelId="vehicleTypeLabel" id="vehicleType"   name="vehicleType" >
+           <Select  labelId="vehicleTypeLabel" id="vehicleType" name="vehicleType" >
                   {item.options.map((item,id)=>{
                     return  <MenuItem key={id} value={item}>{item}</MenuItem>
                   })}
@@ -42,8 +42,6 @@ import React, {useState} from 'react';
                  </>
                  )
        }
-
-       
         return( <Field name={item.label}  type={item.type} placeholder={item.label}/>)
      }
 
