@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   userRole: '',
   firstTimeUser: true,
+  isLoggedIn: false,
+  token: ''
 };
 
 //What is createSlice in Redux Toolkit?
