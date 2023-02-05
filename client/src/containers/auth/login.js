@@ -1,8 +1,10 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./authForm.css"
+import { useNavigate, Link } from "react-router-dom"
+import { useDispatch } from 'react-redux'
+import { setLogin } from '../../redux/reducers/userSlice'
 
-import {Link} from "react-router-dom"
 // Creating schema
 const LoginSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -14,7 +16,17 @@ const LoginSchema = Yup.object().shape({
     .min(8, "Password must be at least 8 characters"),
 });
 
-const Login =()=> {
+const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // login
+
+  const handleLogin = () => {
+    const loginResponse = true
+    dispatch(setLogin(loginResponse))
+    navigate('/')
+  }
+  // login till here
   return (
     <>
       {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -36,10 +48,10 @@ const Login =()=> {
         }) => (
           <div className="authForm">
             <div className="form">
-           {/* Passing handleSubmit parameter tohtml form onSubmit property */}
+              {/* Passing handleSubmit parameter tohtml form onSubmit property */}
               <form noValidate onSubmit={handleSubmit}>
                 <span>Login</span>
-              {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                 <input
                   type="number"
                   name="phoneNumber"
@@ -54,7 +66,7 @@ const Login =()=> {
                 <p className="error">
                   {errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
                 </p>
-                 {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                 <input
                   type="password"
                   name="password"
@@ -64,12 +76,12 @@ const Login =()=> {
                   placeholder="Enter password"
                   className="form-control"
                 />
-                 {/* If validation is not passed show errors */}
+                {/* If validation is not passed show errors */}
                 <p className="error">
                   {errors.password && touched.password && errors.password}
                 </p>
                 {/* Click on submit button to submit the form */}
-                <button type="submit">Login</button>
+                <button type="submit" onClick={handleLogin}>Login</button>
               </form>
               <Link to='/register'>Don't have an account yet?</Link>
             </div>
