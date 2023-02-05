@@ -43,6 +43,7 @@ const UserRoutes = ()=> {
   return (
       <Routes>
         <Route path="/" element={ <Home/> } />
+        <Route path="/login" element={<Login/>} />
         <Route path="/send-orders" element={ <SendOrders/> } />
         <Route path="/register" element={<Register/>} />
       </Routes>
