@@ -1,8 +1,10 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./authForm.css"
+import { switchUserLogin } from "../../redux/reducers/userSlice";
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 
-import {Link} from "react-router-dom"
 // Creating schema
 const LoginSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -14,7 +16,9 @@ const LoginSchema = Yup.object().shape({
     .min(8, "Password must be at least 8 characters"),
 });
 
-const Login =()=> {
+const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <>
       {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -24,6 +28,8 @@ const Login =()=> {
         onSubmit={(values) => {
           // Alert the input values of the form that we filled
           alert(JSON.stringify(values));
+          dispatch(switchUserLogin())
+          navigate("/")
         }}
       >
         {({
