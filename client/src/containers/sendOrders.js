@@ -17,17 +17,20 @@ const SignupSchema = Yup.object().shape({
 
 const SendOrders = () => {
   const orderDetailsFields = [
-    "category",
-    "productName",
-    "productSize",
-    "productDescription",
-    "exptDeliveryDate",
+    { label:"Category", value:"category", type: "text"},
+    { label:"Product Name", value:"productName", type: "text"},
+    { label:"Product Size",value:"productSize",  type: "text"},
+    { label:"Product Description",value:"productDescription",  type: "text"},
+    { label:"Expected Delivery Date",value:"exptDeliveryDate",  type: "text"},
   ];
+
+
   const receiverDetailsFields = [
-    "receiverName",
-    "receiverAddress",
-    "phoneNumber",
+    { label:"Receiver Name",value:"receiverName",  type: "text"},
+    { label:"Receiver Address",value:"receiverAddress",  type: "text"},
+    { label:"Phone Number",value:"phoneNumber",  type: "text"},
   ];
+
 
   return (
     <div>
