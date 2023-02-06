@@ -21,8 +21,11 @@ const userSlice = createSlice({
     setIsFirstTimeUser: (state, actions) => {
       state.firstTimeUser = false
     },
+    switchLogin: (state, actions)=>{
+      state.isLoggedIn = !state.isLoggedIn
+    }
   }
 });
 
-export const { assignUserRole,setIsFirstTimeUser } = userSlice.actions;
+export const { assignUserRole,setIsFirstTimeUser,switchLogin } = userSlice.actions;
 export default userSlice.reducer;

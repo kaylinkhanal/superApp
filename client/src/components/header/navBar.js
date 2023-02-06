@@ -15,10 +15,13 @@ import LoginIcon from '@mui/icons-material/Login';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector , useDispatch} from "react-redux";
+import {switchLogin} from "../../redux/reducers/userSlice"
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'My Orders', 'Logout'];
+
 const NavBar =()=> {
+  const dispatch = useDispatch()
   const navigate= useNavigate()
   const {isLoggedIn} = useSelector(state=> state.user)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,7 +38,11 @@ const NavBar =()=> {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    if(e.target.textContent == 'Logout'){
+      dispatch(switchLogin())
+    }
+
     setAnchorElUser(null);
   };
 

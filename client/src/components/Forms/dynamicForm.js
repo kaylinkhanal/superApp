@@ -49,7 +49,7 @@ import React, {useState} from 'react';
      <Formik
        initialValues={{}}
        onSubmit={values => {
-        // setStepCount(stepCount+1)
+        setStepCount(stepCount+1)
          // same shape as initial values
          console.log(values);
          const requestOptions = {
@@ -61,13 +61,13 @@ import React, {useState} from 'react';
        }}
       //  validationSchema={schema}
      >
-       {({ errors, touched }) => (
+       {({ errors, touched ,values}) => (
           <div className="form">
          <Form>
              {stepCount==1 && props.firstPageFields.map((item,id)=>{
                  return(
                      <div>
-                 <Field name={item.label}  type={item.type} placeholder={item.label}/>
+                 <Field name={item.label} type={item.type} placeholder={item.label}/>
                         {errors[item.label] && touched[item.label] ? (
                             <div>{errors[item.label]}</div>
                         ) : null}
@@ -84,7 +84,7 @@ import React, {useState} from 'react';
                      </div>
                  )
              })}
-           {/* {stepCount==2 && <button onClick={()=>setStepCount(stepCount-1)}>Back</button> } */}
+           {stepCount==2 && <button onClick={()=>setStepCount(stepCount-1)}>Back</button> }
            <button type="submit">Submit</button>
          </Form>
          </div>
