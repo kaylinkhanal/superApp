@@ -21,9 +21,6 @@ const userSlice = createSlice({
     setIsFirstTimeUser: (state, actions) => {
       state.firstTimeUser = false
     },
-    switchLogin: (state, acations)=>{
-      state.isLoggedIn = !state.isLoggedIn 
-    }
   }
 });
 

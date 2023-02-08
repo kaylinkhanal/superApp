@@ -1,9 +1,6 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./authForm.css"
-import { useDispatch } from "react-redux";
-import { switchLogin } from "../../redux/reducers/userSlice";
-import { useNavigate } from "react-router-dom";
 
 import {Link} from "react-router-dom"
 // Creating schema
@@ -18,8 +15,6 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login =()=> {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   return (
     <>
       {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -28,9 +23,7 @@ const Login =()=> {
         initialValues={{ phoneNumber: "", password: "" }}
         onSubmit={(values) => {
           // Alert the input values of the form that we filled
-          // alert(JSON.stringify(values));
-          navigate('/')
-          dispatch(switchLogin())
+          alert(JSON.stringify(values));
         }}
       >
         {({

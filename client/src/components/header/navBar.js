@@ -13,16 +13,13 @@ import Tooltip from '@mui/material/Tooltip';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { switchLogin } from '../../redux/reducers/userSlice';
-
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'My Orders', 'Logout'];
-const NavBar = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { isLoggedIn } = useSelector(state => state.user)
+const NavBar =()=> {
+  const navigate= useNavigate()
+  const {isLoggedIn} = useSelector(state=> state.user)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -37,10 +34,7 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (e) => {
-    if (e.target.textContent === 'Logout') {
-      dispatch(switchLogin())
-    }
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
