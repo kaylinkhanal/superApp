@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const AnyReactComponent = (props) => <div>{props.text}</div>;
 
 const SendOrders =()=>{
   const defaultProps = {
@@ -12,20 +12,27 @@ const SendOrders =()=>{
     zoom: 11
   };
 
+  function renderMarkers(map, maps) {
+    console.log(map)
+    let marker = new maps.Marker({
+      position:defaultProps.center ,
+      map,
+      title: 'Hello World!'
+    });
+  }
   return (
     // Important! Always set the container height explicitly
     <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
         defaultCenter={defaultProps.center}
+        onGoogleApiLoaded={({map, maps}) => renderMarkers(map, maps)}
         defaultZoom={defaultProps.zoom}
       >
-        <AnyReactComponent
-          lat={28.3949}
-          lng={84.1240}
-          text="HELLLLLLOOOOOOOO"
-        />
       </GoogleMapReact>
+      <div style={{ top:5, margin:'5px', borderRadius:'5%', position:"absolute", width:'20%', height: '10%' , backgroundColor:'#fff' }}> 
+        Select your pick up address
+      </div>
     </div>
   );
 }
