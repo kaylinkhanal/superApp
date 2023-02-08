@@ -39,7 +39,7 @@ const NavBar =()=> {
   };
 
   const handleCloseUserMenu = (e) => {
-    if(e.target.textContent == 'Logout'){
+    if(e.target.textContent === 'Logout'){
       dispatch(switchLogin())
     }
 

@@ -2,13 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { assignUserRole } from "../redux/reducers/userSlice";
 import {
-  Card,
   Grid,
 } from "@mui/material";
 import CustomCard from "../components/cards/customCard"
-import { Box, Container } from "@mui/system";
-import PersonIcon from "@mui/icons-material/Person";
-import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
+// import { Box, Container } from "@mui/system";
+// import PersonIcon from "@mui/icons-material/Person";
+// import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,6 +18,7 @@ const Home = () => {
   };
   const { userRole } = useSelector((state) => state.user);
 
+  
   return (
     <div className="App">
       {/* <Typography variant="h3"> Select Your Role </Typography> */}
