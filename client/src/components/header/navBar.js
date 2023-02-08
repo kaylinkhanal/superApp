@@ -11,16 +11,18 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import LoginIcon from '@mui/icons-material/Login';
-
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { switchLogin } from '../../redux/reducers/userSlice';
+
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'My Orders', 'Logout'];
-const NavBar =()=> {
-  const navigate= useNavigate()
-  const {isLoggedIn} = useSelector(state=> state.user)
+const NavBar = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { isLoggedIn } = useSelector(state => state.user)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -35,7 +37,10 @@ const NavBar =()=> {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    if (e.target.textContent === 'Logout') {
+      dispatch(switchLogin())
+    }
     setAnchorElUser(null);
   };
 
@@ -132,7 +137,7 @@ const NavBar =()=> {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {isLoggedIn ?    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> : <LoginIcon onClick={()=>navigate('/login')}/>}
+                {isLoggedIn ? <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> : <LoginIcon onClick={() => navigate('/login')} />}
               </IconButton>
             </Tooltip>
             <Menu
