@@ -1,21 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import {useRef, useState, useEffect } from 'react'
-import NavBar from "../components/header/navBar"
-const Home =()=> {
-  const myInputRef= useRef(null)
-  const [ name ,setName] = useState('hi')
+import { useRef, useState, useEffect } from "react";
+import NavBar from "../components/header/navBar";
 
-  
+const Home = () => {
+  const myInputRef = useRef(null);
+  const [name, setName] = useState("hi");
+
   return (
     <div className="App">
-        <NavBar/>
-        <Link to='/send-orders'>send orders</Link>
-        <button onClick={()=> myInputRef.current.focus()}>ride</button>
-        <input ref={myInputRef}  onKeyUp={(e)=> console.log(e)} placeholder="Enter a name" />
+      <NavBar />
+      <Link to="/send-orders">send orders</Link>
+      <button onClick={() => myInputRef.current.focus()}>ride</button>
+      <input
+        ref={myInputRef}
+        onKeyUp={(e) => console.log(e)}
+        placeholder="Enter a name"
+      />
     </div>
-    
   );
-}
+};
 
 export default Home;
