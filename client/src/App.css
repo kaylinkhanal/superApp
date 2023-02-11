@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+body{
+  font-size: 14px;
+  line-height: 25px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.location_map{
+  top: 10px; margin: 5px; padding: 10px; position: absolute;
+  /* background: rgb(255 255 255 / 36%); */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.location_map h3{ 
+  font-size: 16px; 
+  margin-bottom: 5px;
+  text-transform: uppercase; 
 }
 
-.App-link {
-  color: #61dafb;
+.location_map input{
+  height: 40px;
+  padding: 10px;
+  background: #fff;
+  border: 0;
+  width: 100%;
+  padding-right: 45px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:focus{
+  outline: 0;
+}
+
+.location_form {
+  position: relative;
+  max-width: 380px;
+    width: 380px;
+}
+
+.location_form button{height: 40px;
+  height: 40px;
+  width: 40px;
+  /* border-radius: 50%; */
+  border-color: transparent;
+  cursor: pointer;
+  background: blue;
+  color: #fff;
+  /* margin: 0 10px; */
+  position: absolute;
+  right: 0;
+  top: 0;
 }
