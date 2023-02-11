@@ -67,7 +67,11 @@ const SendOrders=()=> {
         <Marker 
           draggable={true}
           onDragEnd={(e)=> assignSenderLocation(e)}
-          icon={"https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"}
+          icon={{
+            url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            scaledSize: new window.google.maps.Size(50, 50)
+          }}
+         
           position={center} />
         { /* Child components, such as markers, info windows, etc. */ }
         <></>

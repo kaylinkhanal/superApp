@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@react-google-maps/api": "^2.18.1",
+    "google-map-react": "^2.2.0"
+  }
+}
