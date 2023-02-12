@@ -107,14 +107,12 @@ const SendOrders = () => {
 			</GoogleMap>
 			<div className="location_map">
 				<div className="info">
+					<h3 >Select your pick up address</h3>
 					{/* current Browser coords: {JSON.stringify(currentCoordinates)}<br />
 					current sender coords: {JSON.stringify(senderCoordinates)}<br /> */}
 				</div>
 
 				<div className="location_form">
-					{/* <div className='info'>
-				    	  <h3 >Select your pick up address</h3>
-			    	</div> */}
 					{isSenderFormActive ? (
 						<>
 							<Autocomplete key={1} id={1} className="autofill">

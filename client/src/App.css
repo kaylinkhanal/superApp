@@ -68,7 +68,7 @@ header {
 /* loaction map*/
 
 .location_map{
-  top: 10px; margin: 5px; padding: 10px; position: absolute;
+  top: 40px; margin: 5px; padding: 10px; position: absolute;
 }
 
 .location_map h3{ 
