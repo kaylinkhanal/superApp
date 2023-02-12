@@ -10,7 +10,7 @@ body{
 }
 
 .location_map{
-  top: 10px; margin: 5px; padding: 10px; position: absolute;
+  top: 40px; margin-top: 5px; padding: 10px; position: absolute;
   /* background: rgb(255 255 255 / 36%); */
 }
 
@@ -48,7 +48,7 @@ input:focus{
   background: blue;
   color: #fff;
   /* margin: 0 10px; */
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   top: 0;
 }
