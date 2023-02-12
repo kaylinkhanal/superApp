@@ -96,14 +96,13 @@ const SendOrders = () => {
 							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
 						</>) :
 						(<>
+							<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
 							<Autocomplete className='autofill' key={2} id={2}>
 								<input placeholder="Receiver address" />
 							</Autocomplete>
 
 							<input placeholder="Receiver Name" />
 							<input placeholder="Receiver Phone Number" />
-							<input placeholder="Receiver Phone Number" />
-							<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
 							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
 						</>)
 					}
