@@ -1,87 +1,145 @@
-import React from "react";
-import GoogleMapReact from 'google-map-react';
+import React, { useState } from "react";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  Autocomplete,
+} from "@react-google-maps/api";
+import { setSenderCoordinates } from "../redux/reducers/locationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Container, display, Divider, margin } from "@mui/system";
+const containerStyle = {
+  width: "100%",
+  height: "100vh",
+};
 
-const AnyReactComponent = (props) => <div>{props.text}</div>;
+const center = {
+  lat: 27.685616312450417,
+  lng: 85.34456349960001,
+};
 
-const SendOrders =()=>{
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
+const SendOrders = () => {
+  const [isSenderFormActive, setIsSenderFormActive] = useState(true);
+  const [senderAddress, setSenderAddress] = useState("");
+  const { senderCoordinates } = useSelector((state) => state.location);
+  const dispatch = useDispatch();
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
+  const [currentCoordinates, setCurrentCoordinates] = useState();
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let lat = position.coords.latitude;
+      let lng = position.coords.longitude;
+      const cordinates = { lat, lng };
+      setCurrentCoordinates(cordinates);
+    });
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  const assignSenderLocation = (e) => {
+    const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+    dispatch(setSenderCoordinates(cordinates));
+    fetch(
+      `https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+    )
+      .then((res) => res.json())
+      .then((data) => setSenderAddress(data.features[0].properties.formatted));
   };
 
-  function renderMarkers(map, maps) {
-    console.log(map)
-    let marker = new maps.Marker({
-      position:defaultProps.center ,
-      map,
-      title: 'Hello World!'
-    });
-  }
-  return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: '100vh', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={defaultProps.center}
-        onGoogleApiLoaded={({map, maps}) => renderMarkers(map, maps)}
-        defaultZoom={defaultProps.zoom}
+  return isLoaded ? (
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
       >
-      </GoogleMapReact>
-      <div style={{ top:5, margin:'5px', borderRadius:'5%', position:"absolute", width:'20%', height: '10%' , backgroundColor:'#fff' }}> 
-        Select your pick up address
-      </div>
-    </div>
+        <Marker
+          draggable={true}
+          onDragEnd={(e) => assignSenderLocation(e)}
+          icon={
+            "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+          }
+          position={center}
+        />
+        {/* Child components, such as markers, info windows, etc. */}
+        <></>
+      </GoogleMap>
+      <Container
+        style={{
+          top: 50,
+          margin: "5px",
+          borderRadius: "5%",
+          position: "absolute",
+          width: "20%",
+          height: "40%",
+          backgroundColor: "#C0C0C0",
+          opacity: "70%",
+        }}
+      >
+        {/* Select your pick up address current Browser coords:{" "}
+        {JSON.stringify(currentCoordinates)}
+        current sender coords: {JSON.stringify(senderCoordinates)} */}
+        {isSenderFormActive ? (
+          <Box
+            sx={{
+              background: "#green",
+              position: "center",
+              top: 50,
+              margin: "20px",
+            }}
+          >
+            <Autocomplete>
+              <input
+                style={{
+                  margin: "10px",
+                  opacity: "100%",
+                }}
+                placeholder="Sender address"
+                value={senderAddress}
+                onChange={(e) => setSenderAddress(e.target.value)}
+              />
+            </Autocomplete>
+
+            <button
+              style={{
+                marginTop: "10px",
+                opacity: "100%",
+              }}
+              onClick={() => setIsSenderFormActive(false)}
+            >
+              Proceed to receiver location
+            </button>
+          </Box>
+        ) : (
+          <input
+            style={{
+              marginTop: "10px",
+              opacity: "100%",
+            }}
+            placeholder="Receiver address"
+          />
+        )}
+      </Container>
+    </>
+  ) : (
+    "Loading"
   );
-}
+};
 
-export default SendOrders
-
-
-
-// import React from "react";
-// import { Formik, Form, Field } from "formik";
-// import * as Yup from "yup";
-// import DynamicForm from "../components/Forms/dynamicForm";
-
-// const SignupSchema = Yup.object().shape({
-//   firstName: Yup.string()
-//     .min(2, "Too Short!")
-//     .max(50, "Too Long!")
-//     .required("Required"),
-//   lastName: Yup.string()
-//     .min(2, "Too Short!")
-//     .max(50, "Too Long!")
-//     .required("Required"),
-//   email: Yup.string().email("Invalid email").required("Required"),
-// });
-
-// const SendOrders = () => {
-//   const orderDetailsFields = [
-//     { label:"Category", value:"category", type: "text"},
-//     { label:"Product Name", value:"productName", type: "text"},
-//     { label:"Product Size",value:"productSize",  type: "text"},
-//     { label:"Product Description",value:"productDescription",  type: "text"},
-//     { label:"Expected Delivery Date",value:"exptDeliveryDate",  type: "text"},
-//   ];
-
-
-//   const receiverDetailsFields = [
-//     { label:"Receiver Name",value:"receiverName",  type: "text"},
-//     { label:"Receiver Address",value:"receiverAddress",  type: "text"},
-//     { label:"Phone Number",value:"phoneNumber",  type: "text"},
-//   ];
-
-
-//   return (
-//     <div>
-//       <DynamicForm
-//         firstPageFields={orderDetailsFields}
-//         secondPageFields={receiverDetailsFields}
-//       />
-//     </div>
-//   );
-// };
-// export default SendOrders;
+export default React.memo(SendOrders);
