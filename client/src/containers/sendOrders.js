@@ -3,6 +3,7 @@ import { GoogleMap, useJsApiLoader, Marker, Autocomplete } from '@react-google-m
 import { setSenderCoordinates } from "../redux/reducers/locationSlice"
 import { useDispatch, useSelector } from "react-redux"
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 const containerStyle = {
 	width: '100%',
 	height: '100vh'
@@ -62,15 +63,21 @@ const SendOrders = () => {
 				center={center}
 				zoom={14}
 				onLoad={onLoad}
-				onUnmount={onUnmount}
-			>
-				<Marker
-					draggable={true}
-					onDragEnd={(e) => assignSenderLocation(e)}
-					icon={"https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"}
-					position={center} />
-				{ /* Child components, such as markers, info windows, etc. */}
-				<></>
+				onUnmount={onUnmount}>
+				{isSenderFormActive ?
+					<Marker
+						draggable={true}
+						onDragEnd={(e) => assignSenderLocation(e)}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new google.maps.Size(40, 40) }}
+						position={center}
+					/> :
+
+					<Marker
+						draggable={true}
+						onDragEnd={(e) => assignSenderLocation(e)}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new google.maps.Size(37, 37) }}
+						position={center} />
+				}
 			</GoogleMap>
 			<div className='location_map'>
 				<div className='info'>
@@ -82,12 +89,23 @@ const SendOrders = () => {
 				<div className='location_form'>
 					{isSenderFormActive ?
 						(<>
-							<Autocomplete>
+							<Autocomplete className='autofill' key={1} id={1}>
 								<input placeholder="Sender address" value={senderAddress} onChange={(e) => setSenderAddress(e.target.value)} />
 							</Autocomplete>
+
 							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
 						</>) :
-						(<input placeholder="Receiver address" />)
+						(<>
+							<Autocomplete className='autofill' key={2} id={2}>
+								<input placeholder="Receiver address" />
+							</Autocomplete>
+
+							<input placeholder="Receiver Name" />
+							<input placeholder="Receiver Phone Number" />
+							<input placeholder="Receiver Phone Number" />
+							<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
+							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
+						</>)
 					}
 				</div>
 
