@@ -25,7 +25,9 @@ const SendOrders = () => {
 	const [senderAddress, setSenderAddress] = useState("");
 	const [receiverAddress, setReceiverAddress] = useState("");
 
-	const { senderCoordinates, receiverCoordinates } = useSelector((state) => state.location);
+  const { senderCoordinates, receiverCoordinates } = useSelector((state) => state.location);
+	const { isLoggedIn } = useSelector((state) => state.user);
+  
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -65,6 +67,13 @@ const SendOrders = () => {
 			.then((data) => setSenderAddress(data.features[0].properties.formatted));
 	};
 
+  const handleOrderNavigation=() => {
+    if(isLoggedIn ){
+      navigate('/orders')
+    }else{
+      navigate('/login')
+    }
+  }
 
 	const assignReceiverLocation = (e) => {
 		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
@@ -90,14 +99,14 @@ const SendOrders = () => {
 					<Marker
 						draggable={true}
 						onDragEnd={(e) => assignSenderLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new google.maps.Size(40, 40) }}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
 						position={senderCoordinates.lat ? senderCoordinates : center}
 					/>
 				) : (
 					<Marker
 						draggable={true}
 						onDragEnd={(e) => assignReceiverLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new google.maps.Size(37, 37) }}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
 						position={receiverCoordinates.lat ? receiverCoordinates : center}
 					/>
 				)}
@@ -140,7 +149,7 @@ const SendOrders = () => {
 							<input placeholder="Receiver Name" />
 							<input placeholder="Receiver Phone Number" />
 
-							<button onClick={() => { navigate('/orders') }}>
+							<button onClick={() => handleOrderNavigation()}>
 								<ArrowForwardOutlinedIcon />
 							</button>
 						</>
