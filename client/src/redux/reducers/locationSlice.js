@@ -14,8 +14,11 @@ const locationSlice = createSlice({
      console.log(actions.payload)
      state.senderCoordinates= actions.payload
     },
+    setReceiverCoordinates: (state, actions) => {
+      state.receiverCoordinates= actions.payload
+     },
   }
 });
 
-export const { setSenderCoordinates} = locationSlice.actions;
+export const { setSenderCoordinates, setReceiverCoordinates} = locationSlice.actions;
 export default locationSlice.reducer;
