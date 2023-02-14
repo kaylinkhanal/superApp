@@ -8,6 +8,7 @@ import logger from 'redux-logger'
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['location']
 }
 
 const reducer = combineReducers({
