@@ -90,14 +90,14 @@ const SendOrders = () => {
 					<Marker
 						draggable={true}
 						onDragEnd={(e) => assignSenderLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new google.maps.Size(40, 40) }}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
 						position={senderCoordinates.lat ? senderCoordinates : center}
 					/>
 				) : (
 					<Marker
 						draggable={true}
 						onDragEnd={(e) => assignReceiverLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new google.maps.Size(37, 37) }}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
 						position={receiverCoordinates.lat ? receiverCoordinates : center}
 					/>
 				)}
