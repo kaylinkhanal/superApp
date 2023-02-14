@@ -5,10 +5,15 @@ import {
   Marker,
   Autocomplete,
 } from "@react-google-maps/api";
-import { setSenderCoordinates } from "../redux/reducers/locationSlice";
+import {
+  setSenderCoordinates,
+  setReceiverCoordinates,
+} from "../redux/reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
-
 const containerStyle = {
   width: "100%",
   height: "100vh",
@@ -22,8 +27,14 @@ const center = {
 const SendOrders = () => {
   const [isSenderFormActive, setIsSenderFormActive] = useState(true);
   const [senderAddress, setSenderAddress] = useState("");
-  const { senderCoordinates } = useSelector((state) => state.location);
+  const [receiverAddress, setReceiverAddress] = useState("");
+
+  const { senderCoordinates, receiverCoordinates } = useSelector(
+    (state) => state.location
+  );
+  const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -61,74 +72,116 @@ const SendOrders = () => {
       .then((data) => setSenderAddress(data.features[0].properties.formatted));
   };
 
+  const assignReceiverLocation = (e) => {
+    const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+    dispatch(setReceiverCoordinates(cordinates));
+    fetch(
+      `https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        setReceiverAddress(data.features[0].properties.formatted)
+      );
+  };
+
+  const handleOrderNavigation = () => {
+    if (isLoggedIn) {
+      navigate("/order");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return isLoaded ? (
     <>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={14}
+        zoom={15}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <Marker
-          draggable={true}
-          onDragEnd={(e) => assignSenderLocation(e)}
-          icon={
-            "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-          }
-          position={center}
-        />
+        {isSenderFormActive ? (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignSenderLocation(e)}
+            icon={{
+              url: "https://cdn-icons-png.flaticon.com/512/3064/3064712.png",
+              scaledSize: new window.google.maps.Size(60, 60),
+            }}
+            position={senderCoordinates.lat ? senderCoordinates : center}
+          />
+        ) : (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignReceiverLocation(e)}
+            icon={{
+              url: "https://cdn-icons-png.flaticon.com/512/3369/3369447.png",
+              scaledSize: new window.google.maps.Size(60, 60),
+            }}
+            position={receiverCoordinates.lat ? receiverCoordinates : center}
+          />
+        )}
+
         {/* Child components, such as markers, info windows, etc. */}
         <></>
       </GoogleMap>
-      <div className="mapLocationDetialsCardSpace">
-        <div className="mapLocationDetialsCard">
-          <div className="cardComponent">
-            Device coordinates:
-            {JSON.stringify(currentCoordinates)}
-          </div>
+      <div className="location_map">
+        <div className="info">
+          {/* current Browser coords: {JSON.stringify(currentCoordinates)}<br />
+					current sender coords: {JSON.stringify(senderCoordinates)}<br /> */}
+        </div>
 
-          <div className="cardComponent">
-            current sender coords: {JSON.stringify(senderCoordinates)}
-          </div>
-          <div>
-            {isSenderFormActive ? (
-              <>
-                <Autocomplete>
-                  <input
-                    className="mapInputField cardComponent"
-                    placeholder="Sender's address"
-                    value={senderAddress}
-                    onChange={(e) => setSenderAddress(e.target.value)}
-                  />
-                </Autocomplete>
-                <button
-                  className="button cardComponent"
-                  onClick={() => setIsSenderFormActive(false)}
-                >
-                  Next
-                </button>
-              </>
-            ) : (
-              <>
-                <Autocomplete>
-                  <input
-                    className="mapInputField cardComponent"
-                    placeholder="Receiver's address"
-                  />
-                </Autocomplete>
-                <button className="button cardComponent" onClick={""}>
-                  Show route
-                </button>
-              </>
-            )}
-          </div>
+        <div className="location_form">
+          {isSenderFormActive ? (
+            <>
+              <button onClick={() => navigate("/")}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={1} id={1} className="autofill">
+                <input
+                  placeholder="Sender address"
+                  value={senderAddress}
+                  onChange={(e) => setSenderAddress(e.target.value)}
+                />
+              </Autocomplete>
+              <button onClick={() => setIsSenderFormActive(false)}>
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setIsSenderFormActive(true)}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={2} id={2} className="autofill">
+                <input
+                  value={receiverAddress}
+                  onChange={(e) => setReceiverAddress(e.target.value)}
+                  placeholder="Receiver's address"
+                />
+              </Autocomplete>
+              <input placeholder="Receiver's Name" />
+              <input placeholder="Receiver's Phone Number" />
+
+              <button
+                onClick={() => {
+                  handleOrderNavigation();
+                }}
+              >
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>
   ) : (
     <>
-      <LoadingCircle />
+      <div className="loadingAnimation">
+        <LoadingCircle />
+        <p className="p">Loading Google maps</p>
+      </div>
     </>
   );
 };

@@ -4,11 +4,13 @@ import { Formik, Form, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
 import NavBar from "../components/header/navBar";
+import { useNavigate } from "react-router-dom";
 
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
   const [field, meta] = useField(props);
+
   return (
     <>
       <label htmlFor={props.id || props.name}>{label}</label>
@@ -75,10 +77,11 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
+  const navigate = useNavigate();
   return (
     <>
       <NavBar />
-      <h1 className="h1">Create a new order</h1>
+
       <Formik
         initialValues={{
           firstName: "",
@@ -129,6 +132,7 @@ const Order = () => {
         }}
       >
         <Form className="form">
+          <h1 className="h1">Create a new order</h1>
           <MyTextInput name="itemName" type="text" placeholder="Item name" />
           <MySelect label="" name="category" className="dropDown">
             <option value="">Select a category</option>
@@ -166,7 +170,16 @@ const Order = () => {
             I accept the terms and conditions
           </MyCheckbox>
 
-          <button type="submit">Submit</button>
+          <button className="button" type="submit">
+            Submit
+          </button>
+          <button
+            className="button"
+            type="submit"
+            onClick={() => navigate("/send-orders")}
+          >
+            Back
+          </button>
         </Form>
       </Formik>
     </>

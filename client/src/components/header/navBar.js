@@ -102,7 +102,7 @@ const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -145,7 +145,11 @@ const NavBar = () => {
                 {isLoggedIn ? (
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 ) : (
-                  <LoginIcon onClick={() => navigate("/login")} />
+                  <LoginIcon
+                    onClick={() =>
+                      navigate("/login", { state: { redirect_to: "home" } })
+                    }
+                  />
                 )}
               </IconButton>
             </Tooltip>
