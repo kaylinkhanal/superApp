@@ -183,7 +183,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import DynamicForm from "../../components/Forms/dynamicForm";
-import {useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Too Short!")
@@ -197,55 +197,55 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Register = () => {
-    const {userRole} = useSelector(state=> state.user)
-   //   fullName: Yup.string()
-//     .min(5, 'Too Short')
-//     .required('Required'),
-//   registerEmail: Yup.string()
-//     .email('Invalid Email')
-//     .optional(),
-//   phoneNumber: Yup.string()
-//     .min(10, 'Invalid Phone Number')
-//     .max(10, 'Invalid Phone Number')
-//     .required('Required'),
-//   vehicleType: Yup.string()
-//     .required('Vehicle Type is Required'),
-//   vehicleNumber: Yup.string()
-//     .min(5, 'Invalid Vehicle Number')
-//     .required('Required'),
-//   password: Yup.string()
-//     .required('Please enter your password')
-//     .min(8, 'Password must be atleast 8 characters long'),
-//   confirmPassword: Yup.string()
-//     .oneOf([Yup.ref('password'), null], "Must enter the same password")
+  const { userRole } = useSelector(state => state.user)
+  //   fullName: Yup.string()
+  //     .min(5, 'Too Short')
+  //     .required('Required'),
+  //   registerEmail: Yup.string()
+  //     .email('Invalid Email')
+  //     .optional(),
+  //   phoneNumber: Yup.string()
+  //     .min(10, 'Invalid Phone Number')
+  //     .max(10, 'Invalid Phone Number')
+  //     .required('Required'),
+  //   vehicleType: Yup.string()
+  //     .required('Vehicle Type is Required'),
+  //   vehicleNumber: Yup.string()
+  //     .min(5, 'Invalid Vehicle Number')
+  //     .required('Required'),
+  //   password: Yup.string()
+  //     .required('Please enter your password')
+  //     .min(8, 'Password must be atleast 8 characters long'),
+  //   confirmPassword: Yup.string()
+  //     .oneOf([Yup.ref('password'), null], "Must enter the same password")
 
 
   const riderDetailsFields = [
-    { label:"fullName", type: "text"},
-    { label:"registerEmail", type: "text"},
-    { label:"phoneNumber", type: "text"},
-    { label:"address", type: "text"},
-    { label:"vehicleType", type: "dropdown", options:['Bike', 'Car', 'Van']},
-    { label:"vehicleNumber", type: "text"},
-    { label:"password", type: "password"},
-    { label:"confirmPassword", type: "password"},
+    { label: "fullName", type: "text" },
+    { label: "registerEmail", type: "text" },
+    { label: "phoneNumber", type: "text" },
+    { label: "address", type: "text" },
+    { label: "vehicleType", type: "dropdown", options: ['Bike', 'Car', 'Van'] },
+    { label: "vehicleNumber", type: "text" },
+    { label: "password", type: "password" },
+    { label: "confirmPassword", type: "password" },
   ];
   const userDetailsFields = [
-    { label:"fullName", type: "text"},
-    { label:"registerEmail", type: "text"},
-    { label:"phoneNumber", type: "text"},
-    { label:"address", type: "text"},
-    { label:"password", type: "password"},
-    { label:"confirmPassword", type: "password"},
+    { label: "fullName", type: "text" },
+    { label: "registerEmail", type: "text" },
+    { label: "phoneNumber", type: "text" },
+    { label: "address", type: "text" },
+    { label: "password", type: "password" },
+    { label: "confirmPassword", type: "password" },
   ];
 
   return (
-    <div>
+    <section>
       <DynamicForm
-        firstPageFields={userRole=='rider' ? riderDetailsFields : userDetailsFields}
-        isSingleStepForm= {true}
+        firstPageFields={userRole == 'rider' ? riderDetailsFields : userDetailsFields}
+        isSingleStepForm={true}
       />
-    </div>
+    </section>
   );
 };
 export default Register;

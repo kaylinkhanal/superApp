@@ -16,7 +16,7 @@ body {
     background: #d6d7e7;
     border-radius: 10px;
     max-width: 360px;
-    margin: 0 auto 100px;
+    margin: 0 auto;
     padding: 45px;
     text-align: center;
   }
@@ -35,7 +35,7 @@ body {
   }
   
   .form input:focus {
-    background: #dbdbdb;
+    border: 1px solid #ccc;
   }
   
   .form button {

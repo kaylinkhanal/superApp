@@ -3,8 +3,9 @@ import GettingStarted from "../containers/gettingStarted"
 import Home from "../containers/home"
 import Roles from "../containers/roles"
 import SendOrders from "../containers/sendOrders"
-import RiderHome from "../containers/rider/riderHome"
 import Login from "../containers/auth/login"
+import RiderHome from "../containers/rider/riderHome"
+import Orders from "../containers/user/home"
 import Register from "../containers/auth/register"
 
 
@@ -45,6 +46,7 @@ const UserRoutes = ()=> {
         <Route path="/" element={ <Home/> } />
         <Route path="/login" element={<Login/>} />
         <Route path="/send-orders" element={ <SendOrders/> } />
+        <Route path="/orders" element={ <Orders/> } />
         <Route path="/register" element={<Register/>} />
       </Routes>
   )
