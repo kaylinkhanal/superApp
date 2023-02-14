@@ -25,7 +25,9 @@ const SendOrders = () => {
 	const [senderAddress, setSenderAddress] = useState("");
 	const [receiverAddress, setReceiverAddress] = useState("");
 
-	const { senderCoordinates, receiverCoordinates } = useSelector((state) => state.location);
+  const { senderCoordinates, receiverCoordinates } = useSelector((state) => state.location);
+	const { isLoggedIn } = useSelector((state) => state.user);
+  
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -65,6 +67,13 @@ const SendOrders = () => {
 			.then((data) => setSenderAddress(data.features[0].properties.formatted));
 	};
 
+  const handleOrderNavigation=() => {
+    if(isLoggedIn ){
+      navigate('/orders')
+    }else{
+      navigate('/login')
+    }
+  }
 
 	const assignReceiverLocation = (e) => {
 		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
@@ -140,7 +149,7 @@ const SendOrders = () => {
 							<input placeholder="Receiver Name" />
 							<input placeholder="Receiver Phone Number" />
 
-							<button onClick={() => { navigate('/orders') }}>
+							<button onClick={() => handleOrderNavigation()}>
 								<ArrowForwardOutlinedIcon />
 							</button>
 						</>

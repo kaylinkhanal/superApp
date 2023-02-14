@@ -139,7 +139,12 @@ const NavBar =()=> {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {isLoggedIn ?    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> : <LoginIcon onClick={()=>navigate('/login')}/>}
+              {isLoggedIn ?    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> : <LoginIcon onClick={()=>navigate('/login',  {
+                  state: {
+                    redirect_to:"home"
+                  }
+                }
+              )}/>}
               </IconButton>
             </Tooltip>
             <Menu
