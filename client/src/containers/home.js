@@ -63,17 +63,6 @@ const Home =()=> {
                 <br/>
                 <br/>
 
-              <TextField 
-              style = {{
-                'marginTop':'24px',
-                'float':'left'
-              }}
-              variant="outlined" 
-              label="Full Name"
-              ref={myInputRef}  
-              onKeyUp={(e)=> console.log(e)} 
-              placeholder="Enter a name" />
-
               </div>
 
                 <img style={{ 'width': '40%', 'height': '500', 'float':'right' }} src={homepage} alt="website-mockup-image"></img>
