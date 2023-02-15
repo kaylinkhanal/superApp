@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import {
-	GoogleMap,
-	useJsApiLoader,
-	Marker,
-	Autocomplete,
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  Autocomplete,
 } from "@react-google-maps/api";
-import { setSenderCoordinates, setReceiverCoordinates } from "../redux/reducers/locationSlice";
+import {
+  setSenderCoordinates,
+  setReceiverCoordinates,
+} from "../redux/reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom"
+import LoadingCircle from "../components/loadingCircle";
 const containerStyle = {
-	width: "100%",
-	height: "100vh",
+  width: "100%",
+  height: "100vh",
 };
 
 const center = {
-	lat: 27.685616312450417,
-	lng: 85.34456349960001,
+  lat: 27.685616312450417,
+  lng: 85.34456349960001,
 };
 
 const SendOrders = () => {
@@ -110,47 +114,60 @@ const SendOrders = () => {
 					<h3 >Select your pick up address</h3>
 					{/* current Browser coords: {JSON.stringify(currentCoordinates)}<br />
 					current sender coords: {JSON.stringify(senderCoordinates)}<br /> */}
-				</div>
+        </div>
 
-				<div className="location_form">
-					{isSenderFormActive ? (
-						<>
-							<Autocomplete key={1} id={1} className="autofill">
-								<input
-									placeholder="Sender address"
-									value={senderAddress}
-									onChange={(e) => setSenderAddress(e.target.value)}
-								/>
-							</Autocomplete>
-							<button onClick={() => setIsSenderFormActive(false)}>
-								<ArrowForwardOutlinedIcon />
-							</button>
-						</>
-					) : (
-						<>
-							<button onClick={() => setIsSenderFormActive(true)}>
-								<ArrowBack />
-							</button>
-							<Autocomplete key={2} id={2} className="autofill">
-								<input
-									value={receiverAddress}
-									onChange={(e) => setReceiverAddress(e.target.value)}
-									placeholder="Receiver address" />
-							</Autocomplete>
-							<input placeholder="Receiver Name" />
-							<input placeholder="Receiver Phone Number" />
+        <div className="location_form">
+          {isSenderFormActive ? (
+            <>
+              <button onClick={() => navigate("/")}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={1} id={1} className="autofill">
+                <input
+                  placeholder="Sender address"
+                  value={senderAddress}
+                  onChange={(e) => setSenderAddress(e.target.value)}
+                />
+              </Autocomplete>
+              <button onClick={() => setIsSenderFormActive(false)}>
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setIsSenderFormActive(true)}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={2} id={2} className="autofill">
+                <input
+                  value={receiverAddress}
+                  onChange={(e) => setReceiverAddress(e.target.value)}
+                  placeholder="Receiver's address"
+                />
+              </Autocomplete>
+              <input placeholder="Receiver's Name" />
+              <input placeholder="Receiver's Phone Number" />
 
-							<button onClick={() => { navigate('/orders') }}>
-								<ArrowForwardOutlinedIcon />
-							</button>
-						</>
-					)}
-				</div>
-			</div>
-		</>
-	) : (
-		"Loading"
-	);
+              <button
+                onClick={() => {
+                  handleOrderNavigation();
+                }}
+              >
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div className="loadingAnimation">
+        <LoadingCircle />
+        <p className="p">Loading Google maps</p>
+      </div>
+    </>
+  );
 };
 
 export default React.memo(SendOrders);
