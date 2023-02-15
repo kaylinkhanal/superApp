@@ -29,7 +29,7 @@ import React, {useState} from 'react';
 
 })
 
-     const determineFieldType = (item)=> {
+     const DetermineFieldType = ({item})=> {
        if(item.type === 'dropdown'){
          return (
            <>
@@ -42,20 +42,19 @@ import React, {useState} from 'react';
                  </>
                  )
        }
-        return( <Field name={item.label}  type={item.type} placeholder={item.label}/>)
+        return( <Field name={item.label}  type={item.type} placeholder={item.placeholder || item.label}/>)
      }
 
  return(
      <Formik
        initialValues={{}}
        onSubmit={values => {
-        setStepCount(stepCount+1)
          // same shape as initial values
          console.log(values);
          const requestOptions = {
            method: 'POST',
            headers: { 'Content-Type': 'application/json' },
-           body: values
+           body: JSON.stringify(values)
          }
          fetch('http://localhost:5000/register', requestOptions)
        }}
@@ -64,27 +63,13 @@ import React, {useState} from 'react';
        {({ errors, touched ,values}) => (
           <div className="form">
          <Form>
-             {stepCount==1 && props.firstPageFields.map((item,id)=>{
+             {props.firstPageFields.map((item,id)=>{
                  return(
                      <div>
-                 <Field name={item.label} type={item.type} placeholder={item.label}/>
-                        {errors[item.label] && touched[item.label] ? (
-                            <div>{errors[item.label]}</div>
-                        ) : null}
+                       <DetermineFieldType item={item}/>
                      </div>
                  )
              })}
-                {stepCount==2 && props.secondPageFields.map((item,id)=>{
-                 return(
-                     <div>
-                         <Field name={item}  placeholder={item}/>
-                            {errors[item] && touched[item] ? (
-                                <div>{errors[item]}</div>
-                            ) : null}
-                     </div>
-                 )
-             })}
-           {stepCount==2 && <button onClick={()=>setStepCount(stepCount-1)}>Back</button> }
            <button type="submit">Submit</button>
          </Form>
          </div>

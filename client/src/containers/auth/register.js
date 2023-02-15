@@ -221,22 +221,23 @@ const Register = () => {
 
 
   const riderDetailsFields = [
-    { label: "fullName", type: "text" },
-    { label: "registerEmail", type: "text" },
-    { label: "phoneNumber", type: "text" },
-    { label: "address", type: "text" },
-    { label: "vehicleType", type: "dropdown", options: ['Bike', 'Car', 'Van'] },
-    { label: "vehicleNumber", type: "text" },
-    { label: "password", type: "password" },
-    { label: "confirmPassword", type: "password" },
+    { label: "fullName", type: "text" ,placeholder:"Full Name"},
+    { label: "email", type: "text",placeholder:"Email"  },
+    { label: "phoneNumber", type: "text",placeholder:"Phone Number" },
+    { label: "address", type: "text" ,placeholder:"Address"},
+    { label: "vehicleType", type: "dropdown", options: ['Bike', 'Car', 'Van'] ,placeholder:"Vehicle Type"},
+    { label: "vehicleNumber", type: "text" ,placeholder:"Vehicle Number"},
+    { label: "password", type: "password",placeholder:"password" },
+    { label: "confirmPassword", type: "password",placeholder:"Confirm Password" },
   ];
   const userDetailsFields = [
-    { label: "fullName", type: "text" },
-    { label: "registerEmail", type: "text" },
-    { label: "phoneNumber", type: "text" },
-    { label: "address", type: "text" },
-    { label: "password", type: "password" },
-    { label: "confirmPassword", type: "password" },
+    { label: "fullName", type: "text", placeholder:"Full Name" },
+    { label: "userName", type: "text",placeholder:"Username" },
+    { label: "email", type: "text",placeholder:"Email" },
+    { label: "phoneNumber", type: "text" ,placeholder:"Phone Number"},
+    { label: "address", type: "text",placeholder:"Full Name" },
+    { label: "password", type: "password" ,placeholder:"password"},
+    { label: "confirmPassword", type: "password",placeholder:"Confirm Password" },
   ];
 
   return (
