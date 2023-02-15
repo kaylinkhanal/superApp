@@ -132,8 +132,217 @@ input:focus{
   transition: all .5s ease-in-out !important;
 }
 
-.card:hover .icon svg{
-  color: #fff;
-  transform: scale(1.1);
+.user_role {
+  background: rgba (25, 25, 25, 0.5);
 }
 
+.mapInputForm {
+  position: absolute;
+  top: 7%;
+  left: 0.7%;
+  display: flex;
+  align-items: center;
+  background-color: rgba(102, 102, 204, 0.5);
+  opacity: 1;
+  border-radius: 10px;
+  padding: 15px 15px 15px 15px;
+  text-align: center;
+  display: block;
+  width: 450px;
+  height: auto;
+  justify-content: center;
+}
+
+.form {
+  position: relative;
+  top: 50px;
+  z-index: 1;
+  background: #d6d7e7;
+  border-radius: 10px;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 10px 30px 40px 30px;
+  text-align: left;
+  font-family: "Comfortaa", cursive;
+}
+
+.form h1 {
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+  color: #6666cc;
+  text-align: center;
+}
+
+.role_h1 {
+  position: relative;
+  top: 60px;
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+  color: #6666cc;
+  text-align: center;
+}
+.p {
+  padding: 0px 10px 0px 20px;
+  font-family: "Comfortaa", cursive;
+  font-size: 14px;
+  text-align: left;
+}
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 5px;
+  margin: 0 0 15px;
+  padding: 0px 15px 0px 15p;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Comfortaa", cursive;
+}
+
+.button {
+  width: 120px;
+  height: auto;
+  padding: 5px;
+  margin: 5px 5px 5px 5px;
+  border-radius: 8px;
+  border: 2px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background-color: #6666cc;
+  text-align: center;
+  vertical-align: baseline;
+}
+
+.dropDown {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  border-radius: 5px;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Comfortaa", cursive;
+}
+
+.descriptionInput {
+  height: 100px;
+}
+
+.inputField {
+  width: 400px;
+  height: 25px;
+  padding: 5px 15px 5px 20px;
+  border-radius: 8px;
+  border-color: blue;
+  border: 2px;
+  margin-button: 10px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 17px;
+  color: black;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.validationPrompt {
+  font-size: 10px;
+}
+
+.checkbox {
+  olor: #6666cc;
+}
+
+.costumCard {
+  width: 500px;
+}
+
+.homePageCard {
+  display: grid;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  margin: 10px 10px 10px 10px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: #6666cc;
+  text-align: center;
+  vertical-align: center;
+}
+
+.homePageCardsSpace {
+  flexdirection: row;
+  aligncontent: center;
+  justifycontent: center;
+  spacing: 2;
+  margintop: 5%;
+}
+
+/* loaction map*/
+
+.location_map {
+  position: absolute;
+  top: 90px;
+  left: 11px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(102, 102, 204, 0.5);
+  opacity: 1;
+  border-radius: 5px;
+  padding: 15px 15px 15px 15px;
+  text-align: center;
+  display: block;
+  width: auto;
+  height: auto;
+  justify-content: center;
+}
+
+.location_map input {
+  height: 20px;
+  background: #fff;
+  border: 0;
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 0;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.location_form {
+  position: relative;
+  display: flex;
+  flexdirection: row;
+  gap: 5px;
+}
+
+.location_form button {
+  height: 40px;
+  width: 40px;
+  border-color: transparent;
+  cursor: pointer;
+  background: #674cae;
+  color: #fff;
+  border-radius: 5px;
+  right: 0;
+  top: 0;
+}
+
+.autofill input {
+  max-width: 300px;
+  width: 300px;
+}
+
+.loadingAnimation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
