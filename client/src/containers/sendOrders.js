@@ -94,39 +94,33 @@ const SendOrders = () => {
 
   return isLoaded ? (
     <>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={15}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        {isSenderFormActive ? (
-          <Marker
-            draggable={true}
-            onDragEnd={(e) => assignSenderLocation(e)}
-            icon={{
-              url: "https://cdn-icons-png.flaticon.com/512/3064/3064712.png",
-              scaledSize: new window.google.maps.Size(60, 60),
-            }}
-            position={senderCoordinates.lat ? senderCoordinates : center}
-          />
-        ) : (
-          <Marker
-            draggable={true}
-            onDragEnd={(e) => assignReceiverLocation(e)}
-            icon={{
-              url: "https://cdn-icons-png.flaticon.com/512/3369/3369447.png",
-              scaledSize: new window.google.maps.Size(60, 60),
-            }}
-            position={receiverCoordinates.lat ? receiverCoordinates : center}
-          />
-        )}
+    <GoogleMap
+				mapContainerStyle={containerStyle}
+				center={center}
+				zoom={14}
+				onLoad={onLoad}
+				onUnmount={onUnmount}
+			>
+				{isSenderFormActive ? (
+					<Marker
+						draggable={true}
+						onDragEnd={(e) => assignSenderLocation(e)}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+						position={senderCoordinates.lat ? senderCoordinates : center}
+					/>
+				) : (
+					<Marker
+						draggable={true}
+						onDragEnd={(e) => assignReceiverLocation(e)}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+						position={receiverCoordinates.lat ? receiverCoordinates : center}
+					/>
+				)}
 
-        {/* Child components, such as markers, info windows, etc. */}
-        <></>
-      </GoogleMap>
-      <div className="location_map">
+				{/* Child components, such as markers, info windows, etc. */}
+				<></>
+	</GoogleMap>
+	 <div className="location_map">
         <div className="info">
           {/* current Browser coords: {JSON.stringify(currentCoordinates)}<br />
 					current sender coords: {JSON.stringify(senderCoordinates)}<br /> */}
