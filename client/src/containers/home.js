@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 import NavBar from "../components/header/navBar";
-//import homepage from "./homepage.jpeg";
+import homepage from "./homepage.jpeg";
 const Home = () => {
   const myInputRef = useRef(null);
   const [name, setName] = useState("hi");
@@ -74,11 +74,8 @@ const Home = () => {
           <br />
         </div>
 
-        <img
-          style={{ width: "40%", height: "500", float: "right" }}
-          src={""}
-          alt="website-mockup-image"
-        ></img>
+       
+         <img style={{ 'width': '40%', 'height': '500', 'float':'right' }} src={homepage} alt="website-mockup-image"></img>
       </div>
     </div>
   );

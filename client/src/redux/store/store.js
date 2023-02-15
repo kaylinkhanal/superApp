@@ -13,8 +13,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   user: userSlice,
-  location: locationSlice,
-  blacklist: ["location"],
+  location: locationSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
