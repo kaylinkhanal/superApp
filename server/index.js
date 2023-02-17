@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 
 app.post('/register', (req, res) => {
   console.log(req.body)
+  console.log(req.params)
 })  
 
 
