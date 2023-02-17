@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
  import { Formik, Form, Field } from 'formik';
+ import {useNavigate} from "react-router-dom";
  import * as Yup from 'yup';
  import "../../containers/auth/authForm.css"
  import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
  const DynamicForm = (props) => {
+   const navigate = useNavigate()
      const [stepCount, setStepCount] = useState(1)
      const schema = Yup.object().shape({
   fullName: Yup.string()
@@ -45,19 +47,25 @@ import React, {useState} from 'react';
         return( <Field name={item.label}  type={item.type} placeholder={item.placeholder || item.label}/>)
      }
 
+
+     const submitFormData = async (values)=>{  
+       const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values)
+        }
+        const res = await fetch('http://localhost:5000'+props.apiEndpoint, requestOptions)
+          const data = await res.json()
+        if(data){
+          navigate(props.onSuccessNavigation)
+        }
+        
+      }
+
  return(
      <Formik
        initialValues={{}}
-       onSubmit={values => {
-         // same shape as initial values
-         console.log(values);
-         const requestOptions = {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify(values)
-         }
-         fetch('http://localhost:5000/register', requestOptions)
-       }}
+       onSubmit={(values)=>submitFormData(values)}
       //  validationSchema={schema}
      >
        {({ errors, touched ,values}) => (
