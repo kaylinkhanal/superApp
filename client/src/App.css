@@ -1,139 +1,181 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
-/* primary-color = #674CAE */
+/* primary-color =  #a82973*/
 
-body{
+body {
   font-size: 14px;
   line-height: 25px;
   font-family: 'Comfortaa', cursive;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.container{
+.container {
   width: 80%;
   max-width: 100%;
   margin: 0 auto;
 }
 
-section{
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+section {
   padding: 70px 0;
 }
 
-input{
+input {
   height: 40px;
-    border-radius: 0;
-    border-color: #ccc;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 10px;
+  border-radius: 0;
+  border-color: #ccc;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .btn {
+  position: relative;
+  margin: 0 10px;
+  padding: 15px 22px;
+  transition: all 0.2s ease;
+  border: 0;
+  background: transparent;
   font-family: 'Comfortaa', cursive;
   text-transform: uppercase;
-  outline: 0;
-  background: #9096e4;
-  border: 0;
-  border-radius: 5px;
-  padding: 15px;
-  color: #FFFFFF;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  vertical-align: middle;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 28px;
+  background: rgba(255, 171, 157, 0.5);
+  width: 46px;
+  height: 46px;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  width: 100%;
+  background: #ffab9d;
+}
+
+.btn svg {
+  height: 13px;
 }
 
 header {
-  background: #674CAE !important;
+  background: #a82973 !important;
   box-shadow: none !important;
 }
 
 /*landing page */
-.landing_pg, .user_role{
-  height: 100vh;
-    background: #674CAE;
-    text-align: center;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.landing_pg{
+  flex-direction: column
 }
 
-/* loaction map*/
-
-.location_map{
-  top: 40px; margin: 5px; padding: 10px; position: absolute;
-}
-
-.location_map h3{ 
-  font-size: 16px;
-    margin-bottom: 5px;
-    font-weight: normal; 
-}
-
-.location_map input{
-  height: 40px;
-  padding: 10px;
-  background: #fff;
-  border: 0;
-  width: auto;
-  padding: 10px;
-  margin-bottom: 0;
-}
-
-input:focus{
-  outline: 0;
-}
-
-.location_form {
-  background: rgb(0 0 0 / 50%);
-  padding: 10px;
-  position: relative;
+.landing_pg,
+.user_role {
+  text-align: center;
+  font-size: 20px;
   display: flex;
-  flex-flow: row wrap;
-  gap: 5px
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 100vh;
 }
 
-.location_form button{
-  height: 40px;
-  width: 40px;
-  border-color: transparent;
-  cursor: pointer;
-  background: #674CAE;
-  color: #fff;
-  border-radius: 50%;
-  right: 0;
-  top: 0;
-}
-
-.autofill input{
-  max-width: 300px;
-  width: 300px;
+section#role_section {
+  padding: 0;
 }
 
 /* card */
 
-.card{
-  background: none !important;
-    box-shadow: none !important;
-    color: #fff !important;
-    font-weight: normal !important;
+.card {
+  position: relative;
+  cursor: pointer;
 }
 
-.icon svg{
-  font-size: 80px;
-  color: rgba(255,255,255,.4);
+.card:hover i {
+  border-color: #a82973;
+  box-shadow: 1px 2px 3px rgb(0 0 0 / 30%);
+}
+
+.card_icon svg {
+  font-size: 75px;
+  color: #ccc;
+  filter: drop-shadow(1px 2px 2px gray);
   transition: all .5s ease-in-out !important;
 }
 
-.user_role {
-  background: rgba (25, 25, 25, 0.5);
+.card:hover svg {
+  color: #a82973;
+}
+
+.card_icon {
+  height: 150px;
+  width: 150px;
+  display: block;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  line-height: 198px;
+  transition: all .5s ease;
+  margin-bottom: 15px;
+}
+
+.card_content {
+  font-size: 24px;
+  transition: all .5s ease;
+}
+
+.card_content .btn {
+  padding: 8px 20px;
+}
+
+.card_content .btn::before {
+  height: 35px;
+  width: 35px;
+  left: 10px;
+}
+
+.check {
+  position: absolute;
+  top: 0;
+  right: 26px;
+  z-index: 33;
+  box-shadow: none;
+  background: #fff;
+  border-radius: 50%;
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  opacity: 0;
+  transition: opacity .5s ease;
+  visibility: hidden;
+}
+
+.card:hover .check {
+  opacity: 1;
+  visibility: visible;
+}
+
+h5.card_title.btn {
+  font-size: 16px;
 }
 
 .mapInputForm {
@@ -157,36 +199,41 @@ input:focus{
   position: relative;
   top: 50px;
   z-index: 1;
-  background: #d6d7e7;
+  background: rgb(168 41 119 / 12%);
   border-radius: 10px;
   max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 10px 30px 40px 30px;
+  margin: 0 auto;
   text-align: left;
-  font-family: "Comfortaa", cursive;
+}
+
+.form .error {
+  font-size: 12px;
+  color: red;
 }
 
 .form h1 {
-  font-family: "Comfortaa", cursive;
   font-weight: bold;
-  color: #6666cc;
+  color: #a82973;
   text-align: center;
 }
 
 .role_h1 {
   position: relative;
-  top: 60px;
-  font-family: "Comfortaa", cursive;
-  font-weight: bold;
-  color: #6666cc;
   text-align: center;
+  margin-bottom: 20px;
+  color: #a82973;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 50px;
 }
+
 .p {
   padding: 0px 10px 0px 20px;
   font-family: "Comfortaa", cursive;
   font-size: 14px;
   text-align: left;
 }
+
 .form input {
   outline: 0;
   background: #f2f2f2;
@@ -194,8 +241,7 @@ input:focus{
   height: 100%;
   border: 0;
   border-radius: 5px;
-  margin: 0 0 15px;
-  padding: 0px 15px 0px 15p;
+  padding: 0px 15p;
   box-sizing: border-box;
   font-size: 14px;
   font-family: "Comfortaa", cursive;
@@ -212,7 +258,7 @@ input:focus{
   font-size: 15px;
   font-weight: bold;
   color: white;
-  background-color: #6666cc;
+  background-color: #a82973;
   text-align: center;
   vertical-align: baseline;
 }
@@ -241,7 +287,7 @@ input:focus{
   border-radius: 8px;
   border-color: blue;
   border: 2px;
-  margin-button: 10px;
+  margin-bottom: 10px;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 17px;
   color: black;
@@ -254,7 +300,7 @@ input:focus{
 }
 
 .checkbox {
-  olor: #6666cc;
+  color: #a82973;
 }
 
 .costumCard {
@@ -271,46 +317,60 @@ input:focus{
   font-size: 20px;
   font-weight: bold;
   color: white;
-  background-color: #6666cc;
+  background-color: #a82973;
   text-align: center;
   vertical-align: center;
 }
 
-.homePageCardsSpace {
-  flexdirection: row;
-  aligncontent: center;
-  justifycontent: center;
-  spacing: 2;
-  margintop: 5%;
+.user_home {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
+.user_home img {
+  object-fit: contain;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.user_home h1 {
+  color: #a82973;
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.user_home h4 {
+  margin-bottom: 20px;
+}
+
+
+
 /* loaction map*/
+.location{
+  position: relative;
+}
+
+.location .btn {
+  position: absolute;
+  top: 10px;
+  left: 90px;
+}
 
 .location_map {
   position: absolute;
-  top: 90px;
+  top: 65px;
   left: 11px;
   display: flex;
   align-items: center;
-  background-color: rgba(102, 102, 204, 0.5);
   opacity: 1;
   border-radius: 5px;
-  padding: 15px 15px 15px 15px;
-  text-align: center;
   display: block;
   width: auto;
   height: auto;
   justify-content: center;
-}
-
-.location_map input {
-  height: 20px;
-  background: #fff;
-  border: 0;
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 0;
-  border-radius: 5px;
+  max-width: 350px;
+  width: 350px;
 }
 
 input:focus {
@@ -319,26 +379,47 @@ input:focus {
 
 .location_form {
   position: relative;
-  display: flex;
-  flexdirection: row;
-  gap: 5px;
+  flex-direction: row;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 0;
+  transition: all .3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.location_map.active .location_form {
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+
+.location_map.active>button {
+  display: none;
+}
+
+.location_map input {
+  padding: 10px;
+  margin-bottom: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: rgba(255, 255, 255, .8);
+  margin-bottom: 10px;
 }
 
 .location_form button {
-  height: 40px;
-  width: 40px;
   border-color: transparent;
   cursor: pointer;
-  background: #674cae;
-  color: #fff;
-  border-radius: 5px;
-  right: 0;
-  top: 0;
-}
-
-.autofill input {
-  max-width: 300px;
-  width: 300px;
+  color: #000;
+  background: #a82973;
+  height: 35px;
+  width: 35px;
+  margin: 0 10px 5px 0;
+  border-radius: 50%;
 }
 
 .loadingAnimation {
