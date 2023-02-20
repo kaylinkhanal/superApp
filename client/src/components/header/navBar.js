@@ -47,8 +47,8 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#6666cc" }}>
-      <Container maxWidth="xl" sx={{ backgroundColor: "#6666cc" }}>
+    <AppBar position="static" className="navbar">
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img
             src="https://i.ibb.co/Y2YTqkr/superman.png" alt="/"

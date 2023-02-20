@@ -11,14 +11,20 @@ body {
     font-family: 'Comfortaa', cursive;
   }
   
+  .authForm {
+    text-align: center;
+    margin-top: 50px;
+    color: #a82973;
+}
+
   .form {
     position: relative;
     z-index: 1;
-    background: #d6d7e7;
+    background: rgb(168 41 119 / 12%);
     border-radius: 10px;
     max-width: 360px;
     margin: 0 auto;
-    padding: 45px;
+    padding: 30px;
     text-align: center;
   }
   .form input {
@@ -27,7 +33,6 @@ body {
     width: 100%;
     border: 0;
     border-radius: 5px;
-    margin: 0 0 15px;
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
@@ -37,32 +42,14 @@ body {
   .form input:focus {
     border: 1px solid #ccc;
   }
-  
-  .form button {
-    font-family: 'Comfortaa', cursive;
-    text-transform: uppercase;
-    outline: 0;
-    background: #9096e4;
-    width: 100%;
-    border: 0;
-    border-radius: 5px;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
+
+  .authForm button{
+    margin: 10px 0 0;
   }
-  
-  .form button:active {
-    background: #e4e6eb;
-  }
-  
-  .form span {
-    font-size: 40px;
-    /* color: #4b6cb7; */
-    margin-bottom: 25px;
-    display: block;
+
+  .authForm button:hover::before,
+  .authForm button::before{
+    background: #a82973;
   }
   
   .form p.error {
