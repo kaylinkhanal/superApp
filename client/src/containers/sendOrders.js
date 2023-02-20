@@ -6,11 +6,14 @@ import {
 	Autocomplete,
 } from "@react-google-maps/api";
 import {
-	setSenderCoordinates,
-	setReceiverCoordinates,
+  setSenderCoordinates,
+  setReceiverCoordinates,
+  setOrdersDetails,
 } from "../redux/reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -26,84 +29,84 @@ const center = {
 };
 
 const SendOrders = () => {
-	const [isSenderFormActive, setIsSenderFormActive] = useState(true);
-	const [senderAddress, setSenderAddress] = useState("");
-	const [receiverAddress, setReceiverAddress] = useState("");
-
-	const { senderCoordinates, receiverCoordinates } = useSelector(
+	const { senderCoordinates, 
+		receiverCoordinates,
+		ordersDetails
+	 } = useSelector(
 		(state) => state.location
-	);
-	const { isLoggedIn } = useSelector((state) => state.user);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const { isLoaded } = useJsApiLoader({
-		id: "google-map-script",
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-		libraries: ["places"],
-	});
-	const [currentCoordinates, setCurrentCoordinates] = useState();
+	  );
+	  console.log(ordersDetails, "@@")
+  const [isSenderFormActive, setIsSenderFormActive] = useState(true);
+  const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
+  const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
+  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
+  const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
 
-	const [map, setMap] = React.useState(null);
 
-	const onLoad = React.useCallback(function callback(map) {
-		navigator.geolocation.getCurrentPosition((position) => {
-			let lat = position.coords.latitude;
-			let lng = position.coords.longitude;
-			const cordinates = { lat, lng };
-			setCurrentCoordinates(cordinates);
-		});
-		// This is just an example of getting and using the map instance!!! don't just blindly copy!
-		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
+  const [currentCoordinates, setCurrentCoordinates] = useState();
 
-		setMap(map);
-	}, []);
+  const [map, setMap] = React.useState(null);
 
-	const onUnmount = React.useCallback(function callback(map) {
-		setMap(null);
-	}, []);
+  const onLoad = React.useCallback(function callback(map) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let lat = position.coords.latitude;
+      let lng = position.coords.longitude;
+      const cordinates = { lat, lng };
+      setCurrentCoordinates(cordinates);
+    });
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
 
-	const assignSenderLocation = (e) => {
-		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-		dispatch(setSenderCoordinates(cordinates));
-		fetch(
-			`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
-		)
-			.then((res) => res.json())
-			.then((data) => setSenderAddress(data.features[0].properties.formatted));
+    setMap(map);
+  }, []);
 
-		// activeElement.current.classList.toggle('active');
-	};
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
 
-	const assignReceiverLocation = (e) => {
-		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-		dispatch(setReceiverCoordinates(cordinates));
-		fetch(
-			`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
-		)
-			.then((res) => res.json())
-			.then((data) =>
-				setReceiverAddress(data.features[0].properties.formatted)
-			);
-		activeElement.current.classList.toggle('active');
-	};
+  const assignSenderLocation = (e) => {
+    const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+    dispatch(setSenderCoordinates(cordinates));
+    fetch(
+      `https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+    )
+      .then((res) => res.json())
+      .then((data) => setSenderAddress(data.features[0].properties.formatted));
+  };
 
-	const handleOrderNavigation = () => {
-		if (isLoggedIn) {
-			navigate("/order");
-		} else {
-			navigate("/login");
-		}
-	};
+  const assignReceiverLocation = (e) => {
+    const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+    dispatch(setReceiverCoordinates(cordinates));
+    fetch(
+      `https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        setReceiverAddress(data.features[0].properties.formatted)
+      );
+  };
 
-	const activeElement = useRef();
-	const handleActive = () => {
-		activeElement.current.classList.toggle('active');
-	}
+  const handleOrderNavigation = () => {
+    dispatch(setOrdersDetails({receiverAddress, senderAddress, receiverName, receiverPhoneNumber}))
+    if (isLoggedIn) {
+      navigate("/order");
+    } else {
+      navigate("/login", { state: { onSuccessNavigation: "/orders" } });
+    }
+  };
 
-	return isLoaded ? (
-		<div className="location">
-			<GoogleMap
+  return isLoaded ? (
+    <>
+    <GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
 				zoom={14}
@@ -128,54 +131,66 @@ const SendOrders = () => {
 
 				{/* Child components, such as markers, info windows, etc. */}
 				<></>
-			</GoogleMap>
-			
-				{/* <button className="btn"><GolfCourseIcon /><span>Click/Drag the marker</span></button> */}
-				<div className="location_map" >
-
-					<div className="location_form">
-						{isSenderFormActive ? (
-							<>
-								<button onClick={() => navigate("/")}><KeyboardArrowLeftIcon /></button>
-								<button onClick={() => setIsSenderFormActive(false)}><KeyboardArrowRightIcon /></button>
-								<Autocomplete key={1} id={1} className="autofill">
-									<input
-										placeholder="Sender address"
-										value={senderAddress}
-										onChange={(e) => setSenderAddress(e.target.value)}
-									/>
-								</Autocomplete>
-
-							</>
-						) : (
-							<>
-								<button onClick={() => setIsSenderFormActive(true)}><KeyboardArrowLeftIcon /></button>
-								<button onClick={() => { handleOrderNavigation(); }}><KeyboardArrowRightIcon /></button>
-								<Autocomplete key={2} id={2} className="autofill">
-									<input
-										value={receiverAddress}
-										onChange={(e) => setReceiverAddress(e.target.value)}
-										placeholder="Receiver's address"
-									/>
-								</Autocomplete>
-								<input placeholder="Receiver's Name" />
-								<input placeholder="Receiver's Phone Number" />
-
-
-							</>
-						)}
-					</div>
-				</div>
-			
-				</div>
-	) : (
-		<>
-			<div className="loadingAnimation">
-				<LoadingCircle />
-				<p className="p">Loading Google maps</p>
-			</div>
-		</>
-	);
+	</GoogleMap>
+	 <div className="location_map">
+        <div className="location_form">
+          {isSenderFormActive ? (
+            <>
+              <button onClick={() => navigate("/")}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={1} id={1} className="autofill">
+                <input
+                  placeholder="Sender address"
+                  value={senderAddress}
+                  onChange={(e) => setSenderAddress(e.target.value)}
+                />
+              </Autocomplete>
+              <button onClick={() => setIsSenderFormActive(false)}>
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setIsSenderFormActive(true)}>
+                <ArrowBack />
+              </button>
+              <Autocomplete key={2} id={2} className="autofill">
+                <input
+                  value={receiverAddress}
+                  onChange={(e) => setReceiverAddress(e.target.value)}
+                  placeholder="Receiver's address"
+                />
+              </Autocomplete>
+			  <input 
+			  placeholder="Receiver's Name" 
+			  value={receiverName}
+			  onChange={(e) => setReceiverName(e.target.value)}
+			  />
+			  <input placeholder="Receiver's Phone Number"
+			  value={receiverPhoneNumber}
+			  onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+			 />
+              <button
+                onClick={() => {
+                  handleOrderNavigation();
+                }}
+              >
+                <ArrowForwardOutlinedIcon />
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div className="loadingAnimation">
+        <LoadingCircle />
+        <p className="p">Loading Google maps</p>
+      </div>
+    </>
+  );
 };
 
 export default React.memo(SendOrders);

@@ -46,7 +46,7 @@ app.post('/register', async (req, res) => {
     if(data){
       res.send('User Registered Successfully')
     }else{
-      res.send('Regsitration failed')
+      res.send('Regsitration')
     }
   }catch(err){
     console.log("err"+err)
