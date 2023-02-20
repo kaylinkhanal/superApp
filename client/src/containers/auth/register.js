@@ -243,7 +243,7 @@ const Register = () => {
   return (
     <section>
       <DynamicForm
-        firstPageFields={userRole == 'rider' ? riderDetailsFields : userDetailsFields}
+        firstPageFields={userRole === 'rider' ? riderDetailsFields : userDetailsFields}
         isSingleStepForm={true}
       />
     </section>

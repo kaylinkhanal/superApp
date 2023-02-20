@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 const connectDb = async()=> {
   try{
-    const data = await mongoose.connect('mongodb://127.0.0.1:27017/superdb');
+    const data = await mongoose.connect('mongodb://localhost:27017/superdb');
     if(data) console.log("connected to monngodb")
   }catch(err){
     console.log("Db Connection error", err)
