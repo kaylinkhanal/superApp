@@ -26,13 +26,20 @@ const center = {
 };
 
 const SendOrders = () => {
+	const { senderCoordinates, 
+		receiverCoordinates,
+		ordersDetails
+	 } = useSelector(
+		(state) => state.location
+	  );
+	  console.log(ordersDetails, "@@")
   const [isSenderFormActive, setIsSenderFormActive] = useState(true);
-  const [senderAddress, setSenderAddress] = useState("");
-  const [receiverAddress, setReceiverAddress] = useState("");
+  const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
+  const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
+  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
+  const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
 
-  const { senderCoordinates, receiverCoordinates } = useSelector(
-    (state) => state.location
-  );
+
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -86,7 +93,7 @@ const SendOrders = () => {
   };
 
   const handleOrderNavigation = () => {
-    dispatch(setOrdersDetails({receiverAddress:receiverAddress}))
+    dispatch(setOrdersDetails({receiverAddress, senderAddress, receiverName, receiverPhoneNumber}))
     if (isLoggedIn) {
       navigate("/order");
     } else {
@@ -152,9 +159,15 @@ const SendOrders = () => {
                   placeholder="Receiver's address"
                 />
               </Autocomplete>
-              <input placeholder="Receiver's Name" />
-              <input placeholder="Receiver's Phone Number" />
-
+			  <input 
+			  placeholder="Receiver's Name" 
+			  value={receiverName}
+			  onChange={(e) => setReceiverName(e.target.value)}
+			  />
+			  <input placeholder="Receiver's Phone Number"
+			  value={receiverPhoneNumber}
+			  onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+			 />
               <button
                 onClick={() => {
                   handleOrderNavigation();

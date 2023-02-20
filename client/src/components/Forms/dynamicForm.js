@@ -3,6 +3,7 @@ import React, {useState} from 'react';
  import {useNavigate} from "react-router-dom";
  import * as Yup from 'yup';
  import "../../containers/auth/authForm.css"
+ import Snackbar from "../alerts/snackBar"
  import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
  const DynamicForm = (props) => {
    const navigate = useNavigate()
@@ -46,7 +47,7 @@ import React, {useState} from 'react';
        }
         return( <Field name={item.label}  type={item.type} placeholder={item.placeholder || item.label}/>)
      }
-
+     const  [registerSuccess, setRegisterSuccess] =  useState(false)
 
      const submitFormData = async (values)=>{  
        const requestOptions = {
@@ -55,15 +56,15 @@ import React, {useState} from 'react';
           body: JSON.stringify(values)
         }
         const res = await fetch('http://localhost:5000'+props.apiEndpoint, requestOptions)
-    
-          const data = await res.json()
-        if(data){
-          navigate(props.onSuccessNavigation)
+        if(res.status==200){
+          setRegisterSuccess(true)
+            // navigate('/login')
         }
-        
       }
 
  return(
+   <>
+    <Snackbar open={registerSuccess} message="registered successfully"/>
      <Formik
        initialValues={{}}
        onSubmit={(values)=>submitFormData(values)}
@@ -84,6 +85,7 @@ import React, {useState} from 'react';
          </div>
        )}
      </Formik>
+  </>
  );
 }
  export default DynamicForm

@@ -15,7 +15,11 @@ const locationSlice = createSlice({
       state.senderCoordinates = actions.payload;
     },
     setOrdersDetails: (state, actions) => {
-      state.ordersDetails[actions.payload] = actions.payload
+      const onlyKeys = Object.keys(actions.payload)
+      const onlyValues = Object.values(actions.payload)
+      onlyKeys.forEach((item,id)=>{
+        state.ordersDetails[item] = onlyValues[id]
+      })
     },
     setReceiverCoordinates: (state, actions) => {
       state.receiverCoordinates = actions.payload;
