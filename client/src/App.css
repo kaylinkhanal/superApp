@@ -383,10 +383,10 @@ input:focus {
   padding: 10px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  width: 0;
+  /* width: 0; */
   transition: all .3s ease-in-out;
-  visibility: hidden;
-  opacity: 0;
+  /* visibility: hidden; */
+  /* opacity: 0; */
 }
 
 .location_map.active .location_form {
@@ -394,10 +394,10 @@ input:focus {
   visibility: visible;
   opacity: 1;
 }
-
+/* 
 .location_map.active>button {
   display: none;
-}
+} */
 
 .location_map input {
   padding: 10px;

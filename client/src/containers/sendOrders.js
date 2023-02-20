@@ -72,7 +72,7 @@ const SendOrders = () => {
 			.then((res) => res.json())
 			.then((data) => setSenderAddress(data.features[0].properties.formatted));
 
-		activeElement.current.classList.toggle('active');
+		// activeElement.current.classList.toggle('active');
 	};
 
 	const assignReceiverLocation = (e) => {
@@ -130,8 +130,8 @@ const SendOrders = () => {
 				<></>
 			</GoogleMap>
 			
-				<button className="btn" onClick={handleActive}><GolfCourseIcon /><span>Click/Drag the marker</span></button>
-				<div className="location_map" ref={activeElement}>
+				{/* <button className="btn"><GolfCourseIcon /><span>Click/Drag the marker</span></button> */}
+				<div className="location_map" >
 
 					<div className="location_form">
 						{isSenderFormActive ? (
