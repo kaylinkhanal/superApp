@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-  Autocomplete,
+	GoogleMap,
+	useJsApiLoader,
+	Marker,
+	Autocomplete,
 } from "@react-google-maps/api";
 import {
   setSenderCoordinates,
@@ -14,15 +14,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import GolfCourseIcon from '@mui/icons-material/GolfCourse';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LoadingCircle from "../components/loadingCircle";
 const containerStyle = {
-  width: "100%",
-  height: "100vh",
+	width: "100%",
+	height: "100vh",
 };
 
 const center = {
-  lat: 27.685616312450417,
-  lng: 85.34456349960001,
+	lat: 27.685616312450417,
+	lng: 85.34456349960001,
 };
 
 const SendOrders = () => {
