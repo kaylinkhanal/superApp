@@ -55,6 +55,7 @@ import React, {useState} from 'react';
           body: JSON.stringify(values)
         }
         const res = await fetch('http://localhost:5000'+props.apiEndpoint, requestOptions)
+    
           const data = await res.json()
         if(data){
           navigate(props.onSuccessNavigation)

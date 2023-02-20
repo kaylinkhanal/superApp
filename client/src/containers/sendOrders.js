@@ -8,6 +8,7 @@ import {
 import {
   setSenderCoordinates,
   setReceiverCoordinates,
+  setOrdersDetails,
 } from "../redux/reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -85,10 +86,11 @@ const SendOrders = () => {
   };
 
   const handleOrderNavigation = () => {
+    dispatch(setOrdersDetails({receiverAddress:receiverAddress}))
     if (isLoggedIn) {
       navigate("/order");
     } else {
-      navigate("/login");
+      navigate("/login", { state: { onSuccessNavigation: "/orders" } });
     }
   };
 
@@ -121,11 +123,6 @@ const SendOrders = () => {
 				<></>
 	</GoogleMap>
 	 <div className="location_map">
-        <div className="info">
-          {/* current Browser coords: {JSON.stringify(currentCoordinates)}<br />
-					current sender coords: {JSON.stringify(senderCoordinates)}<br /> */}
-        </div>
-
         <div className="location_form">
           {isSenderFormActive ? (
             <>

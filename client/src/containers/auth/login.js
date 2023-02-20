@@ -1,9 +1,10 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./authForm.css";
-import { switchLogin } from "../../redux/reducers/userSlice";
+import { setLoginDetails } from "../../redux/reducers/userSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 // Creating schema
 const LoginSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -20,6 +21,21 @@ const Login = () => {
   const navigate = useNavigate();
   let { state } = useLocation();
 
+  const triggerLogin = async(values)=> {
+    debugger;
+    const res = await axios.post(`http://localhost:5000/login`, values)
+    if(res.status == 200){
+      console.log(res.data.token)
+      dispatch(setLoginDetails(res.data.token));
+    }
+ 
+    if (state?.onSuccessNavigation === "/order") {
+      navigate("/order");
+    } else {
+      navigate("/");
+    }
+  }
+
   return (
     <>
       {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -27,14 +43,7 @@ const Login = () => {
         validationSchema={LoginSchema}
         initialValues={{ phoneNumber: "", password: "" }}
         onSubmit={(values) => {
-          //req to api
-          debugger;
-          dispatch(switchLogin());
-          if (state?.redirect_to === "home") {
-            navigate("/");
-          } else {
-            navigate("/order");
-          }
+            triggerLogin(values)
         }}
       >
         {({

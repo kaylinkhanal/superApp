@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { switchLogin } from "../../redux/reducers/userSlice";
+import { setLoginDetails } from "../../redux/reducers/userSlice";
 const pages = ["Home", "Order", "Track My Order", "Contact US"];
 const settings = ["Profile", "Account", "My Orders", "Logout"];
 
@@ -40,7 +40,7 @@ const NavBar = () => {
 
   const handleCloseUserMenu = (e) => {
     if (e.target.textContent == "Logout") {
-      dispatch(switchLogin());
+      dispatch(setLoginDetails());
     }
 
     setAnchorElUser(null);
@@ -147,7 +147,7 @@ const NavBar = () => {
                 ) : (
                   <LoginIcon
                     onClick={() =>
-                      navigate("/login", { state: { redirect_to: "home" } })
+                      navigate("/login")
                     }
                   />
                 )}
