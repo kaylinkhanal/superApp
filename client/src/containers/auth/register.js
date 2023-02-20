@@ -243,7 +243,9 @@ const Register = () => {
   return (
     <section>
       <DynamicForm
-        firstPageFields={userRole === 'rider' ? riderDetailsFields : userDetailsFields}
+        apiEndpoint= "/register"
+        onSuccessNavigation= "/login"
+        firstPageFields={userRole == 'rider' ? riderDetailsFields : userDetailsFields}
         isSingleStepForm={true}
       />
     </section>
