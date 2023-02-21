@@ -136,9 +136,6 @@ const SendOrders = () => {
         <div className="location_form">
           {isSenderFormActive ? (
             <>
-              <button onClick={() => navigate("/")}>
-                <ArrowBack />
-              </button>
               <Autocomplete key={1} id={1} className="autofill">
                 <input
                   placeholder="Sender address"
@@ -146,15 +143,11 @@ const SendOrders = () => {
                   onChange={(e) => setSenderAddress(e.target.value)}
                 />
               </Autocomplete>
-              <button onClick={() => setIsSenderFormActive(false)}>
-                <ArrowForwardOutlinedIcon />
-              </button>
+              <button onClick={() => navigate("/")}><ArrowBack /></button>
+              <button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
             </>
           ) : (
             <>
-              <button onClick={() => setIsSenderFormActive(true)}>
-                <ArrowBack />
-              </button>
               <Autocomplete key={2} id={2} className="autofill">
                 <input
                   value={receiverAddress}
@@ -171,13 +164,8 @@ const SendOrders = () => {
                 value={receiverPhoneNumber}
                 onChange={(e) => setReceiverPhoneNumber(e.target.value)}
               />
-              <button
-                onClick={() => {
-                  handleOrderNavigation();
-                }}
-              >
-                <ArrowForwardOutlinedIcon />
-              </button>
+              <button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
+              <button onClick={() => { handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
             </>
           )}
         </div>

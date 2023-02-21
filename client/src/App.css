@@ -39,6 +39,14 @@ input {
   margin-bottom: 10px;
 }
 
+
+input.checkboxline {
+  display: inline-block;
+  width: auto !important;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
 .btn {
   position: relative;
   margin: 0 10px;
@@ -76,6 +84,16 @@ input {
 
 .btn svg {
   height: 13px;
+}
+
+.btn.back{
+  padding: 10px;
+  font-size: 12px
+}
+
+.btn.back::before{
+  height: 36px;
+  width: 36px;
 }
 
 header {
