@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
 
 /* primary-color =  #a82973*/
 
 body {
   font-size: 14px;
   line-height: 25px;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
 }
 
 * {
@@ -46,7 +46,7 @@ input {
   transition: all 0.2s ease;
   border: 0;
   background: transparent;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
   text-transform: uppercase;
   font-size: 14px;
   line-height: 18px;
@@ -84,8 +84,8 @@ header {
 }
 
 /*landing page */
-.landing_pg{
-  flex-direction: column
+.landing_pg {
+  flex-direction: column;
 }
 
 .landing_pg,
@@ -119,7 +119,7 @@ section#role_section {
   font-size: 75px;
   color: #ccc;
   filter: drop-shadow(1px 2px 2px gray);
-  transition: all .5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
 }
 
 .card:hover svg {
@@ -133,13 +133,13 @@ section#role_section {
   border-radius: 50%;
   border: 3px solid #ccc;
   line-height: 198px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   margin-bottom: 15px;
 }
 
 .card_content {
   font-size: 24px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 
 .card_content .btn {
@@ -165,7 +165,7 @@ section#role_section {
   width: 20px;
   line-height: 20px;
   opacity: 0;
-  transition: opacity .5s ease;
+  transition: opacity 0.5s ease;
   visibility: hidden;
 }
 
@@ -344,10 +344,8 @@ h5.card_title.btn {
   margin-bottom: 20px;
 }
 
-
-
 /* loaction map*/
-.location{
+.location {
   position: relative;
 }
 
@@ -384,7 +382,7 @@ input:focus {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   /* width: 0; */
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   /* visibility: hidden; */
   /* opacity: 0; */
 }
@@ -407,7 +405,7 @@ input:focus {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   margin-bottom: 10px;
 }
 
@@ -426,4 +424,19 @@ input:focus {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+/* ERROR PAGE */
+.error-page {
+  color: #a82973;
+  height: calc(100vh - 63px);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-page Link {
+  color: #a82973;
+  font-size: 30px;
 }
