@@ -14,11 +14,11 @@ app.get('/', (req, res) => {
   res.send('Inital setup')
 })
 
-const connectDb = async()=> {
-  try{
+const connectDb = async () => {
+  try {
     const data = await mongoose.connect('mongodb://127.0.0.1:27017/superdb');
-    if(data) console.log("connected to monngodb")
-  }catch(err){
+    if (data) console.log("connected to monngodb")
+  } catch (err) {
     console.log("Db Connection error", err)
   }
 }
@@ -41,21 +41,23 @@ const Users = mongoose.model('Users', userSchema);
 
 
 app.post('/register', async (req, res) => {
-  try{
-    const data =  await Users.create(req.body)
-    if(data){
-      res.send('User Registered Successfully')
-    }else{
+  try {
+    const data = await Users.create(req.body)
+    if (data) {
+      res.json({
+        msg: 'User Registered Successfully'
+      })
+    } else {
       res.send('Regsitration')
     }
-  }catch(err){
-    console.log("err"+err)
+  } catch (err) {
+    console.log("err" + err)
   }
-})  
+})
 
 
 app.post('/login', async (req, res) => {
-  jwt.sign({ name: req.body.userName }, process.env.SECRET_KEY, function(err, token) {
+  jwt.sign({ name: req.body.userName }, process.env.SECRET_KEY, function (err, token) {
     res.json({
       msg: "token generated",
       token: token

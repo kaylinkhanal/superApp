@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import {
-	GoogleMap,
-	useJsApiLoader,
-	Marker,
-	Autocomplete,
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  Autocomplete,
 } from "@react-google-maps/api";
 import {
   setSenderCoordinates,
@@ -19,23 +19,23 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LoadingCircle from "../components/loadingCircle";
 const containerStyle = {
-	width: "100%",
-	height: "100vh",
+  width: "100%",
+  height: "100vh",
 };
 
 const center = {
-	lat: 27.685616312450417,
-	lng: 85.34456349960001,
+  lat: 27.685616312450417,
+  lng: 85.34456349960001,
 };
 
 const SendOrders = () => {
-	const { senderCoordinates, 
-		receiverCoordinates,
-		ordersDetails
-	 } = useSelector(
-		(state) => state.location
-	  );
-	  console.log(ordersDetails, "@@")
+  const { senderCoordinates,
+    receiverCoordinates,
+    ordersDetails
+  } = useSelector(
+    (state) => state.location
+  );
+  console.log(ordersDetails, "@@")
   const [isSenderFormActive, setIsSenderFormActive] = useState(true);
   const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
   const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
@@ -96,43 +96,43 @@ const SendOrders = () => {
   };
 
   const handleOrderNavigation = () => {
-    dispatch(setOrdersDetails({receiverAddress, senderAddress, receiverName, receiverPhoneNumber}))
+    dispatch(setOrdersDetails({ receiverAddress, senderAddress, receiverName, receiverPhoneNumber }))
     if (isLoggedIn) {
       navigate("/order");
     } else {
-      navigate("/login", { state: { onSuccessNavigation: "/orders" } });
+      navigate("/login", { state: { onSuccessNavigation: "/order" } });
     }
   };
 
   return isLoaded ? (
     <>
-    <GoogleMap
-				mapContainerStyle={containerStyle}
-				center={center}
-				zoom={14}
-				onLoad={onLoad}
-				onUnmount={onUnmount}
-			>
-				{isSenderFormActive ? (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignSenderLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
-					/>
-				) : (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignReceiverLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-				)}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        {isSenderFormActive ? (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignSenderLocation(e)}
+            icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+            position={senderCoordinates.lat ? senderCoordinates : center}
+          />
+        ) : (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignReceiverLocation(e)}
+            icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+            position={receiverCoordinates.lat ? receiverCoordinates : center}
+          />
+        )}
 
-				{/* Child components, such as markers, info windows, etc. */}
-				<></>
-	</GoogleMap>
-	 <div className="location_map">
+        {/* Child components, such as markers, info windows, etc. */}
+        <></>
+      </GoogleMap>
+      <div className="location_map">
         <div className="location_form">
           {isSenderFormActive ? (
             <>
@@ -162,15 +162,15 @@ const SendOrders = () => {
                   placeholder="Receiver's address"
                 />
               </Autocomplete>
-			  <input 
-			  placeholder="Receiver's Name" 
-			  value={receiverName}
-			  onChange={(e) => setReceiverName(e.target.value)}
-			  />
-			  <input placeholder="Receiver's Phone Number"
-			  value={receiverPhoneNumber}
-			  onChange={(e) => setReceiverPhoneNumber(e.target.value)}
-			 />
+              <input
+                placeholder="Receiver's Name"
+                value={receiverName}
+                onChange={(e) => setReceiverName(e.target.value)}
+              />
+              <input placeholder="Receiver's Phone Number"
+                value={receiverPhoneNumber}
+                onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+              />
               <button
                 onClick={() => {
                   handleOrderNavigation();

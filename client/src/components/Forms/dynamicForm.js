@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
- import { Formik, Form, Field } from 'formik';
- import {useNavigate} from "react-router-dom";
- import * as Yup from 'yup';
- import "../../containers/auth/authForm.css"
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
+import "../../containers/auth/authForm.css"
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
- import Snackbar from "../alerts/snackBar"
- import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
+import { useDispatch } from 'react-redux';
+import { setAlertMessages } from '../../redux/reducers/notifySlice';
+import Snackbar from "../alerts/snackBar"
+import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
 
 const DynamicForm = (props) => {
+	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [stepCount, setStepCount] = useState(1)
 	const schema = Yup.object().shape({
@@ -50,7 +53,6 @@ const DynamicForm = (props) => {
 		return (<Field name={item.label} type={item.type} placeholder={item.placeholder || item.label} />)
 	}
 
-
 	const submitFormData = async (values) => {
 		const requestOptions = {
 			method: 'POST',
@@ -59,10 +61,10 @@ const DynamicForm = (props) => {
 		}
 		const res = await fetch('http://localhost:5000' + props.apiEndpoint, requestOptions)
 		const data = await res.json()
-		if (data) {
-			navigate(props.onSuccessNavigation)
+		if (res.status == 200) {
+			dispatch(setAlertMessages(data.msg))
 		}
-
+		navigate('/login')
 	}
 
 	return (

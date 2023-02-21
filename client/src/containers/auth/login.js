@@ -23,20 +23,20 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	let { state } = useLocation();
-  const triggerLogin = async(values)=> {
-    debugger;
-    const res = await axios.post(`http://localhost:5000/login`, values)
-    if(res.status == 200){
-      console.log(res.data.token)
-      dispatch(setLoginDetails(res.data.token));
-    }
- 
-    if (state?.onSuccessNavigation === "/order") {
-      navigate("/order");
-    } else {
-      navigate("/");
-    }
-  }
+	const triggerLogin = async (values) => {
+		debugger;
+		const res = await axios.post(`http://localhost:5000/login`, values)
+		if (res.status == 200) {
+			console.log(res.data.token)
+			dispatch(setLoginDetails(res.data.token));
+		}
+
+		if (state?.onSuccessNavigation === "/order") {
+			navigate("/order");
+		} else {
+			navigate("/");
+		}
+	}
 	return (
 		<>
 			{/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -44,7 +44,7 @@ const Login = () => {
 				validationSchema={LoginSchema}
 				initialValues={{ phoneNumber: "", password: "" }}
 				onSubmit={(values) => {
-          triggerLogin(values)
+					triggerLogin(values)
 				}}
 			>
 				{({
@@ -95,7 +95,7 @@ const Login = () => {
 										{errors.password && touched.password && errors.password}
 									</div>
 									{/* Click on submit button to submit the form */}
-									<button className="btn" type="submit"><spa>Login</spa> <TrendingFlatIcon /></button>
+									<button className="btn" type="submit"><span>Login</span> <TrendingFlatIcon /></button>
 								</form>
 								<p style={{ marginTop: '15px', fontSize: '12px' }}>
 									Don't have an account? <Link to="/register">Register</Link>
