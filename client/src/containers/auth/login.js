@@ -13,8 +13,6 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 // Creating schema
 const LoginSchema = Yup.object().shape({
 	phoneNumber: Yup.string()
-		.min(10, "Invalid Phone Number")
-		.max(10, "Invalid Phone Number")
 		.required("Required"),
 	password: Yup.string()
 		.required("Password is a required field")
@@ -28,7 +26,7 @@ const Login = () => {
   const triggerLogin = async(values)=> {
     debugger;
     const res = await axios.post(`http://localhost:5000/login`, values)
-    if(res.status == 200){
+    if(res.status === 200){
       dispatch(setLoginDetails(res.data.token));
       dispatch(setAlertMessages(res.data.message))
     }
@@ -67,12 +65,12 @@ const Login = () => {
 								<form noValidate onSubmit={handleSubmit}>
 									{/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
 									<input
-										type="number"
+										type="text"
 										name="phoneNumber"
 										onChange={handleChange}
 										onBlur={handleBlur}
 										value={values.phoneNumber}
-										placeholder="Phone No. or Email or UserName"
+										placeholder="Phone No, Email or UserName"
 										className="form-control inp_text"
 										id="phoneNumber"
 									/>
