@@ -2,6 +2,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import "./authForm.css";
 import { setLoginDetails } from "../../redux/reducers/userSlice";
+import { setAlertMessages } from "../../redux/reducers/notifySlice";
+
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -27,10 +29,10 @@ const Login = () => {
     debugger;
     const res = await axios.post(`http://localhost:5000/login`, values)
     if(res.status == 200){
-      console.log(res.data.token)
       dispatch(setLoginDetails(res.data.token));
+      dispatch(setAlertMessages(res.data.message))
     }
- 
+
     if (state?.onSuccessNavigation === "/order") {
       navigate("/order");
     } else {
@@ -70,7 +72,7 @@ const Login = () => {
 										onChange={handleChange}
 										onBlur={handleBlur}
 										value={values.phoneNumber}
-										placeholder="Enter Phone Number"
+										placeholder="Phone No. or Email or UserName"
 										className="form-control inp_text"
 										id="phoneNumber"
 									/>

@@ -100,7 +100,7 @@ const SendOrders = () => {
     if (isLoggedIn) {
       navigate("/order");
     } else {
-      navigate("/login", { state: { onSuccessNavigation: "/orders" } });
+      navigate("/login", { state: { onSuccessNavigation: "/order" } });
     }
   };
 

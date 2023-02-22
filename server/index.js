@@ -4,6 +4,8 @@ const app = express()
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { Schema } = mongoose;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 require('dotenv').config()
 app.use(cors())
 app.use(express.json())
@@ -42,12 +44,17 @@ const Users = mongoose.model('Users', userSchema);
 
 app.post('/register', async (req, res) => {
   try{
-    const data =  await Users.create(req.body)
+  bcrypt.hash(req.body.password, saltRounds).then(async function(hash) {
+   req.body.password = hash
+       const data =  await Users.create(req.body)
     if(data){
-      res.send('User Registered Successfully')
+      res.json({
+        message: "Registration successful!!"
+      })
     }else{
-      res.send('Regsitration')
+      res.send('Regsitration failed')
     }
+  });
   }catch(err){
     console.log("err"+err)
   }
@@ -55,12 +62,27 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-  jwt.sign({ name: req.body.userName }, process.env.SECRET_KEY, function(err, token) {
+  //first we need check if the req.body.phoneNumber exist in the db
+  const data = await Users.findOne({phoneNumber: req.body.phoneNumber})
+  //if data is there, it means we found a document in db with that particular phoneNumber
+  if(data){
+    //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
+    bcrypt.compare(req.body.password, data.password, function(err, result) {
+        if(result){
+          res.json({
+            message: "Login Success!!"
+          })
+        }else{
+          res.json({
+            message: "Invalid Password!"
+          })
+        }
+    });
+  }else{
     res.json({
-      msg: "token generated",
-      token: token
+      message: "user doesn't exist"
     })
-  });
+  }
 })
 
 
