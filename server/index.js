@@ -34,7 +34,7 @@ const userSchema = new Schema({
   fullName: { type: String, required: true },
   userName: { type: String },
   email: { type: String },
-  phoneNumber: { type: Number },
+  phoneNumber: { type: String },
   address: { type: String },
   password: { type: String }
 })
@@ -65,8 +65,17 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
+
+  //Creating a Parameter check to determine what login credentials the user inputs
+  // 
+  const loginParamCheck = () => {
+    return Object.is(parseInt(req.body.phoneNumber, 10), NaN) ?  
+      (req.body.phoneNumber.includes("@") ? "email" : "userName") : "phoneNumber"
+  }
+  const loginCheck = {}
+  loginCheck[loginParamCheck()] = req.body.phoneNumber
   //first we need check if the req.body.phoneNumber exist in the db
-  const data = await Users.findOne({phoneNumber: req.body.phoneNumber})
+  const data = await Users.findOne(loginCheck)
   //if data is there, it means we found a document in db with that particular phoneNumber
   if(data){
     //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
