@@ -83,13 +83,7 @@ const Order = () => {
       <NavBar />
 
       <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          acceptedTerms: false, // added for our checkbox
-          jobType: "", // added for our select
-        }}
+        initialValues={{}}
         validationSchema={Yup.object({
           itemName: Yup.string()
             .min(3, "Must be 3 characters or more")
@@ -127,8 +121,8 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          await new Promise((r) => setTimeout(r, 500));
-          setSubmitting(false);
+          values.name= "dinosaurs"
+          console.log("values", values)
         }}
       >
         <Form className="form">

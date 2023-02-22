@@ -1,38 +1,41 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import React, {useState, useEffect} from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Fade from '@mui/material/Fade';
-import Slide from '@mui/material/Slide';
-import Grow from '@mui/material/Grow';
-
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
-
-function GrowTransition(props) {
-  return <Grow {...props} />;
-}
-
+import {resetAlertMessages} from "../../redux/reducers/notifySlice"
+import {useSelector , useDispatch} from "react-redux"
 export default function CustomSnackbar(props) {
-  const [state, setState] = React.useState({
+  const dispatch = useDispatch()
+  const {apiSuccessMessage, isApiSuccessMsgOpen} = useSelector(state=> state.notify)
+  const [state, setState] = useState({
     open: false,
     Transition: Fade,
   });
 
-  const handleClose = () => {
+  useEffect(()=>{
+    if(isApiSuccessMsgOpen){
+      toggleOpen(true)
+      setTimeout(() => {
+        dispatch(resetAlertMessages())
+        toggleOpen(false)
+      }, 6000);
+    }
+  }, [isApiSuccessMsgOpen])
+
+  const toggleOpen = (isOpen) => {
     setState({
       ...state,
-      open: false,
+      open: isOpen,
     });
   };
 
+  
   return (
     <div>
       <Snackbar
-        open={props.open}
-        onClose={handleClose}
+        open={state.open}
+        autoHideDuration={6000}
         TransitionComponent={state.Transition}
-        message={props.message}
+        message={apiSuccessMessage}
         key={state.Transition.name}
       />
     </div>

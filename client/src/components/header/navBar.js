@@ -41,6 +41,7 @@ const NavBar = () => {
   const handleCloseUserMenu = (e) => {
     if (e.target.textContent == "Logout") {
       dispatch(setLoginDetails());
+      navigate("/")
     }
 
     setAnchorElUser(null);
