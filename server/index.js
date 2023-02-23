@@ -1,10 +1,12 @@
 const express = require('express')
 const cors = require('cors')
+// modules vs commonjs
 const app = express()
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
+const checkFieldType = require('./utils/checkFieldType')
 const saltRounds = 10;
 require('dotenv').config()
 app.use(cors())
@@ -65,8 +67,9 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
+  const loginKey =  checkFieldType(req.body.loginKey)
   //first we need check if the req.body.phoneNumber exist in the db
-  const data = await Users.findOne({phoneNumber: req.body.phoneNumber})
+  const data = await Users.findOne({[loginKey]: req.body.loginKey})
   //if data is there, it means we found a document in db with that particular phoneNumber
   if(data){
     //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
