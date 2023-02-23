@@ -12,9 +12,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 // Creating schema
 const LoginSchema = Yup.object().shape({
-	phoneNumber: Yup.string()
-		.min(10, "Invalid Phone Number")
-		.max(10, "Invalid Phone Number")
+	loginKey: Yup.string()
 		.required("Required"),
 	password: Yup.string()
 		.required("Password is a required field")
@@ -26,7 +24,6 @@ const Login = () => {
 	const navigate = useNavigate();
 	let { state } = useLocation();
   const triggerLogin = async(values)=> {
-    debugger;
     const res = await axios.post(`http://localhost:5000/login`, values)
     if(res.status == 200){
       dispatch(setLoginDetails(res.data.token));
@@ -44,7 +41,7 @@ const Login = () => {
 			{/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
 			<Formik
 				validationSchema={LoginSchema}
-				initialValues={{ phoneNumber: "", password: "" }}
+				initialValues={{ loginKey: "", password: "" }}
 				onSubmit={(values) => {
           triggerLogin(values)
 				}}
@@ -67,20 +64,19 @@ const Login = () => {
 								<form noValidate onSubmit={handleSubmit}>
 									{/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
 									<input
-										type="number"
-										name="phoneNumber"
+										name="loginKey"
 										onChange={handleChange}
 										onBlur={handleBlur}
-										value={values.phoneNumber}
+										value={values.loginKey}
 										placeholder="Phone No. or Email or UserName"
 										className="form-control inp_text"
-										id="phoneNumber"
+										id="loginKey"
 									/>
 									{/* If validation is not passed show errors */}
 									<div className="error">
-										{errors.phoneNumber &&
-											touched.phoneNumber &&
-											errors.phoneNumber}
+										{errors.loginKey &&
+											touched.loginKey &&
+											errors.loginKey}
 									</div>
 									{/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
 									<input
