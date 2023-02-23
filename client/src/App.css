@@ -39,6 +39,13 @@ input {
   margin-bottom: 10px;
 }
 
+input.checkboxline {
+  display: inline-block;
+  width: auto !important;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
 .btn {
   position: relative;
   margin: 0 10px;
@@ -66,7 +73,6 @@ input {
   width: 46px;
   height: 46px;
   transition: all 0.3s ease;
-  z-index: -1;
 }
 
 .btn:hover::before {
@@ -76,6 +82,13 @@ input {
 
 .btn svg {
   height: 13px;
+  position: re;
+}
+
+.btn span,
+.btn svg {
+  position: relative;
+  z-index: 1;
 }
 
 header {
