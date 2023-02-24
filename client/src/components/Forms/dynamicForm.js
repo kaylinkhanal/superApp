@@ -61,9 +61,10 @@ const DynamicForm = (props) => {
 			body: JSON.stringify(values)
 		}
 		const res = await fetch('http://localhost:5000' + props.apiEndpoint, requestOptions)
+		debugger;
     const data = await res.json()
 			navigate(props.onSuccessNavigation)
-    if(res.status == 200 && data.message){
+    if(res.status  && data.message){
       dispatch(setAlertMessages(data.message))
     }
 	}
