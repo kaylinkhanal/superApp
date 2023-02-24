@@ -11,7 +11,6 @@ const locationSlice = createSlice({
   initialState,
   reducers: {
     setSenderCoordinates: (state, actions) => {
-      console.log(actions.payload);
       state.senderCoordinates = actions.payload;
     },
     setOrdersDetails: (state, actions) => {

@@ -24,17 +24,23 @@ const Login = () => {
 	const navigate = useNavigate();
 	let { state } = useLocation();
   const triggerLogin = async(values)=> {
-    const res = await axios.post(`http://localhost:5000/login`, values)
-    if(res.status == 200){
-      dispatch(setLoginDetails(res.data.token));
-      dispatch(setAlertMessages(res.data.message))
-    }
-
-    if (state?.onSuccessNavigation === "/order") {
-      navigate("/order");
-    } else {
-      navigate("/");
-    }
+	try{
+		const res = await axios.post(`http://localhost:5000/login`, values)
+	
+		if(res.status == 200){
+		//on successful signin in save token to redux
+		//and set backend message to display in the frontend ui
+		  dispatch(setLoginDetails(res.data.token));
+		  dispatch(setAlertMessages(res.data.message));
+		  if (state?.onSuccessNavigation === "/order") {
+			navigate("/order");
+		  } else {
+			navigate("/");
+		  }
+		}
+	}catch(err){
+		dispatch(setAlertMessages(err.response.data.message));
+	}
   }
 	return (
 		<>
@@ -43,7 +49,7 @@ const Login = () => {
 				validationSchema={LoginSchema}
 				initialValues={{ loginKey: "", password: "" }}
 				onSubmit={(values) => {
-          triggerLogin(values)
+        		  triggerLogin(values)
 				}}
 			>
 				{({
