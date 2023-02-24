@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import { Formik, Form, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
+import {useSelector} from "react-redux";
 import NavBar from "../components/header/navBar";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
@@ -77,19 +78,14 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
+  const {ordersDetails} = useSelector(state=>state.location)
   const navigate = useNavigate();
   return (
     <>
       <NavBar />
 
       <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          acceptedTerms: false, // added for our checkbox
-          jobType: "", // added for our select
-        }}
+        initialValues={{}}
         validationSchema={Yup.object({
           itemName: Yup.string()
             .min(3, "Must be 3 characters or more")
@@ -127,8 +123,10 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          await new Promise((r) => setTimeout(r, 500));
-          setSubmitting(false);
+          const formFields = {...ordersDetails, ...values}
+          const res = await axios.post(`http://localhost:5000/orders`, formFields)
+       
+          
         }}
       >
         <Form className="form">
