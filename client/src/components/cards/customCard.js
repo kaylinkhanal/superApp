@@ -1,32 +1,17 @@
-import {
-    Card,
-    CardActionArea,
-    Button,
-    CardMedia,
-    Grid,
-    CardContent,
-    Typography,
-  } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
-import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
-const CustomCard = (props)=> {
-    return(
-        <Grid item>
-        <Card sx={{ width: 200 }}>
-          <CardActionArea onClick={()=>props.assignRole(props.role)}>
-            <CardMedia>
-              <PersonIcon sx={{ fontSize: 60, color: "9096e4" }} />
-            </CardMedia>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {props.role}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
-    )
+const CustomCard = (props) => {
+	return (
+		<div className="card" onClick={() => props.assignRole(props.role)}>
+			<i className="card_icon">{props.icon}</i>
+			<i className='check'><CheckCircleIcon /></i>
+
+			<div className="card_content">
+				<h5 className="card_title btn"><span>{props.role}</span><TrendingFlatIcon /></h5>
+			</div>
+		</div>
+	)
 }
 
-export default CustomCard
+export default CustomCard;
