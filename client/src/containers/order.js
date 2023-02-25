@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { Formik, Form, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import {useSelector} from "react-redux";
+import Textarea from "@mui/joy/Textarea";
+import { useSelector } from "react-redux";
 import NavBar from "../components/header/navBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -78,7 +79,7 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-  const {ordersDetails} = useSelector(state=>state.location)
+  const { ordersDetails } = useSelector((state) => state.location);
   const navigate = useNavigate();
   return (
     <>
@@ -123,15 +124,15 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          const formFields = {...ordersDetails, ...values}
-          const res = await axios.post(`http://localhost:5000/orders`, formFields)
-       
-          
+          const formFields = { ...ordersDetails, ...values };
+          const res = await axios.post(
+            `http://localhost:5000/orders`,
+            formFields
+          );
         }}
       >
         <Form className="form">
           <h1 className="h1">Create a new order</h1>
-          <MyTextInput name="itemName" type="text" placeholder="Item name" />
           <MySelect label="" name="category" className="dropDown">
             <option value="">Select a category</option>
             <option value="Document">Document</option>
@@ -141,17 +142,20 @@ const Order = () => {
             <option value="Jewelry">Jewelry</option>
             <option value="Other">Other</option>
           </MySelect>
+          <MyTextInput name="itemName" type="text" placeholder="Item name" />
           <MyTextInput
             name="weight"
             type="number"
             placeholder="Weight (in kg)"
           />
-          <MyTextInput
+          <Textarea
             label=""
             name="itemDescription"
             type="string"
             placeholder="Item description"
             className="descriptionInput"
+            variant="plain"
+            sx={{ backgroundColor: "#F2F2F2" }}
           />
           <MyTextInput
             label="Pickup date"
