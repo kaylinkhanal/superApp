@@ -9,9 +9,6 @@
 .details:hover{
     background-color: rgb(111, 158, 158);
 }
-
-
-
 .details button {
    
     display: inline-block;

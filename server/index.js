@@ -2,10 +2,10 @@ const express = require('express')
 const cors = require('cors')
 // modules vs commonjs
 const app = express()
-const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
+const Users = require("./models/users")
+const Orders = require("./models/orders")
 
 const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
@@ -30,15 +30,7 @@ connectDb()
 
 
 
-const userSchema = new Schema({
-  fullName: { type: String, required: true },
-  userName: { type: String },
-  email: { type: String },
-  phoneNumber: { type: Number },
-  address: { type: String },
-  password: { type: String }
-})
-const Users = mongoose.model('Users', userSchema);
+
 
 
 
@@ -65,69 +57,73 @@ app.post('/register', async (req, res) => {
   }
 })
 
-const orderSchema = new Schema({
-  receiverAddress: { type: String, required: true },
-  senderAddress: { type: String },
-  receiverPhoneNumber: { type: String },
-})
-const locationDetails = mongoose.model('locationDetails', orderSchema);
+
+
 
 
 app.post('/orders', async (req, res) => {
   try {
-    //create a orders object/document using Orders model and save it to the database here
-    const data = await locationDetails.create(req.body)
-    console.log(data)
+    // getting values from client
+    const { receiverAddress, senderAddress, receiverName, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime } = req.body
+    // check if all fields are entered
+    if (!(receiverAddress && senderAddress && receiverName && receiverPhoneNumber && itemName && category && weight && itemDescription && pickupDate && pickUpTime)) {
+      res.status(400).json({ message: "All fields are required" })
+    }
+    // if all fields are valid and
+    else {
+      const newOrders = new Orders({ receiverAddress, senderAddress, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime });
+      await newOrders.save()
+      res.status(200).json({ message: "Your Order is on the way" })
+    }
+
   } catch (err) {
     console.log("err" + err)
+    res.status(500).json({ message: "Something went wrong" })
   }
 })
 
-const orderDetailShema = new Schema({
-  acceptedTerms: { type: Boolean, required: true },
-  category: { type: String },
-  itemDescription: { type: String },
-  itemName: { type: String },
-  pickUpTime: { type: String },
-  pickupDate: { type: Date },
-  receiverName: { type: String },
-  weight: { type: String },
 
-})
-const orders = mongoose.model("order",orderDetailShema)
-app.post('/orders/details', async (req, res) => {
+const generateToken = async (key, value) => {
   try {
-    //create a orders object/document using Orders model and save it to the database here
-    const data = await orders.create(req.body)
-    console.log(data)
+    /* [key]: value 
+    payload with be something like this(example only):
+     username: ram
+     email: ram@gmail.com
+     phoneNumber: 9843400002
+
+     based on this payload + secret key we generate a token and return it back
+    */
+    const token = await jwt.sign({ [key]: value }, process.env.SECRET_KEY)
+    return token
   } catch (err) {
-    console.log("err" + err)
+    console.log(err)
   }
-})
 
-
+}
 
 app.post('/login', async (req, res) => {
-  const loginKey = checkFieldType(req.body.loginKey)
-  //first we need check if the req.body.loginKey exist in the db
-  const data = await Users.findOne({ [loginKey]: req.body.loginKey })
+  const fieldKey = checkFieldType(req.body.loginKey)
+  const token = generateToken(fieldKey, req.body.loginKey)
+  //first we need check if the req.body.loginKey's value exist in the db 
+  const data = await Users.findOne({ [fieldKey]: req.body.loginKey })
   //if data is there, it means we found a document in db with that particular phoneNumber
   if (data) {
     //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
     bcrypt.compare(req.body.password, data.password, function (err, result) {
       if (result) {
         res.json({
-          message: "Login Success!!"
+          message: "Login Success!!",
+          token
         })
       } else {
-        res.json({
-          message: "Invalid Password!"
+        res.status(401).json({
+          message: "Wrong Password"
         })
       }
     });
   } else {
-    res.json({
-      message: "user doesn't exist"
+    res.status(403).json({
+      message: "Invalid credentials"
     })
   }
 })

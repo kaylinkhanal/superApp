@@ -7,6 +7,7 @@ import RiderHome from "../containers/rider/riderHome";
 import Login from "../containers/auth/login";
 import Register from "../containers/auth/register";
 import Order from "../containers/order";
+import Error from "../containers/error404";
 
 import { useSelector } from "react-redux";
 
@@ -48,7 +49,7 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-  
+    <Route path="/*" element={<Error />} />
     </Routes>
   );
 };

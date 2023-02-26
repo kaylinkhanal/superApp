@@ -17,7 +17,7 @@ export default function CustomSnackbar(props) {
       setTimeout(() => {
         dispatch(resetAlertMessages())
         toggleOpen(false)
-      }, 6000);
+      }, 3000);
     }
   }, [isApiSuccessMsgOpen])
 
@@ -33,7 +33,6 @@ export default function CustomSnackbar(props) {
     <div>
       <Snackbar
         open={state.open}
-        autoHideDuration={6000}
         TransitionComponent={state.Transition}
         message={apiSuccessMessage}
         key={state.Transition.name}
