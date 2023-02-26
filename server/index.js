@@ -16,7 +16,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-const port = 5001;
+const port = 5000;
 
 app.get("/", (req, res) => {
   res.send("Inital setup");
