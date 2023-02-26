@@ -45,62 +45,87 @@ const Users = mongoose.model('Users', userSchema);
 
 
 app.post('/register', async (req, res) => {
-  try{
-  //we generate hash(encrpyted password) using bcrypt 
-  // check https://github.com/kelektiv/node.bcrypt.js#:~:text=(myPlaintextPassword%2C-,saltRounds,-).then
-  bcrypt.hash(req.body.password, saltRounds).then(async function(hash) {
-    //we set passowrd as new hashed password and save it into db using Save or create
-   req.body.password = hash
-       const data =  await Users.create(req.body)
-    if(data){
-      res.json({
-        message: "Registration successful!!"
-      })
-    }else{
-      res.send('Regsitration failed')
-    }
-  });
-  }catch(err){
-    console.log("err"+err)
+  try {
+    //we generate hash(encrpyted password) using bcrypt 
+    // check https://github.com/kelektiv/node.bcrypt.js#:~:text=(myPlaintextPassword%2C-,saltRounds,-).then
+    bcrypt.hash(req.body.password, saltRounds).then(async function (hash) {
+      //we set passowrd as new hashed password and save it into db using Save or create
+      req.body.password = hash
+      const data = await Users.create(req.body)
+      if (data) {
+        res.json({
+          message: "Registration successful!!"
+        })
+      } else {
+        res.send('Regsitration failed')
+      }
+    });
+  } catch (err) {
+    console.log("err" + err)
   }
-})  
+})
 
 const orderSchema = new Schema({
   receiverAddress: { type: String, required: true },
   senderAddress: { type: String },
   receiverPhoneNumber: { type: String },
 })
-const Orders = mongoose.model('Orders', orderSchema);
+const locationDetails = mongoose.model('locationDetails', orderSchema);
 
 
 app.post('/orders', async (req, res) => {
-  try{
-   //create a orders object/document using Orders model and save it to the database here
-
-  }catch(err){
-    console.log("err"+err)
+  try {
+    //create a orders object/document using Orders model and save it to the database here
+    const data = await locationDetails.create(req.body)
+    console.log(data)
+  } catch (err) {
+    console.log("err" + err)
   }
-})  
+})
+
+const orderDetailShema = new Schema({
+  acceptedTerms: { type: Boolean, required: true },
+  category: { type: String },
+  itemDescription: { type: String },
+  itemName: { type: String },
+  pickUpTime: { type: String },
+  pickupDate: { type: Date },
+  receiverName: { type: String },
+  weight: { type: String },
+
+})
+const orders = mongoose.model("order",orderDetailShema)
+app.post('/orders/details', async (req, res) => {
+  try {
+    //create a orders object/document using Orders model and save it to the database here
+    const data = await orders.create(req.body)
+    console.log(data)
+  } catch (err) {
+    console.log("err" + err)
+  }
+})
+
+
 
 app.post('/login', async (req, res) => {
-  const loginKey =  checkFieldType(req.body.loginKey)
+  const loginKey = checkFieldType(req.body.loginKey)
   //first we need check if the req.body.loginKey exist in the db
-  const data = await Users.findOne({[loginKey]: req.body.loginKey})
+  const data = await Users.findOne({ [loginKey]: req.body.loginKey })
   //if data is there, it means we found a document in db with that particular phoneNumber
-  if(data){
+  if (data) {
     //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
-    bcrypt.compare(req.body.password, data.password, function(err, result) {
-        if(result){
-          res.json({
-            message: "Login Success!!"
-          })
-        }else{
-          res.json({
-            message: "Invalid Password!"
-          })
-        }
+    bcrypt.compare(req.body.password, data.password, function (err, result) {
+      if (result) {
+        res.json({
+          message: "Login Success!!"
+        })
+      } else {
+        res.json({
+          message: "Invalid Password!"
+        })
+      }
     });
-  }else{
+  } else {
     res.json({
       message: "user doesn't exist"
     })

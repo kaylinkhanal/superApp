@@ -35,7 +35,6 @@ const SendOrders = () => {
 	 } = useSelector(
 		(state) => state.location
 	  );
-	  console.log(ordersDetails, "@@")
   const [isSenderFormActive, setIsSenderFormActive] = useState(true);
   const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
   const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);

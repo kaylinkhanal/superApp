@@ -126,7 +126,7 @@ const Order = () => {
           const formFields = {...ordersDetails, ...values}
           const res = await axios.post(`http://localhost:5000/orders`, formFields)
        
-          
+          console.log(values)
         }}
       >
         <Form className="form">
