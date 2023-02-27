@@ -10,6 +10,7 @@ import {
   setReceiverCoordinates,
   setOrdersDetails,
 } from "../redux/reducers/locationSlice";
+import OrderList from "./sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
@@ -35,6 +36,7 @@ const SendOrders = () => {
 	 } = useSelector(
 		(state) => state.location
 	  );
+	
   const [isSenderFormActive, setIsSenderFormActive] = useState(true);
   const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
   const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
@@ -181,6 +183,9 @@ const SendOrders = () => {
           )}
         </div>
       </div>
+      <div className="order_list">
+      <OrderList/>
+        </div>
     </>
   ) : (
     <>

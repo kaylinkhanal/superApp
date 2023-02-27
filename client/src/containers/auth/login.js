@@ -28,9 +28,7 @@ const Login = () => {
 		const res = await axios.post(`http://localhost:5000/login`, values)
 	
 		if(res.status == 200){
-		//on successful signin in save token to redux
-		//and set backend message to display in the frontend ui
-		  dispatch(setLoginDetails(res.data.token));
+		  dispatch(setLoginDetails({id: res.data.id, token: res.data.token}));
 		  dispatch(setAlertMessages(res.data.message));
 		  if (state?.onSuccessNavigation === "/order") {
 			navigate("/order");
