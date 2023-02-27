@@ -19,6 +19,7 @@ import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LoadingCircle from "../components/loadingCircle";
+import { Stack } from "@mui/material";
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -133,6 +134,7 @@ const SendOrders = () => {
 				{/* Child components, such as markers, info windows, etc. */}
 				<></>
 	</GoogleMap>
+  <Stack spacing={10}>
 	 <div className="location_map">
         <div className="location_form">
           {isSenderFormActive ? (
@@ -186,6 +188,7 @@ const SendOrders = () => {
       <div className="order_list">
       <OrderList/>
         </div>
+    </Stack>
     </>
   ) : (
     <>

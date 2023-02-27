@@ -2,7 +2,7 @@
 
 /* primary-color =  #a82973*/
 
-body {
+body, h5, h6 {
   font-size: 14px;
   line-height: 25px;
   font-family: 'Comfortaa', cursive;

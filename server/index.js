@@ -113,7 +113,7 @@ const generateToken = async (key, value) => {
 
      based on this payload + secret key we generate a token and return it back
     */
-    const token = await jwt.sign({ [key]: value }, process.env.SECRET_KEY)
+    const token = await jwt.sign({ [key]: value }, "someValue")
     return token
   } catch (err) {
     console.log(err)
