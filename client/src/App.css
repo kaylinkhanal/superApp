@@ -66,7 +66,6 @@ input {
   width: 46px;
   height: 46px;
   transition: all 0.3s ease;
-  z-index: -1;
 }
 
 .btn:hover::before {
@@ -76,6 +75,12 @@ input {
 
 .btn svg {
   height: 13px;
+}
+
+.btn span,
+.btn svg {
+  position: relative;
+  z-index: 1;
 }
 
 header {
@@ -247,6 +252,13 @@ h5.card_title.btn {
   font-family: "Comfortaa", cursive;
 }
 
+input.checkboxline {
+  display: inline-block;
+  width: auto !important;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
 .button {
   width: 120px;
   height: auto;
@@ -371,21 +383,24 @@ h5.card_title.btn {
   justify-content: center;
   max-width: 350px;
   width: 350px;
+  overflow: hidden;
 }
-.order_list {
+/* .order_list {
   position: absolute;
   top: 240px;
   left: 11px;
-  display: flex;
-  align-items: center;
-  opacity: 1;
   border-radius: 5px;
-  display: block;
-  width: auto;
-  height: auto;
-  justify-content: center;
   max-width: 350px;
   width: 350px;
+} */
+
+.orders {
+  background: rgb(0 0 0 / 34%);
+  margin-bottom: 5px;
+  color: #fff;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 30%);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 input:focus {
@@ -400,6 +415,7 @@ input:focus {
   border-radius: 10px;
   /* width: 0; */
   transition: all .3s ease-in-out;
+  margin-bottom: 10px;
   /* visibility: hidden; */
   /* opacity: 0; */
 }
@@ -428,13 +444,13 @@ input:focus {
 
 .location_form button {
   border-color: transparent;
-  cursor: pointer;
-  color: #000;
-  background: #a82973;
-  height: 35px;
-  width: 35px;
-  margin: 0 10px 5px 0;
-  border-radius: 50%;
+    cursor: pointer;
+    color: #a82973;
+    background: transparent;
+    /* height: 35px; */
+    /* width: 35px; */
+    margin: 0 10px 5px 0;
+    border-radius: 50%;
 }
 
 .loadingAnimation {
