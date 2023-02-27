@@ -64,25 +64,44 @@ app.post('/register', async (req, res) => {
 
 app.post('/orders', async (req, res) => {
   try {
-    // getting values from client
-    const { receiverAddress, senderAddress, receiverName, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime } = req.body
-    // check if all fields are entered
-    if (!(receiverAddress && senderAddress && receiverName && receiverPhoneNumber && itemName && category && weight && itemDescription && pickupDate && pickUpTime)) {
-      res.status(400).json({ message: "All fields are required" })
-    }
-    // if all fields are valid and
-    else {
-      const newOrders = new Orders({ receiverAddress, senderAddress, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime });
-      await newOrders.save()
-      res.status(200).json({ message: "Your Order is on the way" })
-    }
-
+    //condt newOrders = await Orders.create(req.body)
+      const newOrders = new Orders(req.body);
+      await newOrders.save().then(data=> {
+        if(data){
+          res.status(200).json({ message: "Your Order is on the way" })
+        }
+      })
   } catch (err) {
     console.log("err" + err)
-    res.status(500).json({ message: "Something went wrong" })
+    res.status(500).json({ message: err})
   }
 })
 
+
+app.get('/orders', async (req, res) => {
+  try {
+      const orders = await Orders.find()
+      if(orders){
+        res.status(200).json({orders})
+      }
+  } catch (err) {
+    res.status(500).json({ message: err})
+  }
+})
+
+app.get('/orders/:senderId', async (req, res) => {
+  try {
+    //we find all the orders for that particular user who requested the orders list 
+    const ordersList = await Orders.find({senderId: req.params.senderId})
+    if(ordersList){
+      res.json({
+        ordersList
+      })
+    }
+  } catch (err) {
+    res.status(500).json({ message: err})
+  }
+})
 
 const generateToken = async (key, value) => {
   try {
@@ -103,30 +122,36 @@ const generateToken = async (key, value) => {
 }
 
 app.post('/login', async (req, res) => {
-  const fieldKey = checkFieldType(req.body.loginKey)
-  const token = generateToken(fieldKey, req.body.loginKey)
-  //first we need check if the req.body.loginKey's value exist in the db 
-  const data = await Users.findOne({ [fieldKey]: req.body.loginKey })
-  //if data is there, it means we found a document in db with that particular phoneNumber
-  if (data) {
-    //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
-    bcrypt.compare(req.body.password, data.password, function (err, result) {
-      if (result) {
-        res.json({
-          message: "Login Success!!",
-          token
-        })
-      } else {
-        res.status(401).json({
-          message: "Wrong Password"
-        })
-      }
-    });
-  } else {
-    res.status(403).json({
-      message: "Invalid credentials"
-    })
+  try{
+    const fieldKey = checkFieldType(req.body.loginKey)
+    const token = generateToken(fieldKey, req.body.loginKey)
+    //first we need check if the req.body.loginKey's value exist in the db 
+    const data = await Users.findOne({ [fieldKey]: req.body.loginKey })
+    //if data is there, it means we found a document in db with that particular phoneNumber
+    if (data) {
+      //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
+      bcrypt.compare(req.body.password, data.password, function (err, result) {
+        if (result) {
+          res.json({
+            message: "Login Success!!",
+            token,
+            id: data._id
+          })
+        } else {
+          res.status(401).json({
+            message: "Wrong Password"
+          })
+        }
+      });
+    } else {
+      res.status(403).json({
+        message: "Invalid credentials"
+      })
+    }
+  }catch(err){
+    console.log(err)
   }
+
 })
 
 

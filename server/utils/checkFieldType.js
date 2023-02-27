@@ -1,6 +1,6 @@
 const checkFieldType = (loginText) => {
     let fieldType
-    if(loginText.includes('@') && loginText.includes('.')){
+    if(loginText.toString().includes('@') && loginText.toString().includes('.')){
         fieldType = 'email'
     }else if(Object.is(parseInt(loginText, 10), NaN)){
     fieldType = 'userName'
