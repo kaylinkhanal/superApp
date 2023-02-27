@@ -4,7 +4,8 @@ export const initialState = {
   userRole: '',
   firstTimeUser: true,
   isLoggedIn: false,
-  token: ''
+  token: '',
+  id: ''
 };
 
 //What is createSlice in Redux Toolkit?
@@ -22,8 +23,11 @@ const userSlice = createSlice({
       state.firstTimeUser = false
     },
     setLoginDetails: (state, actions)=>{
+      debugger
+      if(actions.payload){
+        state.id = actions.payload
+      }
       state.isLoggedIn = !state.isLoggedIn
-      state.token = actions.payload
     }
   }
 });

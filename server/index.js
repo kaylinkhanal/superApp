@@ -11,7 +11,7 @@ const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
 
 const saltRounds = 10;
-require('dotenv').config()
+require("dotenv").config()
 
 app.use(cors())
 app.use(express.json())
@@ -30,7 +30,24 @@ connectDb()
 
 
 
+app.get('/orders/:id', async (req,res) =>{
+  try{
+    //Find accepts an object as a filter
+    //Passing in senderId, to list all orders made by the specific customer.
+    console.log(req.params.id)
+    let findKey = {senderId: req.params.id}
+    console.log(findKey)
+    const data = await Orders.find(findKey)
+    if(data){
+      res.send(data)
+    }
 
+  }
+  catch(err){
+    console.log(err)
+  }
+
+})
 
 
 
@@ -65,14 +82,14 @@ app.post('/register', async (req, res) => {
 app.post('/orders', async (req, res) => {
   try {
     // getting values from client
-    const { receiverAddress, senderAddress, receiverName, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime } = req.body
+    const { receiverAddress, senderAddress, receiverName, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime, senderId } = req.body
     // check if all fields are entered
     if (!(receiverAddress && senderAddress && receiverName && receiverPhoneNumber && itemName && category && weight && itemDescription && pickupDate && pickUpTime)) {
       res.status(400).json({ message: "All fields are required" })
     }
     // if all fields are valid and
     else {
-      const newOrders = new Orders({ receiverAddress, senderAddress, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime });
+      const newOrders = new Orders({ senderId, receiverAddress, senderAddress, receiverPhoneNumber, itemName, category, weight, itemDescription, pickupDate, pickUpTime, receiverName });
       await newOrders.save()
       res.status(200).json({ message: "Your Order is on the way" })
     }
@@ -94,7 +111,8 @@ const generateToken = async (key, value) => {
 
      based on this payload + secret key we generate a token and return it back
     */
-    const token = await jwt.sign({ [key]: value }, process.env.SECRET_KEY)
+    const token = await jwt.sign({ [key]: value }, "randomValue")
+
     return token
   } catch (err) {
     console.log(err)
@@ -114,7 +132,8 @@ app.post('/login', async (req, res) => {
       if (result) {
         res.json({
           message: "Login Success!!",
-          token
+          token: token,
+          id: data._id
         })
       } else {
         res.status(401).json({

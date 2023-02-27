@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import NavBar from "../components/header/navBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelect } from "@mui/base";
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
@@ -79,6 +80,7 @@ const MySelect = ({ label, ...props }) => {
 // And now we can use these
 const Order = () => {
   const {ordersDetails} = useSelector(state=>state.location)
+  const senderId = useSelector(state=>state.user.id)
   const navigate = useNavigate();
   return (
     <>
@@ -123,7 +125,7 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          const formFields = {...ordersDetails, ...values}
+          const formFields = {...ordersDetails, ...values, senderId}
           const res = await axios.post(`http://localhost:5000/orders`, formFields)
        
           

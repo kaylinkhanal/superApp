@@ -1,16 +1,17 @@
 const mongoose = require("mongoose")
 
 const ordersSchema = new mongoose.Schema({
-  receiverAddress: { type: String, require: true },
-  senderAddress: { type: String, require: true },
-  receiverName: { type: String, require: true },
-  receiverPhoneNumber: { type: Number, require: true },
-  itemName: { type: String, require: true },
-  category: { type: String, require: true },
-  weight: { type: Number, require: true },
-  itemDescription: { type: String, require: true },
-  pickupDate: { type: Date, require: true },
-  pickUpTime: { type: String, require: true }
+  senderId: {type: String, required: true},
+  receiverAddress: { type: String, required: true },
+  senderAddress: { type: String, required: true },
+  receiverName: { type: String, required: true },
+  receiverPhoneNumber: { type: Number, required: true },
+  itemName: { type: String, required: true },
+  category: { type: String, required: true },
+  weight: { type: Number, required: true },
+  itemDescription: { type: String, required: true },
+  pickupDate: { type: Date, required: true },
+  pickUpTime: { type: String, required: true }
 })
 
 const Orders = mongoose.model('Orders', ordersSchema)
