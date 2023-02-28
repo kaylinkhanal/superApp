@@ -103,15 +103,8 @@ const SendOrders = () => {
 		}
 	};
 
-	const [slide, setSlide] = useState(false);
-	const toggleSlise = () => {
-		if (!slide) {
-			setSlide(true)
-		} else {
-			setSlide(false)
-		}
+	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
 
-	}
 
 	return isLoaded ? (
 		<>
@@ -174,9 +167,9 @@ const SendOrders = () => {
 					)}
 				</div>
 
-				<button onClick={() => toggleSlise()} className="btn"><HighlightAltIcon /> <span>Check your orders</span></button>
+				<button onClick={() => 	setIsOrderListOpen(!isOrderListOpen)} className="btn"><HighlightAltIcon /> <span>{!isOrderListOpen ? "Check your orders" : "Cancel"}</span></button>
 				<div style={{ overflow: 'hidden' }}>
-					<div className="order_list" style={!slide ? {
+					<div className="order_list" style={!isOrderListOpen ? {
 						transition: `transform 250ms ease-in-out`,
 						transform: "translateY(-101%)"
 					} : {
