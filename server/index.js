@@ -9,33 +9,14 @@ const Orders = require("./models/orders")
 
 const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
+connectDb()
+const port = 5000
 
 const saltRounds = 10;
 require('dotenv').config()
 
 app.use(cors())
 app.use(express.json())
-
-
-const port = 5000
-
-
-app.get('/', (req, res) => {
-  res.send('Inital setup')
-})
-
-
-
-connectDb()
-
-
-
-
-
-
-
-
-
 
 app.post('/register', async (req, res) => {
   try {
@@ -58,50 +39,58 @@ app.post('/register', async (req, res) => {
   }
 })
 
-
-
-
-
 app.post('/orders', async (req, res) => {
   try {
     //condt newOrders = await Orders.create(req.body)
-      const newOrders = new Orders(req.body);
-      await newOrders.save().then(data=> {
-        if(data){
-          res.status(200).json({ message: "Your Order is on the way" })
-        }
-      })
+    const newOrders = new Orders(req.body);
+    await newOrders.save().then(data => {
+      if (data) {
+        res.status(200).json({ message: "Your Order is on the way" })
+      }
+    })
   } catch (err) {
     console.log("err" + err)
-    res.status(500).json({ message: err})
+    res.status(500).json({ message: err })
   }
 })
-
 
 app.get('/orders', async (req, res) => {
   try {
-      const orders = await Orders.find()
-      if(orders){
-        res.status(200).json({orders})
-      }
+    const orders = await Orders.find()
+    if (orders) {
+      res.status(200).json({ orders })
+    }
   } catch (err) {
-    res.status(500).json({ message: err})
+    res.status(500).json({ message: err })
   }
 })
+
+app.put('/orders', async (req, res) => {
+  try {
+     await Orders.findByIdAndUpdate(req.body._id, req.body)
+      res.json({
+        message: "orders updated successfully"
+      })
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+})
+  
 
 app.get('/orders/:senderId', async (req, res) => {
   try {
     //we find all the orders for that particular user who requested the orders list 
-    const ordersList = await Orders.find({senderId: req.params.senderId})
-    if(ordersList){
+    const ordersList = await Orders.find({ senderId: req.params.senderId })
+    if (ordersList) {
       res.json({
         ordersList
       })
     }
   } catch (err) {
-    res.status(500).json({ message: err})
+    res.status(500).json({ message: err })
   }
 })
+
 
 const generateToken = async (key, value) => {
   try {
@@ -122,7 +111,7 @@ const generateToken = async (key, value) => {
 }
 
 app.post('/login', async (req, res) => {
-  try{
+  try {
     const fieldKey = checkFieldType(req.body.loginKey)
     const token = generateToken(fieldKey, req.body.loginKey)
     //first we need check if the req.body.loginKey's value exist in the db 
@@ -148,7 +137,7 @@ app.post('/login', async (req, res) => {
         message: "Invalid credentials"
       })
     }
-  }catch(err){
+  } catch (err) {
     console.log(err)
   }
 

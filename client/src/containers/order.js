@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import { Formik, Form, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import NavBar from "../components/header/navBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
@@ -78,12 +81,11 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-  const {ordersDetails} = useSelector(state=>state.location)
-  const {id} = useSelector(state=>state.user)
+  const { ordersDetails } = useSelector(state => state.location)
+  const { id } = useSelector(state => state.user)
   const navigate = useNavigate();
   return (
     <>
-      <NavBar />
 
       <Formik
         initialValues={{}}
@@ -124,60 +126,55 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          const formFields = {...ordersDetails, ...values, senderId: id}
+          const formFields = { ...ordersDetails, ...values, senderId: id }
           const res = await axios.post(`http://localhost:5000/orders`, formFields)
         }}
       >
-        <Form className="form">
+        <div className="authForm">
           <h1 className="h1">Create a new order</h1>
-          <MyTextInput name="itemName" type="text" placeholder="Item name" />
-          <MySelect label="" name="category" className="dropDown">
-            <option value="">Select a category</option>
-            <option value="Document">Document</option>
-            <option value="Clothing">Clothing</option>
-            <option value="HomeAppliance">Home appliance</option>
-            <option value="Food">Food</option>
-            <option value="Jewelry">Jewelry</option>
-            <option value="Other">Other</option>
-          </MySelect>
-          <MyTextInput
-            name="weight"
-            type="number"
-            placeholder="Weight (in kg)"
-          />
-          <MyTextInput
-            label=""
-            name="itemDescription"
-            type="string"
-            placeholder="Item description"
-            className="descriptionInput"
-          />
-          <MyTextInput
-            label="Pickup date"
-            name="pickupDate"
-            type="date"
-            placeholder="Pickup date"
-          />
-          <MySelect label="" name="pickUpTime" className="dropDown">
-            <option value="">Select a pick up time</option>
-            <option value="Morning">Morning </option>
-            <option value="Afternoon">Afternoon</option>
-          </MySelect>
-          <MyCheckbox name="acceptedTerms" className="checkboxline">
-            I accept the terms and conditions
-          </MyCheckbox>
+          <Form className="form">
 
-          <button className="button" type="submit">
-            Submit
-          </button>
-          <button
-            className="button"
-            type="submit"
-            onClick={() => navigate("/send-orders")}
-          >
-            Back
-          </button>
-        </Form>
+            <MyTextInput name="itemName" type="text" placeholder="Item name" />
+            <MySelect label="" name="category" className="dropDown">
+              <option value="">Select a category</option>
+              <option value="Document">Document</option>
+              <option value="Clothing">Clothing</option>
+              <option value="HomeAppliance">Home appliance</option>
+              <option value="Food">Food</option>
+              <option value="Jewelry">Jewelry</option>
+              <option value="Other">Other</option>
+            </MySelect>
+            <MyTextInput
+              name="weight"
+              type="number"
+              placeholder="Weight (in kg)"
+            />
+            <MyTextInput
+              label=""
+              name="itemDescription"
+              type="string"
+              placeholder="Item description"
+              className="descriptionInput"
+            />
+            <MyTextInput
+              label=""
+              name="pickupDate"
+              type="date"
+              placeholder="Pickup date"
+            />
+            <MySelect label="" name="pickUpTime" className="dropDown">
+              <option value="">Select a pick up time</option>
+              <option value="Morning">Morning </option>
+              <option value="Afternoon">Afternoon</option>
+            </MySelect>
+            <MyCheckbox name="acceptedTerms" className="checkboxline">
+              I accept the terms and conditions
+            </MyCheckbox>
+
+            <button className="btn" type="submit" onClick={() => navigate("/send-orders")} > <KeyboardBackspaceIcon /> <span>Back</span> </button>
+            <button className="btn" type="submit"><span>Submit</span> <TrendingFlatIcon /></button>
+          </Form>
+        </div>
       </Formik>
     </>
   );
