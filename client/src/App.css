@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
 
 /* primary-color =  #a82973*/
 
 body {
   font-size: 14px;
   line-height: 25px;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
 }
 
 * {
@@ -46,7 +46,7 @@ input {
   transition: all 0.2s ease;
   border: 0;
   background: transparent;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
   text-transform: uppercase;
   font-size: 14px;
   line-height: 18px;
@@ -89,8 +89,8 @@ header {
 }
 
 /*landing page */
-.landing_pg{
-  flex-direction: column
+.landing_pg {
+  flex-direction: column;
 }
 
 .landing_pg,
@@ -124,7 +124,7 @@ section#role_section {
   font-size: 75px;
   color: #ccc;
   filter: drop-shadow(1px 2px 2px gray);
-  transition: all .5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
 }
 
 .card:hover svg {
@@ -138,13 +138,13 @@ section#role_section {
   border-radius: 50%;
   border: 3px solid #ccc;
   line-height: 198px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   margin-bottom: 15px;
 }
 
 .card_content {
   font-size: 24px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 
 .card_content .btn {
@@ -170,7 +170,7 @@ section#role_section {
   width: 20px;
   line-height: 20px;
   opacity: 0;
-  transition: opacity .5s ease;
+  transition: opacity 0.5s ease;
   visibility: hidden;
 }
 
@@ -356,10 +356,8 @@ input.checkboxline {
   margin-bottom: 20px;
 }
 
-
-
 /* loaction map*/
-.location{
+.location {
   position: relative;
 }
 
@@ -395,12 +393,17 @@ input.checkboxline {
 } */
 
 .orders {
-  background: rgb(0 0 0 / 34%);
+  background-color: rgba(102, 102, 204, 0.5);
   margin-bottom: 5px;
-  color: #fff;
+  color: #a82973;
   box-shadow: 0 2px 3px rgb(0 0 0 / 30%);
   padding: 10px;
   border-radius: 10px;
+  height: auto;
+  place-content: center;
+  align-items: center;
+  text-align: left;
+  vertical-align: middle;
 }
 
 input:focus {
@@ -414,7 +417,7 @@ input:focus {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   /* width: 0; */
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   margin-bottom: 10px;
   /* visibility: hidden; */
   /* opacity: 0; */
@@ -438,23 +441,78 @@ input:focus {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   margin-bottom: 10px;
 }
 
 .location_form button {
   border-color: transparent;
-    cursor: pointer;
-    color: #a82973;
-    background: transparent;
-    /* height: 35px; */
-    /* width: 35px; */
-    margin: 0 10px 5px 0;
-    border-radius: 50%;
+  cursor: pointer;
+  color: #a82973;
+  background: transparent;
+  /* height: 35px; */
+  /* width: 35px; */
+  margin: 0 10px 5px 0;
+  border-radius: 50%;
 }
 
 .loadingAnimation {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+/* ORDERS CARD */
+.orders-card-header {
+  position: relative;
+  left: 90%;
+}
+
+.orders-card {
+  color: #a82973;
+  font-weight: bold;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  place-content: center;
+  align-items: center;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.orders-card div {
+  display: grid;
+  grid-template-columns: 140px 140px 40px;
+}
+
+.orders-edit-card {
+  color: #a82973;
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+.orders-edit-card input {
+  color: #a82973;
+  border-radius: 10px;
+  width: 100px;
+  height: 47px;
+}
+
+.orders-edit-card div {
+  dispaly: flex;
+}
+
+.orders-edit-card select {
+  border-radius: 10px;
+  width: 130px;
+}
+
+.orders-edit-card button {
+  width: 60px;
+  background-color: #a82973;
+  color: white;
+  border: 0px;
+  border-radius: 10px;
+  height: 30px;
+}
+.submit-button {
+  text-align: center;
 }
