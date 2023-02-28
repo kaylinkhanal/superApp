@@ -183,6 +183,8 @@ h5.card_title.btn {
   font-size: 16px;
 }
 
+/* MAP */
+
 .mapInputForm {
   position: absolute;
   top: 7%;
@@ -198,6 +200,20 @@ h5.card_title.btn {
   width: 450px;
   height: auto;
   justify-content: center;
+}
+.logout-button {
+  position: absolute;
+  left: 200px;
+  top: 10px;
+  width: 80px;
+  border: 0px;
+  height: 38px;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 1px 1px 10px 1px lightgray;
+  font-size: 16px;
+  color: #a82973;
+  font-weight: bold;
 }
 
 .form {
@@ -393,7 +409,7 @@ input.checkboxline {
 } */
 
 .orders {
-  background-color: rgba(102, 102, 204, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   margin-bottom: 5px;
   color: #a82973;
   box-shadow: 0 2px 3px rgb(0 0 0 / 30%);
@@ -404,6 +420,8 @@ input.checkboxline {
   align-items: center;
   text-align: left;
   vertical-align: middle;
+  box-shadow: 0px 00px 10px 10px lightgray;
+  border: 1px solid lightgrey;
 }
 
 input:focus {
@@ -515,4 +533,32 @@ input:focus {
 }
 .submit-button {
   text-align: center;
+}
+
+/* error page */
+.error-page {
+  color: #a82973;
+  height: calc(100vh - 63px);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-texts h2 {
+  position: relative;
+  color: #a82973;
+  font-size: 25px;
+  font-weight: normal;
+  margin-bottom: 15px;
+}
+
+.error-texts svg {
+  font-size: 100px;
+  color: red;
+}
+
+.return-home {
+  width: 200px;
+  height: 40px;
 }

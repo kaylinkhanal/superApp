@@ -124,6 +124,9 @@ const SendOrders = () => {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
+        <button className="logout-button" onClick={() => navigate("/")}>
+          Logout
+        </button>
         {isSenderFormActive ? (
           <Marker
             draggable={true}
@@ -178,6 +181,7 @@ const SendOrders = () => {
               >
                 <ArrowForwardOutlinedIcon />
               </button>
+
               <Autocomplete key={2} id={2} className="autofill">
                 <input
                   value={receiverAddress}
@@ -204,7 +208,7 @@ const SendOrders = () => {
           className="btn"
         >
           <HighlightAltIcon />{" "}
-          <span>{!isOrderListOpen ? "My orders" : "Cancel"}</span>
+          <span>{!isOrderListOpen ? "Show my orders" : "Hide orders"}</span>
         </button>
         <div style={{ overflow: "hidden" }}>
           <div
@@ -227,6 +231,7 @@ const SendOrders = () => {
           </div>
         </div>
       </div>
+      n>
     </>
   ) : (
     <>

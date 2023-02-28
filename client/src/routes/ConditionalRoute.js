@@ -7,14 +7,15 @@ import RiderHome from "../containers/rider/riderHome";
 import Login from "../containers/auth/login";
 import Register from "../containers/auth/register";
 import Order from "../containers/order";
+import ErrorPage from "../components/errorPage/error";
 
 import { useSelector } from "react-redux";
 
 const ConditionalRoute = () => {
   const { userRole, firstTimeUser, token } = useSelector((state) => state.user);
-  if (userRole === "rider" ) {
+  if (userRole === "rider") {
     return <RiderRoutes />;
-  } else if (userRole === "user" ) {
+  } else if (userRole === "user") {
     return <UserRoutes />;
   } else if (firstTimeUser) {
     return <FirstUserRoutes />;
@@ -27,6 +28,7 @@ const FirstUserRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<GettingStarted />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
@@ -35,10 +37,10 @@ const DefaulRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Roles />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
-
 
 const UserRoutes = () => {
   return (
@@ -48,7 +50,7 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-  
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
@@ -58,6 +60,7 @@ const RiderRoutes = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
