@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginDetails } from "../../redux/reducers/userSlice";
+import { setLoginDetails } from "../../redux/reducers/userSlice"
 const pages = ["Home", "Order", "Track My Order", "Contact US"];
 const settings = ["Profile", "Account", "My Orders", "Logout"];
 
@@ -39,8 +39,7 @@ const NavBar = () => {
   };
 
   const handleCloseUserMenu = (e) => {
-    debugger;
-    if (e.target.textContent == "Logout") {
+    if (e.target.textContent === "Logout") {
       dispatch(setLoginDetails());
       navigate("/")
     }
@@ -53,7 +52,7 @@ const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img
-            src="https://i.ibb.co/Y2YTqkr/superman.png" //https://i.ibb.co/jTtxb8P/superman2.png //https://i.ibb.co/Y2YTqkr/superman.png
+            src="https://i.ibb.co/Y2YTqkr/superman.png"
             style={{ width: "50px" }}
           />
           <Typography

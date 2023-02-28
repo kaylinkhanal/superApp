@@ -28,15 +28,6 @@ app.get('/', (req, res) => {
 
 connectDb()
 
-
-
-
-
-
-
-
-
-
 app.post('/register', async (req, res) => {
   try {
     //we generate hash(encrpyted password) using bcrypt 
@@ -57,8 +48,6 @@ app.post('/register', async (req, res) => {
     console.log("err" + err)
   }
 })
-
-
 
 
 
@@ -153,8 +142,6 @@ app.post('/login', async (req, res) => {
   }
 
 })
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

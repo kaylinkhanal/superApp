@@ -1,48 +1,62 @@
-import React, { useState, useRef } from "react";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import LoginIcon from "@mui/icons-material/Login";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
 import {
-	GoogleMap,
-	useJsApiLoader,
-	Marker,
-	Autocomplete,
+  Autocomplete,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
-import {
-  setSenderCoordinates,
-  setReceiverCoordinates,
-  setOrdersDetails,
-} from "../redux/reducers/locationSlice";
-import OrderList from "./sharedScreens/orderList"
+import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import GolfCourseIcon from '@mui/icons-material/GolfCourse';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LoadingCircle from "../components/loadingCircle";
+import {
+  setOrdersDetails,
+  setReceiverCoordinates,
+  setSenderCoordinates,
+} from "../redux/reducers/locationSlice";
+import OrderList from "./sharedScreens/orderList";
+import { setLoginDetails } from "../redux/reducers/userSlice";
+const settings = ["Profile", "Account", "My Orders", "Logout"];
+const pages = ["Home", "Order", "Track My Order", "Contact US"];
 const containerStyle = {
-	width: "100%",
-	height: "100vh",
+  width: "100%",
+  height: "100vh",
 };
 
 const center = {
-	lat: 27.685616312450417,
-	lng: 85.34456349960001,
+  lat: 27.685616312450417,
+  lng: 85.34456349960001,
 };
 
 const SendOrders = () => {
-	const { senderCoordinates, 
-		receiverCoordinates,
-		ordersDetails
-	 } = useSelector(
-		(state) => state.location
-	  );
-	
-  const [isSenderFormActive, setIsSenderFormActive] = useState(true);
-  const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
-  const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
-  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
-  const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
+  const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector(
+    (state) => state.location
+  );
 
+  const [isSenderFormActive, setIsSenderFormActive] = useState(true);
+  const [senderAddress, setSenderAddress] = useState(
+    ordersDetails?.senderAddress
+  );
+  const [receiverAddress, setReceiverAddress] = useState(
+    ordersDetails?.receiverAddress
+  );
+  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(
+    ordersDetails?.receiverPhoneNumber
+  );
+  const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -97,7 +111,14 @@ const SendOrders = () => {
   };
 
   const handleOrderNavigation = () => {
-    dispatch(setOrdersDetails({receiverAddress, senderAddress, receiverName, receiverPhoneNumber}))
+    dispatch(
+      setOrdersDetails({
+        receiverAddress,
+        senderAddress,
+        receiverName,
+        receiverPhoneNumber,
+      })
+    );
     if (isLoggedIn) {
       navigate("/order");
     } else {
@@ -105,35 +126,81 @@ const SendOrders = () => {
     }
   };
 
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = (e) => {
+    if (e.target.textContent === "Logout"){
+      dispatch(setLoginDetails());
+      navigate("/send-orders")
+    }
+  }   
+
   return isLoaded ? (
     <>
-    <GoogleMap
-				mapContainerStyle={containerStyle}
-				center={center}
-				zoom={14}
-				onLoad={onLoad}
-				onUnmount={onUnmount}
-			>
-				{isSenderFormActive ? (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignSenderLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
-					/>
-				) : (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignReceiverLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-				)}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        <Box>
+          <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {isLoggedIn ? (
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              ) : null }
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={isLoggedIn ? Boolean(anchorElUser) : false}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+        {isSenderFormActive ? (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignSenderLocation(e)}
+            icon={{
+              url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png",
+              scaledSize: new window.google.maps.Size(40, 40),
+            }}
+            position={senderCoordinates.lat ? senderCoordinates : center}
+          />
+        ) : (
+          <Marker
+            draggable={true}
+            onDragEnd={(e) => assignReceiverLocation(e)}
+            icon={{
+              url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png",
+              scaledSize: new window.google.maps.Size(37, 37),
+            }}
+            position={receiverCoordinates.lat ? receiverCoordinates : center}
+          />
+        )}
 
-				{/* Child components, such as markers, info windows, etc. */}
-				<></>
-	</GoogleMap>
-	 <div className="location_map">
+        {/* Child components, such as markers, info windows, etc. */}
+      </GoogleMap>
+      <div className="location_map">
         <div className="location_form">
           {isSenderFormActive ? (
             <>
@@ -163,15 +230,16 @@ const SendOrders = () => {
                   placeholder="Receiver's address"
                 />
               </Autocomplete>
-			  <input 
-			  placeholder="Receiver's Name" 
-			  value={receiverName}
-			  onChange={(e) => setReceiverName(e.target.value)}
-			  />
-			  <input placeholder="Receiver's Phone Number"
-			  value={receiverPhoneNumber}
-			  onChange={(e) => setReceiverPhoneNumber(e.target.value)}
-			 />
+              <input
+                placeholder="Receiver's Name"
+                value={receiverName}
+                onChange={(e) => setReceiverName(e.target.value)}
+              />
+              <input
+                placeholder="Receiver's Phone Number"
+                value={receiverPhoneNumber}
+                onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+              />
               <button
                 onClick={() => {
                   handleOrderNavigation();
@@ -184,8 +252,8 @@ const SendOrders = () => {
         </div>
       </div>
       <div className="order_list">
-      <OrderList/>
-        </div>
+        <OrderList />
+      </div>
     </>
   ) : (
     <>
@@ -196,5 +264,4 @@ const SendOrders = () => {
     </>
   );
 };
-
 export default React.memo(SendOrders);
