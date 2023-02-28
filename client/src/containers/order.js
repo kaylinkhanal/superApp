@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import NavBar from "../components/header/navBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -81,12 +81,11 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-  const { ordersDetails } = useSelector(state => state.location)
-  const { id } = useSelector(state => state.user)
+  const { ordersDetails } = useSelector((state) => state.location);
+  const { id } = useSelector((state) => state.user);
   const navigate = useNavigate();
   return (
     <>
-
       <Formik
         initialValues={{}}
         validationSchema={Yup.object({
@@ -126,14 +125,16 @@ const Order = () => {
             .required(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          const formFields = { ...ordersDetails, ...values, senderId: id }
-          const res = await axios.post(`http://localhost:5000/orders`, formFields)
+          const formFields = { ...ordersDetails, ...values, senderId: id };
+          const res = await axios.post(
+            `http://localhost:8000/orders`,
+            formFields
+          );
         }}
       >
         <div className="authForm">
           <h1 className="h1">Create a new order</h1>
           <Form className="form">
-
             <MyTextInput name="itemName" type="text" placeholder="Item name" />
             <MySelect label="" name="category" className="dropDown">
               <option value="">Select a category</option>
@@ -147,7 +148,7 @@ const Order = () => {
             <MyTextInput
               name="weight"
               type="number"
-              placeholder="Weight (in kg)"
+              placeholder="Weight (KG)"
             />
             <MyTextInput
               label=""
@@ -171,8 +172,17 @@ const Order = () => {
               I accept the terms and conditions
             </MyCheckbox>
 
-            <button className="btn" type="submit" onClick={() => navigate("/send-orders")} > <KeyboardBackspaceIcon /> <span>Back</span> </button>
-            <button className="btn" type="submit"><span>Submit</span> <TrendingFlatIcon /></button>
+            <button
+              className="btn"
+              type="submit"
+              onClick={() => navigate("/send-orders")}
+            >
+              {" "}
+              <KeyboardBackspaceIcon /> <span>Back</span>{" "}
+            </button>
+            <button className="btn" type="submit">
+              <span>Submit</span> <TrendingFlatIcon />
+            </button>
           </Form>
         </div>
       </Formik>
