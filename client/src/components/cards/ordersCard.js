@@ -91,7 +91,7 @@ const OrdersCard = (props) => {
 								const formFields = { ...ordersDetails, ...values, senderId: id }
 								const res = await axios.put(`http://localhost:5000/orders`, formFields)
 								console.log(res)
-								if (res.status && res.data.message && !isEdit) {
+								if (res.status && res.data.message && isEdit) {
 									dispatch(setAlertMessages(res.data.message))
 								}
 								setIsEdit()
@@ -134,7 +134,7 @@ const OrdersCard = (props) => {
 								</MySelect>
 
 								<button style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0, marginRight: '5px' }} type="submit"><span>Save</span></button>
-								<button onClick={() => isEdit()} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} type="submit"><span>cancle</span></button>
+								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} type="submit"><span>cancle</span></button>
 							</Form>
 						</Formik> :
 

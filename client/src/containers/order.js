@@ -86,7 +86,6 @@ const Order = () => {
   const navigate = useNavigate();
   return (
     <>
-      <NavBar />
 
       <Formik
         initialValues={{}}
