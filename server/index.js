@@ -64,7 +64,7 @@ app.get('/orders', async (req, res) => {
     res.status(500).json({ message: err })
   }
 })
-  
+
 app.get('/orders/:senderId', async (req, res) => {
   try {
     //we find all the orders for that particular user who requested the orders list 
@@ -72,6 +72,34 @@ app.get('/orders/:senderId', async (req, res) => {
     if (ordersList) {
       res.json({
         ordersList
+      })
+    }
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+})
+
+app.get('/orders/:senderId', async (req, res) => {
+  try {
+    //we find all the orders for that particular user who requested the orders list 
+    const ordersList = await Orders.find({ senderId: req.params.senderId })
+    if (ordersList) {
+      res.json({
+        ordersList
+      })
+    }
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+})
+
+app.put('/orders', async (req, res) => {
+  try {
+    //we find all the orders for that particular user who requested the orders list 
+    const updateData = await Orders.findByIdAndUpdate(req.body._id, req.body)
+    if (updateData) {
+      res.json({
+        message: 'updated data'
       })
     }
   } catch (err) {
