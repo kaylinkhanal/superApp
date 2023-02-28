@@ -144,6 +144,16 @@ app.post('/login', async (req, res) => {
 })
 
 
+app.delete('/orders/:id', async (res, req) => {
+  const deleteOrder = await Orders.findByIdAndDelete(req.params.id)
+  if(deleteOrder){
+    console.log
+    res.json({
+      message: "Order deleted"
+    })
+  }// console.log(req.params.id)
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -5,7 +5,7 @@ import { Formik, Form, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
-
+import { Alert, AlertTitle, Dialog, DialogTitle, DialogContent, Button, DialogContentText, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
@@ -40,6 +40,7 @@ const MyTextInput = ({ label, ...props }) => {
       </>
     );
   };
+  
   
   // Styled components ....
   const StyledSelect = styled.select`
@@ -83,13 +84,43 @@ const OrdersCard = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const { ordersDetails } = useSelector(state => state.location)
   const { id } = useSelector(state => state.user)
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const navigate = useNavigate();
+
+
+  const confirmDelete = async (orderId) => {
+    const res = await axios.delete(`http://localhost:5000/orders/${orderId}`)
+  }
+
   return (
     <>
       <div className="orders">
         <div className="order_content">
           <button onClick={() => setIsEdit(!isEdit)}>Edit</button>
-          <button>Delete</button>
+          <button onClick={()=> handleClickOpen() }>Delete</button>
+          <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" 
+        color="warning"
+      >
+        <Alert color="warning" severity="warning">
+          <AlertTitle>Are you sure you want to Delete this item? </AlertTitle>
+          Deleting this item will cause <strong> irreversible</strong> changes
+          
+        </Alert>
+        <Button variant="contained" color="success" onClick={handleClose}>Close</Button>
+        <Button variant="contained" color="error" onClick={()=> confirmDelete(props.item._id)} autoFocus> DELETE </Button>
+      </Dialog>
           {isEdit ? (
             <Formik
               initialValues={props.item}
