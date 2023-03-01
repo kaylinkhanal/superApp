@@ -98,6 +98,7 @@ const OrdersCard = (props) => {
 
   const confirmDelete = async (orderId) => {
     const res = await axios.delete(`http://localhost:5000/orders/${orderId}`)
+    handleClose()
     if(res) props.fetchOrders()
   }
 
