@@ -17,7 +17,6 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -105,7 +104,6 @@ const SendOrders = () => {
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
 
-
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
@@ -167,7 +165,7 @@ const SendOrders = () => {
 					)}
 				</div>
 
-				<button onClick={() => 	setIsOrderListOpen(!isOrderListOpen)} className="btn"><HighlightAltIcon /> <span>{!isOrderListOpen ? "Check your orders" : "Cancel"}</span></button>
+				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
 				<div style={{ overflow: 'hidden' }}>
 					<div className="order_list" style={!isOrderListOpen ? {
 						transition: `transform 250ms ease-in-out`,
@@ -176,7 +174,7 @@ const SendOrders = () => {
 						transition: `transform 250ms ease-in-out`,
 						transform: "translateY(0)"
 					}}>
-						<Scrollbars style={{ height: 300 }} >
+						<Scrollbars style={{ height: 300, borderRadius: '10px' }} >
 							<OrderList />
 						</Scrollbars>
 					</div>

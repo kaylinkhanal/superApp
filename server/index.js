@@ -65,18 +65,6 @@ app.get('/orders', async (req, res) => {
   }
 })
 
-app.put('/orders', async (req, res) => {
-  try {
-     await Orders.findByIdAndUpdate(req.body._id, req.body)
-      res.json({
-        message: "orders updated successfully"
-      })
-  } catch (err) {
-    res.status(500).json({ message: err })
-  }
-})
-  
-
 app.get('/orders/:senderId', async (req, res) => {
   try {
     //we find all the orders for that particular user who requested the orders list 
@@ -91,6 +79,19 @@ app.get('/orders/:senderId', async (req, res) => {
   }
 })
 
+app.put('/orders', async (req, res) => {
+  try {
+    //we find all the orders for that particular user who requested the orders list 
+    const updateData = await Orders.findByIdAndUpdate(req.body._id, req.body)
+    if (updateData) {
+      res.status(200).json({
+        message: 'updated data'
+      })
+    }
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+})
 
 const generateToken = async (key, value) => {
   try {
