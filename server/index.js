@@ -144,14 +144,19 @@ app.post('/login', async (req, res) => {
 })
 
 
-app.delete('/orders/:id', async (res, req) => {
-  const deleteOrder = await Orders.findByIdAndDelete(req.params.id)
-  if(deleteOrder){
-    console.log
-    res.json({
-      message: "Order deleted"
-    })
-  }// console.log(req.params.id)
+app.delete('/orders/:id', async (req, res) => {
+  console.log(req.params.id)
+  try{
+    const deleteOrder = await Orders.findByIdAndDelete(req.params.id)
+    if(deleteOrder){
+      res.json({
+        message: "Order deleted"
+      })
+    }
+  }catch(err){
+    console.log(err)
+  }
+
 })
 
 
