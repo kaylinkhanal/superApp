@@ -9,6 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import Logout from "../components/header/reusableLogout"
 import { useState } from "react";
 import {
   Autocomplete,
@@ -145,7 +146,8 @@ const SendOrders = () => {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <Box>
+      <Logout/>
+        {/* <Box>
           <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               {isLoggedIn ? (
@@ -175,7 +177,7 @@ const SendOrders = () => {
               </MenuItem>
             ))}
           </Menu>
-        </Box>
+        </Box> */}
         {isSenderFormActive ? (
           <Marker
             draggable={true}
@@ -250,9 +252,6 @@ const SendOrders = () => {
             </>
           )}
         </div>
-      </div>
-      <div className="order_list">
-        <OrderList />
       </div>
     </>
   ) : (
