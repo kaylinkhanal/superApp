@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const Users = require("./models/users")
 
 const ordersRouter =require('./routes/orders')
+const profileRouter = require('./routes/profile')
 const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
 connectDb()
@@ -16,6 +17,7 @@ require('dotenv').config()
 app.use(cors())
 app.use(express.json())
 app.use("/",ordersRouter)
+app.use("/",profileRouter)
 
 
 const port = 5000
@@ -106,7 +108,6 @@ app.post('/login', async (req, res) => {
   }
 
 })
-
 
 
 app.listen(port, () => {

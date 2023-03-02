@@ -36,29 +36,22 @@ const NavBar = () => {
   const handleCloseUserMenu = (e) => {
     if (e.target.textContent === "Logout") {
       dispatch(setLoginDetails());
-      navigate("/")
+      navigate("/");
     }
     setAnchorElUser(null);
   };
-
   return (
     <AppBar position="static" className="navbar">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-         
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {isLoggedIn ? (
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 ) : (
-                  <LoginIcon
-                    onClick={() =>
-                      navigate("/login")
-                    }
-                  />
+                  <LoginIcon onClick={() => navigate("/login")} />
                 )}
               </IconButton>
             </Tooltip>
