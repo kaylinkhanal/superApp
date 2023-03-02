@@ -125,9 +125,11 @@ const Order = () => {
             .oneOf(["Morning", "Afternoon"], "Invalid Time ")
             .required(),
         })}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values) => {
           const formFields = { ...ordersDetails, ...values, senderId: id }
           const res = await axios.post(`http://localhost:5000/orders`, formFields)
+          if (res.status == 200)
+            navigate("/send-orders")
         }}
       >
         <div className="authForm">
@@ -171,7 +173,7 @@ const Order = () => {
               I accept the terms and conditions
             </MyCheckbox>
 
-            <button className="btn" type="submit" onClick={() => navigate("/send-orders")} > <KeyboardBackspaceIcon /> <span>Back</span> </button>
+            <button className="btn" onClick={() => navigate("/send-orders")} > <KeyboardBackspaceIcon /> <span>Back</span> </button>
             <button className="btn" type="submit"><span>Submit</span> <TrendingFlatIcon /></button>
           </Form>
         </div>

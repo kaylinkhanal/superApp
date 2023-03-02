@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginDetails } from "../../redux/reducers/userSlice";
+import { resetLoginDetails } from "../../redux/reducers/userSlice";
 const pages = ["Home", "Order", "Track My Order", "Contact US"];
 const settings = ["Profile", "Account", "My Orders", "Logout"];
 
@@ -39,10 +39,10 @@ const NavBar = () => {
   };
 
   const handleCloseUserMenu = (e) => {
-    debugger;
+    // debugger;
     if (e.target.textContent == "Logout") {
-      dispatch(setLoginDetails());
-      navigate("/")
+      dispatch(resetLoginDetails());
+      navigate("/user-role")
     }
 
     setAnchorElUser(null);

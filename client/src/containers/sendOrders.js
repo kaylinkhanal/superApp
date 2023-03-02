@@ -95,11 +95,12 @@ const SendOrders = () => {
 
 	const handleOrderNavigation = () => {
 		dispatch(setOrdersDetails({ receiverAddress, senderAddress, receiverName, receiverPhoneNumber }))
-		if (isLoggedIn) {
-			navigate("/order");
-		} else {
-			navigate("/login", { state: { onSuccessNavigation: "/order" } });
-		}
+		// if (isLoggedIn) {
+		// 	navigate("/order");
+		// } else {
+		// 	navigate("/login", { state: { onSuccessNavigation: "/order" } });
+		// }
+		navigate("/order")
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);

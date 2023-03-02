@@ -2,7 +2,7 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useState } from "react";
 import ShareImg from "../images/share.svg"
 import { Link } from 'react-router-dom';
-const Home = () => {
+const UserHome = () => {
 	const [name, setName] = useState("hi");
 
 	return (
@@ -12,7 +12,7 @@ const Home = () => {
 				<h1>Hi, we're SuperApp.</h1>
 
 				<h4>"Send your order or take a ride with us"</h4>
-				<Link className="btn" to="/send-orders"><span>Send Orders</span><TrendingFlatIcon /></Link>
+				<Link className="btn" to="/login"><span>Send Orders</span><TrendingFlatIcon /></Link>
 
 				<button className="btn"><span>Ride</span><TrendingFlatIcon /></button>
 			</div>
@@ -20,4 +20,4 @@ const Home = () => {
 	)
 }
 
-export default Home;
+export default UserHome;

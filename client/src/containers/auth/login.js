@@ -23,23 +23,24 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	let { state } = useLocation();
-  const triggerLogin = async(values)=> {
-	try{
-		const res = await axios.post(`http://localhost:5000/login`, values)
-	
-		if(res.status == 200){
-		  dispatch(setLoginDetails({id: res.data.id, token: res.data.token}));
-		  dispatch(setAlertMessages(res.data.message));
-		  if (state?.onSuccessNavigation === "/order") {
-			navigate("/order");
-		  } else {
-			navigate("/");
-		  }
+	const triggerLogin = async (values) => {
+		try {
+			const res = await axios.post(`http://localhost:5000/login`, values)
+
+			if (res.status == 200) {
+				dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }));
+				dispatch(setAlertMessages(res.data.message));
+				//   if (state?.onSuccessNavigation === "/order") {
+				// 	navigate("/order");
+				//   } else {
+				// 	navigate("/");
+				//   }
+				navigate("/send-orders")
+			}
+		} catch (err) {
+			dispatch(setAlertMessages(err.response.data.message));
 		}
-	}catch(err){
-		dispatch(setAlertMessages(err.response.data.message));
 	}
-  }
 	return (
 		<>
 			{/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -47,7 +48,7 @@ const Login = () => {
 				validationSchema={LoginSchema}
 				initialValues={{ loginKey: "", password: "" }}
 				onSubmit={(values) => {
-        		  triggerLogin(values)
+					triggerLogin(values)
 				}}
 			>
 				{({
