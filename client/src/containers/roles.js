@@ -9,7 +9,8 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const assignRole = (role) => {
-    navigate("/");
+    if(role=='rider') navigate("/login") 
+    else navigate("/")
     dispatch(assignUserRole(role));
   };
   const { userRole } = useSelector((state) => state.user);
