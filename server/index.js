@@ -142,7 +142,8 @@ app.post('/login', async (req, res) => {
           res.json({
             message: "Login Success!!",
             token,
-            id: data._id
+            id: data._id,
+            name: data.userName
           })
         } else {
           res.status(401).json({
