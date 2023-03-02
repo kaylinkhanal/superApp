@@ -17,7 +17,7 @@ const OrderList = () => {
     return (
         <div>
             {orderList.length> 0 && orderList.map((item, id) => {
-                return <OrdersCard item={item} />
+                return <OrdersCard item={item} fetchOrders={fetchOrders} />
             })}
         </div>
     )
