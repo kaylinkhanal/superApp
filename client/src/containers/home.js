@@ -1,9 +1,11 @@
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useState } from "react";
 import ShareImg from "../images/share.svg"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const UserHome = () => {
-	const [name, setName] = useState("hi");
+	const { isLoggedIn } = useSelector(state => state.user)
+	const navigate = useNavigate()
 
 	return (
 		<section id="home">
@@ -12,7 +14,7 @@ const UserHome = () => {
 				<h1>Hi, we're SuperApp.</h1>
 
 				<h4>"Send your order or take a ride with us"</h4>
-				<Link className="btn" to="/login"><span>Send Orders</span><TrendingFlatIcon /></Link>
+				<button className="btn" onClick={() => { !isLoggedIn ? navigate("/login") : navigate('/send-orders') }} to={!isLoggedIn ? "/login" : '/send-orders'}><span>Send Orders</span><TrendingFlatIcon /></button>
 
 				<button className="btn"><span>Ride</span><TrendingFlatIcon /></button>
 			</div>

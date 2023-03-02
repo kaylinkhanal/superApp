@@ -26,9 +26,9 @@ const Login = () => {
 	const triggerLogin = async (values) => {
 		try {
 			const res = await axios.post(`http://localhost:5000/login`, values)
-
+			console.log(res)
 			if (res.status == 200) {
-				dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }));
+				dispatch(setLoginDetails({ id: res.data.id, token: res.data.token, username: res.data.name }));
 				dispatch(setAlertMessages(res.data.message));
 				//   if (state?.onSuccessNavigation === "/order") {
 				// 	navigate("/order");

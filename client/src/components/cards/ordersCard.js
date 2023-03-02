@@ -69,7 +69,6 @@ const MySelect = ({ label, ...props }) => {
 };
 
 const OrdersCard = (props) => {
-	console.log(props)
 	const [isEdit, setIsEdit] = useState(false)
 	const dispatch = useDispatch()
 

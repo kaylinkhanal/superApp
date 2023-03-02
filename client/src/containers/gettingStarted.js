@@ -9,7 +9,7 @@ const GettingStarted = () => {
 	const dispatch = useDispatch()
 	const assignVisitor = () => {
 		dispatch(setIsFirstTimeUser())
-		navigate('/')
+		navigate('/user-role')
 	}
 	return (
 
