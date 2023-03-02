@@ -17,6 +17,9 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import LogoutMenu from "../components/header/logoutMenu";
+
+
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -100,7 +103,8 @@ const SendOrders = () => {
 		// } else {
 		// 	navigate("/login", { state: { onSuccessNavigation: "/order" } });
 		// }
-		navigate("/order")
+		if (receiverAddress && senderAddress && receiverName && receiverPhoneNumber) { navigate("/order") }
+
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
@@ -126,12 +130,14 @@ const SendOrders = () => {
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
 			<div className="location_map">
+				<LogoutMenu />	
 				<div className="location_form">
 					{isSenderFormActive ? (
 						<>
 							<button onClick={() => navigate("/")}><ArrowBack /></button>
-							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
+							<button onClick={() => { senderAddress && setIsSenderFormActive(false) }}><ArrowForwardOutlinedIcon /></button>
 							<Autocomplete key={1} id={1} className="autofill">
 								<input
 									placeholder="Sender address"
