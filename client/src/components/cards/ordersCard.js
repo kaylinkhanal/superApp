@@ -69,18 +69,27 @@ const MySelect = ({ label, ...props }) => {
 };
 
 const OrdersCard = (props) => {
+	console.log(props)
 	const [isEdit, setIsEdit] = useState(false)
 	const dispatch = useDispatch()
 
 	const { ordersDetails } = useSelector(state => state.location)
 	const { id } = useSelector(state => state.user)
+
+	const deleteOrders = async (id) => {
+		const res = await axios.delete(`http://localhost:5000/orders/${id}`)
+		if (res.status && res.data.message) {
+			dispatch(setAlertMessages(res.data.message))
+		}
+		props.fetchOrders()
+	}
 	return (
 		<>
 			<div className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
-						<button className='random_btn'><DeleteOutlineOutlinedIcon /></button>
+						<button className='random_btn' onClick={() => deleteOrders(props.item._id)}><DeleteOutlineOutlinedIcon /></button>
 					</div>
 				}
 				<div className="order_content">
@@ -95,6 +104,7 @@ const OrdersCard = (props) => {
 									dispatch(setAlertMessages(res.data.message))
 								}
 								setIsEdit()
+								props.fetchOrders()
 							}}
 						>
 
