@@ -93,6 +93,23 @@ app.put('/orders', async (req, res) => {
   }
 })
 
+// delete food data
+app.delete('/orders/:id', async (req, res) => {
+  try {
+    // console.log(req.params.id)
+    const result = await Orders.deleteOne({ _id: req.params.id })
+    if (result) {
+      res.status(200).json({
+        message: 'Deleted Order'
+      })
+    }
+
+  } catch (err) {
+    console.log(err)
+  }
+
+})
+
 const generateToken = async (key, value) => {
   try {
     /* [key]: value 
