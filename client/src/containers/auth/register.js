@@ -22,6 +22,7 @@ const Register = () => {
   const { userRole } = useSelector(state => state.user)
   const riderDetailsFields = [
     { label: "fullName", type: "text" ,placeholder:"Full Name"},
+    { label: "userName", type: "text",placeholder:"Username" },
     { label: "email", type: "text",placeholder:"Email"  },
     { label: "phoneNumber", type: "text",placeholder:"Phone Number" },
     { label: "address", type: "text" ,placeholder:"Address"},
@@ -47,7 +48,8 @@ const Register = () => {
 				<h1 className="h1">Signup</h1>
 				<DynamicForm
 					apiEndpoint="/register"
-					onSuccessNavigation="/login"
+          onSuccessNavigation="/login"
+          additionalFields={{userRole: userRole}}
 					firstPageFields={userRole == 'rider' ? riderDetailsFields : userDetailsFields}
 					isSingleStepForm={true}
 				/>

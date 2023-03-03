@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom"
+import SendOrders from "../sendOrders"
 const RiderHome =()=> {
   return (
     <div className="App">
-    hi i am rider home
+      <SendOrders/>
     </div>
   );
 }

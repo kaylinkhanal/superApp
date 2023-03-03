@@ -5,8 +5,8 @@ const app = express()
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Users = require("./models/users")
-const Orders = require("./models/orders")
 
+const ordersRouter =require('./routes/orders')
 const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
 connectDb()
@@ -17,6 +17,7 @@ require('dotenv').config()
 
 app.use(cors())
 app.use(express.json())
+app.use("/",ordersRouter)
 
 app.post('/register', async (req, res) => {
   try {
@@ -36,58 +37,6 @@ app.post('/register', async (req, res) => {
     });
   } catch (err) {
     console.log("err" + err)
-  }
-})
-
-app.post('/orders', async (req, res) => {
-  try {
-    //condt newOrders = await Orders.create(req.body)
-    const newOrders = new Orders(req.body);
-    await newOrders.save().then(data => {
-      if (data) {
-        res.status(200).json({ message: "Your Order is on the way" })
-      }
-    })
-  } catch (err) {
-    console.log("err" + err)
-    res.status(500).json({ message: err })
-  }
-})
-
-app.get('/orders', async (req, res) => {
-  try {
-    const orders = await Orders.find()
-    if (orders) {
-      res.status(200).json({ orders })
-    }
-  } catch (err) {
-    res.status(500).json({ message: err })
-  }
-})
-
-app.put('/orders', async (req, res) => {
-  try {
-     await Orders.findByIdAndUpdate(req.body._id, req.body)
-      res.json({
-        message: "orders updated successfully"
-      })
-  } catch (err) {
-    res.status(500).json({ message: err })
-  }
-})
-  
-
-app.get('/orders/:senderId', async (req, res) => {
-  try {
-    //we find all the orders for that particular user who requested the orders list 
-    const ordersList = await Orders.find({ senderId: req.params.senderId })
-    if (ordersList) {
-      res.json({
-        ordersList
-      })
-    }
-  } catch (err) {
-    res.status(500).json({ message: err })
   }
 })
 
@@ -115,7 +64,7 @@ app.post('/login', async (req, res) => {
     const fieldKey = checkFieldType(req.body.loginKey)
     const token = generateToken(fieldKey, req.body.loginKey)
     //first we need check if the req.body.loginKey's value exist in the db 
-    const data = await Users.findOne({ [fieldKey]: req.body.loginKey })
+    const data = await Users.findOne({ [fieldKey]: req.body.loginKey, userRole: req.body.userRole })
     //if data is there, it means we found a document in db with that particular phoneNumber
     if (data) {
       //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
@@ -142,6 +91,7 @@ app.post('/login', async (req, res) => {
   }
 
 })
+
 
 
 

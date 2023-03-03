@@ -55,10 +55,11 @@ const DynamicForm = (props) => {
 
 
 	const submitFormData = async (values) => {
+		const updatedValues = {...values, ...props.additionalFields}
 		const requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(values)
+			body: JSON.stringify(updatedValues)
 		}
 		const res = await fetch('http://localhost:5000' + props.apiEndpoint, requestOptions)
 		debugger;
