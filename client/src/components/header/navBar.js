@@ -39,7 +39,6 @@ const NavBar = () => {
   };
 
   const handleCloseUserMenu = (e) => {
-    debugger;
     if (e.target.textContent == "Logout") {
       dispatch(setLoginDetails());
       navigate("/")

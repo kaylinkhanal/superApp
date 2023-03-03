@@ -6,16 +6,29 @@ import {
 	Autocomplete,
 } from "@react-google-maps/api";
 import {
-	setSenderCoordinates,
-	setReceiverCoordinates,
-	setOrdersDetails,
+  setSenderCoordinates,
+  setReceiverCoordinates,
+  setOrdersDetails,
 } from "../redux/reducers/locationSlice";
-import OrderList from "./sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
+import OrderList from "../containers/sharedScreens/orderList"
 import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import GolfCourseIcon from '@mui/icons-material/GolfCourse';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LoadingCircle from "../components/loadingCircle";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import LoginIcon from "@mui/icons-material/Login";
+import { setLoginDetails } from "../redux/reducers/userSlice";
+
+
 import { Scrollbars } from 'react-custom-scrollbars-2';
 const containerStyle = {
 	width: "100%",
@@ -28,13 +41,22 @@ const center = {
 };
 
 const SendOrders = () => {
-	const { senderCoordinates,
+	const { senderCoordinates, 
 		receiverCoordinates,
 		ordersDetails
-	} = useSelector(
+	 } = useSelector(
 		(state) => state.location
 	);
-
+	const [anchorElNav, setAnchorElNav] = React.useState(null);
+	const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+	const handleOpenNavMenu = (event) => {
+	  setAnchorElNav(event.currentTarget);
+	};
+	const handleOpenUserMenu = (event) => {
+	  setAnchorElUser(event.currentTarget);
+	};
+  
 	const [isSenderFormActive, setIsSenderFormActive] = useState(true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
@@ -103,11 +125,54 @@ const SendOrders = () => {
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-
+	const handleCloseUserMenu = (e) => {
+		if (e.target.textContent == "Logout") {
+		  dispatch(setLoginDetails());
+		  navigate("/")
+		}
+	
+		setAnchorElUser(null);
+	  };
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-				{isSenderFormActive ? (
+
+
+					<Box sx={{ flexGrow: 0 }}>
+					<Tooltip title={isLoggedIn ? "Logout" : "Login"}>
+						<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+						{isLoggedIn ? (
+							<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"
+							onClick={() => dispatch(setLoginDetails(false))}/>
+							
+						) : (
+							<LoginIcon
+							onClick={() =>
+								navigate("/login")
+							}
+							/>
+						)}
+						</IconButton>
+					</Tooltip>
+					<Menu
+						sx={{ mt: "1000px" }}
+						id="menu-appbar"
+						anchorEl={anchorElUser}
+						anchorOrigin={{
+						vertical: "top",
+						horizontal: "right",
+						}}
+						keepMounted
+						transformOrigin={{
+						vertical: "top",
+						horizontal: "right",
+						}}
+						open={isLoggedIn ? Boolean(anchorElUser) : false}
+						onClose={handleCloseUserMenu}
+					>
+					</Menu>
+					</Box>
+					{isSenderFormActive ? (
 					<Marker
 						draggable={true}
 						onDragEnd={(e) => assignSenderLocation(e)}
