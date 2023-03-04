@@ -5,7 +5,8 @@ export const initialState = {
   firstTimeUser: true,
   isLoggedIn: false,
   token: '',
-  id: ''
+  id: '',
+  username: ''
 };
 
 //What is createSlice in Redux Toolkit?
@@ -22,16 +23,17 @@ const userSlice = createSlice({
     setIsFirstTimeUser: (state, actions) => {
       state.firstTimeUser = false
     },
-    setLoginDetails: (state, actions)=>{
-      if(actions.payload){
-        const {token, id} = actions.payload
+    setLoginDetails: (state, actions) => {
+      if (actions.payload) {
+        const { token, id, username } = actions.payload
         state.token = token
         state.id = id
+        state.username = username
       }
       state.isLoggedIn = !state.isLoggedIn
     }
   }
 });
 
-export const { assignUserRole,setIsFirstTimeUser,setLoginDetails } = userSlice.actions;
+export const { assignUserRole, setIsFirstTimeUser, setLoginDetails } = userSlice.actions;
 export default userSlice.reducer;

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Users = require("./models/users")
 
-const ordersRouter =require('./routes/orders')
+const ordersRouter = require('./routes/orders')
 const checkFieldType = require('./utils/checkFieldType')
 const connectDb = require('./db/connectDb')
 connectDb()
@@ -17,7 +17,7 @@ require('dotenv').config()
 
 app.use(cors())
 app.use(express.json())
-app.use("/",ordersRouter)
+app.use("/", ordersRouter)
 
 app.post('/register', async (req, res) => {
   try {
@@ -73,7 +73,8 @@ app.post('/login', async (req, res) => {
           res.json({
             message: "Login Success!!",
             token,
-            id: data._id
+            id: data._id,
+            userName: data.userName
           })
         } else {
           res.status(401).json({

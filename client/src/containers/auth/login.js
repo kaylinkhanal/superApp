@@ -5,7 +5,7 @@ import { setLoginDetails } from "../../redux/reducers/userSlice";
 import { setAlertMessages } from "../../redux/reducers/notifySlice";
 
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -20,26 +20,27 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-	const {userRole} = useSelector(state=> state.user)
+	const { userRole } = useSelector(state => state.user)
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	let { state } = useLocation();
-  const triggerLogin = async(values)=> {
-	try{
-		const res = await axios.post(`http://localhost:5000/login`, {...values, userRole })
-		if(res.status == 200){
-		  dispatch(setLoginDetails({id: res.data.id, token: res.data.token}));
-		  dispatch(setAlertMessages(res.data.message));
-		  if (state?.onSuccessNavigation === "/order") {
-			navigate("/order");
-		  } else {
-			navigate("/");
-		  }
+	const triggerLogin = async (values) => {
+		try {
+			const res = await axios.post(`http://localhost:5000/login`, { ...values, userRole })
+			console.log(res)
+			if (res.status == 200) {
+				dispatch(setLoginDetails({ id: res.data.id, token: res.data.token, username: res.data.userName }));
+				dispatch(setAlertMessages(res.data.message));
+				if (state?.onSuccessNavigation === "/order") {
+					navigate("/order");
+				} else {
+					navigate("/");
+				}
+			}
+		} catch (err) {
+			dispatch(setAlertMessages(err.response.data.message));
 		}
-	}catch(err){
-		dispatch(setAlertMessages(err.response.data.message));
 	}
-  }
 	return (
 		<>
 			{/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -47,7 +48,7 @@ const Login = () => {
 				validationSchema={LoginSchema}
 				initialValues={{ loginKey: "", password: "" }}
 				onSubmit={(values) => {
-        		  triggerLogin(values)
+					triggerLogin(values)
 				}}
 			>
 				{({

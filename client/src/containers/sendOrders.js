@@ -17,6 +17,7 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import Logout from "../components/header/logoutMenu";
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -125,6 +126,9 @@ const SendOrders = () => {
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
+			<Logout />
+
 			<div className="location_map">
 				<div className="location_form">
 					{isSenderFormActive ? (
@@ -165,20 +169,24 @@ const SendOrders = () => {
 					)}
 				</div>
 
-				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
-				<div style={{ overflow: 'hidden' }}>
-					<div className="order_list" style={!isOrderListOpen ? {
-						transition: `transform 250ms ease-in-out`,
-						transform: "translateY(-101%)"
-					} : {
-						transition: `transform 250ms ease-in-out`,
-						transform: "translateY(0)"
-					}}>
-						<Scrollbars style={{ height: 300, borderRadius: '10px' }} >
-							<OrderList />
-						</Scrollbars>
-					</div>
-				</div>
+				{isLoggedIn &&
+					<>
+						<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
+						<div style={{ overflow: 'hidden' }}>
+							<div className="order_list" style={!isOrderListOpen ? {
+								transition: `transform 250ms ease-in-out`,
+								transform: "translateY(-101%)"
+							} : {
+								transition: `transform 250ms ease-in-out`,
+								transform: "translateY(0)"
+							}}>
+								<Scrollbars style={{ height: 300, borderRadius: '10px' }} >
+									<OrderList />
+								</Scrollbars>
+							</div>
+						</div>
+					</>
+				}
 			</div>
 
 		</>
