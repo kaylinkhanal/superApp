@@ -26,6 +26,7 @@ app.post('/register', async (req, res) => {
       //we set passowrd as new hashed password and save it into db using Save or create
       req.body.password = hash
       const data = await Users.create(req.body)
+      console.log(data)
       if (data) {
         res.json({
           message: "Registration successful!!"

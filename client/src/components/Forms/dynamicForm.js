@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
- import { Formik, Form, Field } from 'formik';
- import {useNavigate} from "react-router-dom";
- import * as Yup from 'yup';
- import {useDispatch } from "react-redux";
- import {setAlertMessages} from "../../redux/reducers/notifySlice"
- import "../../containers/auth/authForm.css"
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from "react-redux";
+import { setAlertMessages } from "../../redux/reducers/notifySlice"
+import "../../containers/auth/authForm.css"
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
- import Snackbar from "../alerts/snackBar"
- import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
+import Snackbar from "../alerts/snackBar"
+import { Button, TextField, Select, MenuItem, InputLabel, Grid } from '@mui/material'
 
 const DynamicForm = (props) => {
-  const dispatch = useDispatch()
+	const { userRole } = useSelector(state => state.user)
+	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [stepCount, setStepCount] = useState(1)
 	const schema = Yup.object().shape({
@@ -44,6 +45,7 @@ const DynamicForm = (props) => {
 					<InputLabel id="vehicleTypeLabel">{item.label}</InputLabel>
 					<Select labelId="vehicleTypeLabel" id="vehicleType" name="vehicleType" >
 						{item.options.map((item, id) => {
+							console.log(item)
 							return <MenuItem key={id} value={item}>{item}</MenuItem>
 						})}
 					</Select>
@@ -55,18 +57,21 @@ const DynamicForm = (props) => {
 
 
 	const submitFormData = async (values) => {
+		const updatedValues = { ...values, ...props.additionalFields }
 		const requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(values)
+			body: JSON.stringify(updatedValues)
 		}
+
 		const res = await fetch('http://localhost:5000' + props.apiEndpoint, requestOptions)
 		debugger;
-    const data = await res.json()
-			navigate(props.onSuccessNavigation)
-    if(res.status  && data.message){
-      dispatch(setAlertMessages(data.message))
-    }
+		const data = await res.json()
+		console.log(data)
+		navigate(props.onSuccessNavigation)
+		if (res.status && data.message) {
+			dispatch(setAlertMessages(data.message))
+		}
 	}
 
 	return (
