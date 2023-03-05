@@ -13,9 +13,9 @@ import { useSelector } from "react-redux";
 
 const ConditionalRoute = () => {
   const { userRole, firstTimeUser, token } = useSelector((state) => state.user);
-  if (userRole === "rider" ) {
+  if (userRole === "rider") {
     return <RiderRoutes />;
-  } else if (userRole === "user" ) {
+  } else if (userRole === "user") {
     return <UserRoutes />;
   } else if (firstTimeUser) {
     return <FirstUserRoutes />;
@@ -49,7 +49,7 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-    <Route path="/*" element={<Error />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 };
