@@ -54,4 +54,20 @@ router.post('/orders', async (req, res) => {
       res.status(500).json({ message: err })
     }
   })
+
+  router.delete('/orders/:id', async (req, res) => {
+    console.log(req.params.id)
+    try{
+      const deleteOrder = await Orders.findByIdAndDelete(req.params.id)
+      if(deleteOrder){
+        res.json({
+          message: "Order deleted"
+        })
+      }
+    }catch(err){
+      console.log(err)
+    }
+  
+  })
+  
   module.exports=router;
