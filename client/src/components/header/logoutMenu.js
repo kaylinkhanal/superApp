@@ -10,14 +10,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginDetails } from "../../redux/reducers/userSlice";
-const settings = ["Profile", "Account", "My Orders", "Logout"];
+import { resetLoginDetails, setLoginDetails } from "../../redux/reducers/userSlice";
+const settings = ["Profile", "Account", "My Orders", "Switch User", "Logout"];
 
 const Logout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLoggedIn, username } = useSelector((state) => state.user);
-    console.log(username)
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -25,11 +24,19 @@ const Logout = () => {
     };
 
     const handleCloseUserMenu = (e) => {
+        console.log(e.target.textContent)
         debugger;
         if (e.target.textContent == "Logout") {
             dispatch(setLoginDetails(''));
             navigate("/")
+        } else if (e.target.textContent == "Switch User") {
+            dispatch(resetLoginDetails())
+            navigate("/")
         }
+
+        // if (e.target.textContent == "Switch User") {
+        //     dispatch(setIsFirstTimeUser(true));
+        // }
 
         setAnchorElUser(null);
     };

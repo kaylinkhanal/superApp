@@ -31,9 +31,17 @@ const userSlice = createSlice({
         state.username = username
       }
       state.isLoggedIn = !state.isLoggedIn
+    },
+    resetLoginDetails: (state) => {
+      state.token = ''
+      state.id = ''
+      state.username = ''
+      state.userRole = ''
+      state.isLoggedIn = !state.isLoggedIn
+      state.firstTimeUser = true
     }
   }
 });
 
-export const { assignUserRole, setIsFirstTimeUser, setLoginDetails } = userSlice.actions;
+export const { assignUserRole, setIsFirstTimeUser, setLoginDetails, resetLoginDetails } = userSlice.actions;
 export default userSlice.reducer;

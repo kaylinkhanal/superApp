@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import { useSelector , useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Alert, AlertTitle, Dialog, DialogTitle, DialogContent, Button, DialogContentText, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -74,45 +74,45 @@ const MySelect = ({ label, ...props }) => {
 
 
 const OrdersCard = (props) => {
-  const [isEdit, setIsEdit] = useState(false)
+	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
 	const dispatch = useDispatch()
 
 	const { ordersDetails } = useSelector(state => state.location)
-  const { id } = useSelector(state => state.user)
-  const confirmDelete = async (orderId) => {
-    const res = await axios.delete(`http://localhost:5000/orders/${orderId}`)
-    if(res) props.fetchOrders() 
-    setIsDeleteConfirmPopup(false)
-  }
-  
-  const handleClose =()=>{
-    setIsDeleteConfirmPopup(false)
-  }
+	const { id } = useSelector(state => state.user)
+	const confirmDelete = async (orderId) => {
+		const res = await axios.delete(`http://localhost:5000/orders/${orderId}`)
+		if (res) props.fetchOrders()
+		setIsDeleteConfirmPopup(false)
+	}
+
+	const handleClose = () => {
+		setIsDeleteConfirmPopup(false)
+	}
 	return (
 		<>
 			<div className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
-						<button className='random_btn' onClick={()=> setIsDeleteConfirmPopup(true)}><DeleteOutlineOutlinedIcon /></button>
+						<button className='random_btn' onClick={() => setIsDeleteConfirmPopup(true)}><DeleteOutlineOutlinedIcon /></button>
 					</div>
 				}
-        <Dialog
-      open={isDeleteConfirmPopup}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description" 
-      color="warning"
-    >
-      <Alert color="warning" severity="warning">
-        <AlertTitle>Are you sure you want to Delete this item? </AlertTitle>
-        Deleting this item will cause <strong> irreversible</strong> changes
-        
-      </Alert>
-      <Button variant="contained" color="success" onClick={handleClose}>Close</Button>
-      <Button variant="contained" color="error" onClick={()=> confirmDelete(props.item._id)} autoFocus> DELETE </Button>
-    </Dialog>
+				<Dialog
+					open={isDeleteConfirmPopup}
+					onClose={handleClose}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+					color="warning"
+				>
+					<Alert color="warning" severity="warning">
+						<AlertTitle>Are you sure you want to Delete this item? </AlertTitle>
+						Deleting this item will cause <strong> irreversible</strong> changes
+
+					</Alert>
+					<Button variant="contained" color="success" onClick={handleClose}>Close</Button>
+					<Button variant="contained" color="error" onClick={() => confirmDelete(props.item._id)} autoFocus> DELETE </Button>
+				</Dialog>
 				<div className="order_content">
 					{isEdit ?
 						<Formik
@@ -172,8 +172,6 @@ const OrdersCard = (props) => {
 							<p><i><BookmarkBorderOutlinedIcon /></i> <span>{props.item.category}</span></p>
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>
-							<p><ContactPageOutlinedIcon /> <span>{props.item.receiverName}</span></p>
-							<p><PhoneIphoneOutlinedIcon /> <span>{props.item.receiverPhoneNumber}</span></p>
 							<p><CalendarMonthOutlinedIcon /> <span>{props.item.pickupDate}</span></p>
 						</>
 					}

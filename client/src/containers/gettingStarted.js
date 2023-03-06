@@ -8,7 +8,7 @@ const GettingStarted = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const assignVisitor = () => {
-		dispatch(setIsFirstTimeUser())
+		dispatch(setIsFirstTimeUser(false))
 		navigate('/')
 	}
 	return (

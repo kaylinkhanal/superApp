@@ -497,12 +497,13 @@ input:focus {
 }
 
 .orders span{
-  font-size: 16px;
+  font-size: 14px;
     margin-left: 15px;
 }
 
 .orders svg{
-  font-size: 20px;
+  font-size: 18px;
+    height: 17px;
 }
 
 .orders:hover .update_field{
