@@ -42,7 +42,7 @@ const SendOrders = () => {
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
 	const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
 
-	const { isLoggedIn } = useSelector((state) => state.user);
+	const { isLoggedIn, userRole } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -130,48 +130,50 @@ const SendOrders = () => {
 			<Logout />
 
 			<div className="location_map">
-				<div className="location_form">
-					{isSenderFormActive ? (
-						<>
-							<button onClick={() => navigate("/")}><ArrowBack /></button>
-							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
-							<Autocomplete key={1} id={1} className="autofill">
-								<input
-									placeholder="Sender address"
-									value={senderAddress}
-									onChange={(e) => setSenderAddress(e.target.value)}
-								/>
-							</Autocomplete>
+				{userRole === 'user' &&
+					<div className="location_form">
+						{isSenderFormActive ? (
+							<>
+								<button onClick={() => navigate("/")}><ArrowBack /></button>
+								<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
+								<Autocomplete key={1} id={1} className="autofill">
+									<input
+										placeholder="Sender address"
+										value={senderAddress}
+										onChange={(e) => setSenderAddress(e.target.value)}
+									/>
+								</Autocomplete>
 
-						</>
-					) : (
-						<>
-							<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
-							<button onClick={() => { handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
-							<Autocomplete key={2} id={2} className="autofill">
+							</>
+						) : (
+							<>
+								<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
+								<button onClick={() => { handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
+								<Autocomplete key={2} id={2} className="autofill">
+									<input
+										value={receiverAddress}
+										onChange={(e) => setReceiverAddress(e.target.value)}
+										placeholder="Receiver's address"
+									/>
+								</Autocomplete>
 								<input
-									value={receiverAddress}
-									onChange={(e) => setReceiverAddress(e.target.value)}
-									placeholder="Receiver's address"
+									placeholder="Receiver's Name"
+									value={receiverName}
+									onChange={(e) => setReceiverName(e.target.value)}
 								/>
-							</Autocomplete>
-							<input
-								placeholder="Receiver's Name"
-								value={receiverName}
-								onChange={(e) => setReceiverName(e.target.value)}
-							/>
-							<input placeholder="Receiver's Phone Number"
-								value={receiverPhoneNumber}
-								onChange={(e) => setReceiverPhoneNumber(e.target.value)}
-							/>
+								<input placeholder="Receiver's Phone Number"
+									value={receiverPhoneNumber}
+									onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+								/>
 
-						</>
-					)}
-				</div>
+							</>
+						)}
+					</div>
+				}
 
 				{isLoggedIn &&
 					<>
-						<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
+						<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen && userRole === 'user' ? 'Check your orders' : !isOrderListOpen && userRole === 'rider' ? 'All Orders' : 'Close'}</span></button>
 						<div style={{ overflow: 'hidden' }}>
 							<div className="order_list" style={!isOrderListOpen ? {
 								transition: `transform 250ms ease-in-out`,

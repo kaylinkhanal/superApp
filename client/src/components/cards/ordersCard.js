@@ -16,6 +16,7 @@ import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { setAlertMessages } from "../../redux/reducers/notifySlice"
 import DeleteAlert from '../alerts/deleteAlert';
+import { setSelectedCardDetails } from '../../redux/reducers/orderSlice';
 
 
 const MyTextInput = ({ label, ...props }) => {
@@ -72,9 +73,6 @@ const MySelect = ({ label, ...props }) => {
 	);
 };
 
-
-
-
 const OrdersCard = (props) => {
 	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
@@ -93,7 +91,7 @@ const OrdersCard = (props) => {
 	}
 	return (
 		<>
-			<div className="orders" >
+			<div className="orders" onClick={() => dispatch(setSelectedCardDetails(props.item))}>
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>

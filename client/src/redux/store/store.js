@@ -6,6 +6,7 @@ import locationSlice from "../reducers/locationSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import logger from "redux-logger";
 import notifySlice from "../reducers/notifySlice";
+import orderSlice from "../reducers/orderSlice";
 const persistConfig = {
   key: "root",
   storage,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   user: userSlice,
   location: locationSlice,
   notify: notifySlice,
+  order: orderSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
