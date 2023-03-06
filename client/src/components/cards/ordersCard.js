@@ -15,6 +15,8 @@ import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
 import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { setAlertMessages } from "../../redux/reducers/notifySlice"
+import DeleteAlert from '../alerts/deleteAlert';
+
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -98,21 +100,7 @@ const OrdersCard = (props) => {
 						<button className='random_btn' onClick={() => setIsDeleteConfirmPopup(true)}><DeleteOutlineOutlinedIcon /></button>
 					</div>
 				}
-				<Dialog
-					open={isDeleteConfirmPopup}
-					onClose={handleClose}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-					color="warning"
-				>
-					<Alert color="warning" severity="warning">
-						<AlertTitle>Are you sure you want to Delete this item? </AlertTitle>
-						Deleting this item will cause <strong> irreversible</strong> changes
-
-					</Alert>
-					<Button variant="contained" color="success" onClick={handleClose}>Close</Button>
-					<Button variant="contained" color="error" onClick={() => confirmDelete(props.item._id)} autoFocus> DELETE </Button>
-				</Dialog>
+				<DeleteAlert confirmDelete={confirmDelete} handleClose={handleClose} isDeleteConfirmPopup={isDeleteConfirmPopup} itemId={props.item._id} />
 				<div className="order_content">
 					{isEdit ?
 						<Formik
