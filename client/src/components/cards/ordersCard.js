@@ -95,6 +95,7 @@ const OrdersCard = (props) => {
 									dispatch(setAlertMessages(res.data.message))
 								}
 								setIsEdit()
+								props.fetchOrders()
 							}}
 						>
 
