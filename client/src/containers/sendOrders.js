@@ -41,7 +41,7 @@ const SendOrders = () => {
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
 	const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
 
-	const { isLoggedIn } = useSelector((state) => state.user);
+	const { isLoggedIn, userRole } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -103,68 +103,99 @@ const SendOrders = () => {
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
+	const CustomMarker = (props) => {
+		return (
+			<Marker
+				draggable={props.draggable}
+				onDragEnd={(e) => props.label == 'sender' ? assignSenderLocation(e) : assignReceiverLocation(e)}
+				icon={props.icon}
+				position={props.position}
+			/>
+		)
+	}
+
 
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-				{isSenderFormActive ? (
-					<Marker
+				{isSenderFormActive && userRole !== 'rider' ? (
+					<CustomMarker
 						draggable={true}
-						onDragEnd={(e) => assignSenderLocation(e)}
+						label="sender"
 						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
 						position={senderCoordinates.lat ? senderCoordinates : center}
 					/>
 				) : (
-					<Marker
+					<CustomMarker
+						label="receiver"
 						draggable={true}
-						onDragEnd={(e) => assignReceiverLocation(e)}
 						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
 						position={receiverCoordinates.lat ? receiverCoordinates : center}
 					/>
 				)}
 
+				{userRole === 'rider' &&
+					<>
+						<CustomMarker
+							label="sender"
+							draggable={false}
+							icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+							position={senderCoordinates.lat ? senderCoordinates : center}
+						/>
+
+						<CustomMarker
+							label="receiver"
+							draggable={false}
+							icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+							position={receiverCoordinates.lat ? receiverCoordinates : center}
+						/>
+					</>
+				}
+
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
 
 			<div className="location_map">
-				<div className="location_form">
-					{isSenderFormActive ? (
-						<>
-							<button onClick={() => navigate("/")}><ArrowBack /></button>
-							<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
-							<Autocomplete key={1} id={1} className="autofill">
-								<input
-									placeholder="Sender address"
-									value={senderAddress}
-									onChange={(e) => setSenderAddress(e.target.value)}
-								/>
-							</Autocomplete>
+				{userRole === 'user' &&
+					<div className="location_form">
+						{isSenderFormActive ? (
+							<>
+								<button onClick={() => navigate("/")}><ArrowBack /></button>
+								<button onClick={() => setIsSenderFormActive(false)}><ArrowForwardOutlinedIcon /></button>
+								<Autocomplete key={1} id={1} className="autofill">
+									<input
+										placeholder="Sender address"
+										value={senderAddress}
+										onChange={(e) => setSenderAddress(e.target.value)}
+									/>
+								</Autocomplete>
 
-						</>
-					) : (
-						<>
-							<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
-							<button onClick={() => { handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
-							<Autocomplete key={2} id={2} className="autofill">
+							</>
+						) : (
+							<>
+								<button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
+								<button onClick={() => { handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
+								<Autocomplete key={2} id={2} className="autofill">
+									<input
+										value={receiverAddress}
+										onChange={(e) => setReceiverAddress(e.target.value)}
+										placeholder="Receiver's address"
+									/>
+								</Autocomplete>
 								<input
-									value={receiverAddress}
-									onChange={(e) => setReceiverAddress(e.target.value)}
-									placeholder="Receiver's address"
+									placeholder="Receiver's Name"
+									value={receiverName}
+									onChange={(e) => setReceiverName(e.target.value)}
 								/>
-							</Autocomplete>
-							<input
-								placeholder="Receiver's Name"
-								value={receiverName}
-								onChange={(e) => setReceiverName(e.target.value)}
-							/>
-							<input placeholder="Receiver's Phone Number"
-								value={receiverPhoneNumber}
-								onChange={(e) => setReceiverPhoneNumber(e.target.value)}
-							/>
+								<input placeholder="Receiver's Phone Number"
+									value={receiverPhoneNumber}
+									onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+								/>
 
-						</>
-					)}
-				</div>
+							</>
+						)}
+					</div>
+				}
 
 				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
 				<div style={{ overflow: 'hidden' }}>
