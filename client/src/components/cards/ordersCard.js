@@ -91,7 +91,7 @@ const OrdersCard = (props) => {
   }
 	return (
 		<>
-			<div className="orders" >
+			<div onClick={()=>alert(JSON.stringify(props))} className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
@@ -120,9 +120,9 @@ const OrdersCard = (props) => {
 							onSubmit={async (values) => {
 								const formFields = { ...ordersDetails, ...values, senderId: id }
 								const res = await axios.put(`http://localhost:5000/orders`, formFields)
-								console.log(res)
 								if (res.status && res.data.message && isEdit) {
 									dispatch(setAlertMessages(res.data.message))
+									await props.fetchOrders()
 								}
 								setIsEdit()
 							}}
@@ -164,7 +164,7 @@ const OrdersCard = (props) => {
 								</MySelect>
 
 								<button style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0, marginRight: '5px' }} type="submit"><span>Save</span></button>
-								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} type="submit"><span>cancle</span></button>
+								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} ><span>cancle</span></button>
 							</Form>
 						</Formik> :
 

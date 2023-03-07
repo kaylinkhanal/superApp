@@ -5,7 +5,7 @@ import CustomCard from "../components/cards/customCard";
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
 
-const Home = () => {
+const Roles = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const assignRole = (role) => {
@@ -25,4 +25,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default Roles;
