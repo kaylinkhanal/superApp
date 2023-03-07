@@ -28,7 +28,7 @@ const Login = () => {
   let { state } = useLocation()
   const triggerLogin = async values => {
     try {
-      const res = await axios.post(`http://localhost:8000/login`, {
+      const res = await axios.post(`http://localhost:5000/login`, {
         ...values,
         userRole
       })

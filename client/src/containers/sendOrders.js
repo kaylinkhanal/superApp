@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
-import { Scrollbars } from 'react-custom-scrollbars-2';
+
+
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -174,9 +175,8 @@ const SendOrders = () => {
 						transition: `transform 250ms ease-in-out`,
 						transform: "translateY(0)"
 					}}>
-						<Scrollbars style={{ height: 300, borderRadius: '10px' }} >
 							<OrderList />
-						</Scrollbars>
+				
 					</div>
 				</div>
 			</div>
