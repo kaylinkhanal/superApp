@@ -1,12 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   isApiSuccessMsgOpen: false,
-  apiSuccessMessage: ''
-};
+  apiSuccessMessage: '',
+  apiResIsSuccess: Boolean
+}
 
 const notifySlice = createSlice({
-  name: "notify",
+  name: 'notify',
   initialState,
   reducers: {
     setAlertMessages: (state, actions) => {
@@ -16,9 +17,16 @@ const notifySlice = createSlice({
     resetAlertMessages: (state, actions) => {
       state.apiSuccessMessage = ''
       state.isApiSuccessMsgOpen = false
+    },
+    apiResStatus: (state, actions) => {
+      state.apiResIsSuccess = actions.payload
     }
   }
-});
+})
 
-export const { setAlertMessages,resetAlertMessages } = notifySlice.actions;
-export default notifySlice.reducer;
+export const {
+  setAlertMessages,
+  resetAlertMessages,
+  apiResStatus
+} = notifySlice.actions
+export default notifySlice.reducer
