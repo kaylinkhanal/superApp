@@ -42,7 +42,7 @@ const SendOrders = () => {
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
 	const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
 
-	const { isLoggedIn } = useSelector((state) => state.user);
+	const { isLoggedIn ,userRole} = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -104,25 +104,51 @@ const SendOrders = () => {
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-
+	const CustomMarker = (props)=> {
+		return (
+			<Marker
+				draggable={props.draggable}
+				onDragEnd={(e) => props.label == 'sender' ? assignSenderLocation(e) : assignReceiverLocation(e)}
+				icon={props.icon}
+				position={props.position}
+			/>
+		)
+	}
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-				{isSenderFormActive ? (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignSenderLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
+				{userRole === 'rider' && (
+					<>
+					<CustomMarker 
+					label="sender"
+					draggable={false} 
+					icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+					position={senderCoordinates.lat ? senderCoordinates : center}
 					/>
-				) : (
-					<Marker
-						draggable={true}
-						onDragEnd={(e) => assignReceiverLocation(e)}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
+					<CustomMarker 
+					label="rider"
+					draggable={false} 
+					icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+					position={receiverCoordinates.lat ? receiverCoordinates : center}
 					/>
+					</>
 				)}
+
+			{userRole !== 'rider' && isSenderFormActive ?  (
+					<CustomMarker 
+					label="sender"
+					draggable={true} 
+					icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+					position={senderCoordinates.lat ? senderCoordinates : center}
+					/>
+			):(
+			<CustomMarker 
+					label="rider"
+					draggable={true} 
+					icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+					position={receiverCoordinates.lat ? receiverCoordinates : center}
+					/>
+			)}
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>

@@ -16,6 +16,8 @@ import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
 import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { setAlertMessages,apiResStatus } from "../../redux/reducers/notifySlice"
+import { setOrdersDetails } from "../../redux/reducers/orderSlice"
+
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -92,7 +94,7 @@ const OrdersCard = (props) => {
   }
 	return (
 		<>
-			<div onClick={()=>alert(JSON.stringify(props))} className="orders" >
+			<div onClick={()=>dispatch(setOrdersDetails(props.item))} className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
