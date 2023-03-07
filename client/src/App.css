@@ -541,3 +541,8 @@ input:focus {
   top: 50%;
   left: 50%;
 }
+
+.gm-style .gm-style-iw-tc,
+.gm-style .gm-style-iw-c{
+  top: -40px
+}
