@@ -113,28 +113,10 @@ const SendOrders = () => {
 			/>
 		)
 	}
-
-
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-				{isSenderFormActive && userRole !== 'rider' ? (
-					<CustomMarker
-						draggable={true}
-						label="sender"
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
-					/>
-				) : (
-					<CustomMarker
-						label="receiver"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-				)}
-
-				{userRole === 'rider' &&
+				{userRole === 'rider' && (
 					<>
 						<CustomMarker
 							label="sender"
@@ -142,15 +124,30 @@ const SendOrders = () => {
 							icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
 							position={senderCoordinates.lat ? senderCoordinates : center}
 						/>
-
 						<CustomMarker
-							label="receiver"
+							label="rider"
 							draggable={false}
 							icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
 							position={receiverCoordinates.lat ? receiverCoordinates : center}
 						/>
 					</>
-				}
+				)}
+
+				{userRole !== 'rider' && isSenderFormActive ? (
+					<CustomMarker
+						label="sender"
+						draggable={true}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+						position={senderCoordinates.lat ? senderCoordinates : center}
+					/>
+				) : (
+					<CustomMarker
+						label="rider"
+						draggable={true}
+						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+						position={receiverCoordinates.lat ? receiverCoordinates : center}
+					/>
+				)}
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
@@ -207,7 +204,6 @@ const SendOrders = () => {
 						transform: "translateY(0)"
 					}}>
 						<OrderList />
-
 					</div>
 				</div>
 			</div>

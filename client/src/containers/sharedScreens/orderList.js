@@ -10,7 +10,6 @@ const OrderList = () => {
     const { id, userRole } = useSelector(state => state.user)
     const [orderList, setOrderList] = useState([])
     const [totalItem, setTotalItem] = useState(0)
-    const [page, setPage] = useState(1)
     const fetchOrders = async (page) => {
         let res
         if (userRole == 'rider') {
@@ -20,16 +19,11 @@ const OrderList = () => {
         }
         setOrderList(res.data?.ordersList)
         setTotalItem(res.data?.totalItem)
-        setPage(page)
     }
     useEffect(() => {
         //we fetch list of orders in the initial load
         fetchOrders('1')
     }, [])
-
-    const handleChangePage = (e, page) => {
-        setPage(page)
-    }
 
     return (
         <div>
@@ -38,9 +32,8 @@ const OrderList = () => {
                     return <OrdersCard item={item} fetchOrders={fetchOrders} />
                 })}
             </Scrollbars>
-            <h1>current page is {page}</h1>
             <Stack spacing={2}>
-                <Pagination count={totalItem} onChange={(e) => fetchOrders(e.target.textContent)} size="small" onChangePage={handleChangePage} />
+                <Pagination count={totalItem} onChange={(e) => fetchOrders(e.target.textContent)} size="small" />
             </Stack>
         </div>
     )

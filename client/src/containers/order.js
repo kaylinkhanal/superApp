@@ -83,9 +83,8 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector((state) => state.location)
-
-	const { id } = useSelector((state) => state.user)
+	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
+	const { id } = useSelector(state => state.user)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	return (
@@ -118,7 +117,7 @@ const Order = () => {
 								'Electronics',
 								'HomeAppliance',
 								'Food',
-								'Jewelry',
+								'Jewelry'
 							],
 							'Invalid Item Type'
 						)
@@ -127,15 +126,12 @@ const Order = () => {
 						// specify the set of valid values for job type
 						// @see http://bit.ly/yup-mixed-oneOf
 						.oneOf(['Morning', 'Afternoon'], 'Invalid Time ')
-						.required(),
+						.required()
 				})}
 				onSubmit={async (values, { setSubmitting }) => {
+					const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates, senderCoordinates }
+					const res = await axios.post(`http://localhost:5000/orders`, formFields)
 
-					const formFields = { ...ordersDetails, ...values, senderId: id, senderCoordinates, receiverCoordinates }
-					const res = await axios.post(
-						`http://localhost:5000/orders`,
-						formFields
-					)
 					console.log(res)
 					console.log(res.data)
 
