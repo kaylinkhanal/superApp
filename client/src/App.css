@@ -465,10 +465,17 @@ input:focus {
 .location_form button {
   border-color: transparent;
     cursor: pointer;
-    color: #a82973;
     background: transparent;
     margin: 0 10px 5px 0;
     border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #ffab9d;
+    color: #000;
+}
+
+.location_form button svg{
+  font-size: 18px;
 }
 
 .orders {
