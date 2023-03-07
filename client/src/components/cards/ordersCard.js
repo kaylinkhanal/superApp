@@ -6,6 +6,7 @@ import { useSelector , useDispatch} from "react-redux";
 import { Alert, AlertTitle, Dialog, DialogTitle, DialogContent, Button, DialogContentText, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
@@ -14,7 +15,7 @@ import ScaleOutlinedIcon from '@mui/icons-material/ScaleOutlined';
 import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
 import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import { setAlertMessages } from "../../redux/reducers/notifySlice"
+import { setAlertMessages,apiResStatus } from "../../redux/reducers/notifySlice"
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -122,6 +123,7 @@ const OrdersCard = (props) => {
 								const res = await axios.put(`http://localhost:5000/orders`, formFields)
 								if (res.status && res.data.message && isEdit) {
 									dispatch(setAlertMessages(res.data.message))
+									dispatch(apiResStatus(true))
 									await props.fetchOrders()
 								}
 								setIsEdit()

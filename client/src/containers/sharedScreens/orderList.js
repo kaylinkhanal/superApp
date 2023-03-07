@@ -10,7 +10,6 @@ const OrderList = () => {
     const { id, userRole } = useSelector(state => state.user)
     const [orderList, setOrderList] = useState([])
     const [totalItem, setTotalItem] = useState(0)
-
     const fetchOrders = async (page) => {
         let res
         if(userRole== 'rider'){
