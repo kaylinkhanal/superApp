@@ -525,6 +525,10 @@ input:focus {
   font-size: 14px;
 }
 
+.delete-alert button{
+  color: #000;
+}
+
 .loadingAnimation {
   position: absolute;
   top: 50%;

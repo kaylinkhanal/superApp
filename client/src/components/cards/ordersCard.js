@@ -11,6 +11,7 @@ import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import ScaleOutlinedIcon from '@mui/icons-material/ScaleOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { setAlertMessages, apiResStatus } from "../../redux/reducers/notifySlice"
+import { setOrdersDetails } from "../../redux/reducers/orderSlice"
 import DeleteAlert from '../alerts/deleteAlert';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -86,7 +87,7 @@ const OrdersCard = (props) => {
 	}
 	return (
 		<>
-			<div onClick={() => alert(JSON.stringify(props))} className="orders" >
+			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
