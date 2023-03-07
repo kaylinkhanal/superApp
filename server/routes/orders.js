@@ -1,6 +1,8 @@
 const express=require('express')
 const router=express.Router()
 const Orders = require("../models/orders")
+const {DateTime} = require("luxon")
+
 router.post('/orders', async (req, res) => {
     try {
       //condt newOrders = await Orders.create(req.body)
@@ -20,9 +22,16 @@ router.post('/orders', async (req, res) => {
     try {
       const ordersList = await Orders.find()
       if (ordersList) {
+        ordersList.map((item) => {
+          console.log(item.pickupDate.toLocaleDateString())
+          item.pickupDate = item.pickupDate.toLocaleDateString()
+          console.log(item.pickupDate)
+          
+        })
         res.status(200).json({ ordersList })
       }
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: err })
     }
   })
