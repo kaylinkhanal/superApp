@@ -166,7 +166,7 @@ const OrdersCard = (props) => {
 								</MySelect>
 
 								<button style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0, marginRight: '5px' }} type="submit"><span>Save</span></button>
-								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} ><span>cancle</span></button>
+								<button onClick={() => setIsEdit()} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} ><span>cancle</span></button>
 							</Form>
 						</Formik> :
 

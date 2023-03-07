@@ -41,7 +41,6 @@ const NavBar = () => {
   const handleCloseUserMenu = (e) => {
     debugger;
     if (e.target.textContent == "Logout") {
-      dispatch(setLoginDetails());
       navigate("/")
     }
 
@@ -148,7 +147,9 @@ const NavBar = () => {
                 ) : (
                   <LoginIcon
                     onClick={() =>
-                      navigate("/login")
+                      dispatch(setLoginDetails())
+
+                      // navigate("/login")
                     }
                   />
                 )}
