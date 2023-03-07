@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import { style } from "@mui/system";
 
 
 const containerStyle = {
@@ -104,7 +105,7 @@ const SendOrders = () => {
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-
+	
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
@@ -166,7 +167,10 @@ const SendOrders = () => {
 					)}
 				</div>
 
-				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
+				{ <div>{isLoggedIn ? <button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>:<h1></h1>}</div> }
+
+				 {/* {<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>} */}
+					 
 				<div style={{ overflow: 'hidden' }}>
 					<div className="order_list" style={!isOrderListOpen ? {
 						transition: `transform 250ms ease-in-out`,
@@ -180,6 +184,7 @@ const SendOrders = () => {
 					</div>
 				</div>
 			</div>
+			
 
 		</>
 	) : (
