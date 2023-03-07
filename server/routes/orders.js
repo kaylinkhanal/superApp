@@ -18,24 +18,35 @@ router.post('/orders', async (req, res) => {
   
   router.get('/orders', async (req, res) => {
     try {
-      const ordersList = await Orders.find()
-      if (ordersList) {
-        res.status(200).json({ ordersList })
+      const skipStartPages = req.query.size * (req.query.page -1)
+      let totalItem = await Orders.find().count()
+      if(totalItem % req.query.size != 0){
+        totalItem = Math.ceil((totalItem / req.query.size))
+      }else{
+        totalItem = (totalItem / req.query.size) 
       }
+      //we find all the orders for that particular user who requested the orders list 
+      const ordersList = await Orders.find().skip(skipStartPages).limit(req.query.size)
+      res.json({ordersList,totalItem})
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: err })
     }
   })
   
   router.get('/orders/:senderId', async (req, res) => {
     try {
-      //we find all the orders for that particular user who requested the orders list 
-      const ordersList = await Orders.find({ senderId: req.params.senderId })
-      if (ordersList) {
-        res.json({
-          ordersList
-        })
+      const skipStartPages = req.query.size * (req.query.page -1)
+      let totalItem = await Orders.find().count()
+      if(totalItem % req.query.size != 0){
+        totalItem = Math.ceil((totalItem / req.query.size))
+      }else{
+        totalItem = (totalItem / req.query.size) 
       }
+    
+      //we find all the orders for that particular user who requested the orders list 
+      const ordersList = await Orders.find({ senderId: req.params.senderId }).skip(skipStartPages).limit(req.query.size)
+      res.json({ordersList,totalItem})
     } catch (err) {
       res.status(500).json({ message: err })
     }
@@ -56,7 +67,6 @@ router.post('/orders', async (req, res) => {
   })
 
   router.delete('/orders/:id', async (req, res) => {
-    console.log(req.params.id)
     try{
       const deleteOrder = await Orders.findByIdAndDelete(req.params.id)
       if(deleteOrder){

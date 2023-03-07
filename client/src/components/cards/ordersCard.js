@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { Formik, Form, useField } from "formik";
-import * as Yup from "yup";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { Alert, AlertTitle, Dialog, DialogTitle, DialogContent, Button, DialogContentText, DialogActions } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import ScaleOutlinedIcon from '@mui/icons-material/ScaleOutlined';
-import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
-import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import { setAlertMessages } from "../../redux/reducers/notifySlice"
+import { setAlertMessages, apiResStatus } from "../../redux/reducers/notifySlice"
 import DeleteAlert from '../alerts/deleteAlert';
-
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -73,8 +68,6 @@ const MySelect = ({ label, ...props }) => {
 };
 
 
-
-
 const OrdersCard = (props) => {
 	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
@@ -93,7 +86,7 @@ const OrdersCard = (props) => {
 	}
 	return (
 		<>
-			<div className="orders" >
+			<div onClick={() => alert(JSON.stringify(props))} className="orders" >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
@@ -108,9 +101,10 @@ const OrdersCard = (props) => {
 							onSubmit={async (values) => {
 								const formFields = { ...ordersDetails, ...values, senderId: id }
 								const res = await axios.put(`http://localhost:5000/orders`, formFields)
-								console.log(res)
 								if (res.status && res.data.message && isEdit) {
 									dispatch(setAlertMessages(res.data.message))
+									dispatch(apiResStatus(true))
+									await props.fetchOrders()
 								}
 								setIsEdit()
 							}}
@@ -152,7 +146,7 @@ const OrdersCard = (props) => {
 								</MySelect>
 
 								<button style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0, marginRight: '5px' }} type="submit"><span>Save</span></button>
-								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} type="submit"><span>cancle</span></button>
+								<button onClick={() => isEdit} style={{ padding: '10px 20px', color: '#fff', background: '#a82973', border: 0 }} ><span>cancle</span></button>
 							</Form>
 						</Formik> :
 
