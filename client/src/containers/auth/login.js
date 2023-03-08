@@ -45,6 +45,7 @@ const Login = () => {
         dispatch(apiResStatus(false))
       }
     } catch (err) {
+      dispatch(apiResStatus(false))
       dispatch(setAlertMessages(err.response.data.message))
     }
   }

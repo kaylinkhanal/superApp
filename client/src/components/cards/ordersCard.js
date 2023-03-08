@@ -76,6 +76,8 @@ const OrdersCard = (props) => {
 	const dispatch = useDispatch()
 
 	const { ordersDetails } = useSelector(state => state.location)
+	const { selectedCardDetails } = useSelector(state => state.order)
+
 	const { id } = useSelector(state => state.user)
 	const confirmDelete = async (orderId) => {
 		const res = await axios.delete(`http://localhost:5000/orders/${orderId}`)
@@ -88,7 +90,7 @@ const OrdersCard = (props) => {
 	}
 	return (
 		<>
-			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" >
+			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{backgroundColor: selectedCardDetails._id == props.item._id ? 'aqua': null}} >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
