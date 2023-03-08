@@ -16,7 +16,7 @@ const RiderMarker = () => {
     const { selectedCardDetails } = useSelector((state) => state.order)
     return (
         <div>
-            {userRole === 'rider' && (
+            {userRole === 'rider' && selectedCardDetails.senderCoordinates && (
                 <>
                     <InfoWindow
                         position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
