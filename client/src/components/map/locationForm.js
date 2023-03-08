@@ -15,6 +15,8 @@ const LocationForm = (props) => {
     const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
     const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
     const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
+
+
     return (
         <>
             {userRole === 'user' &&
@@ -27,30 +29,29 @@ const LocationForm = (props) => {
                                 <input
                                     placeholder="Sender address"
                                     value={senderAddress}
-                                    onChange={(e) => setSenderAddress(e.target.value)}
+                                    onChange={(e) => props.setSenderAddress(e.target.value)}
                                 />
                             </Autocomplete>
-
                         </>
                     ) : (
                         <>
-                            <button onClick={() => setIsSenderFormActive(true)}><ArrowBack /></button>
+                            <button onClick={() => props.setIsSenderFormActive(true)}><ArrowBack /></button>
                             <button onClick={() => { props.handleOrderNavigation(); }}><ArrowForwardOutlinedIcon /></button>
                             <Autocomplete key={2} id={2} className="autofill">
                                 <input
                                     value={receiverAddress}
-                                    onChange={(e) => setReceiverAddress(e.target.value)}
+                                    onChange={(e) => props.setReceiverAddress(e.target.value)}
                                     placeholder="Receiver's address"
                                 />
                             </Autocomplete>
                             <input
                                 placeholder="Receiver's Name"
                                 value={receiverName}
-                                onChange={(e) => setReceiverName(e.target.value)}
+                                onChange={(e) => props.setReceiverName(e.target.value)}
                             />
                             <input placeholder="Receiver's Phone Number"
                                 value={receiverPhoneNumber}
-                                onChange={(e) => setReceiverPhoneNumber(e.target.value)}
+                                onChange={(e) => props.setReceiverPhoneNumber(e.target.value)}
                             />
 
                         </>

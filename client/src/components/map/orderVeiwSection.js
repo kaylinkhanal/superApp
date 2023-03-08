@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import OrderList from "../../containers/sharedScreens/orderList"
 
 const OrderViewSection = () => {
+    const [isOrderListOpen, setIsOrderListOpen] = useState(false);
     return (
         <>
             <button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
