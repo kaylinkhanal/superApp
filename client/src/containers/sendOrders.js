@@ -17,7 +17,6 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
 
-
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
@@ -152,6 +151,7 @@ const SendOrders = () => {
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
 			<div className="location_map">
 				<div className="location_form">
 					{isSenderFormActive ? (
@@ -201,8 +201,8 @@ const SendOrders = () => {
 						transition: `transform 250ms ease-in-out`,
 						transform: "translateY(0)"
 					}}>
-							<OrderList />
-				
+						<OrderList />
+
 					</div>
 				</div>
 			</div>

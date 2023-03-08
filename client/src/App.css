@@ -106,6 +106,25 @@ header {
   box-shadow: none !important;
 }
 
+.logout{
+  position: absolute;
+    top: 10px;
+    right: 70px;
+}
+
+.logout button{
+  font-size: 14px;
+}
+
+.logout i{
+  font-size: 30px;
+background: rgba(255, 171, 157, 0.5);
+border-radius: 50%;
+margin-right: 5px;
+height: 30px;
+    width: 30px;
+}    
+
 /*landing page */
 .landing_pg{
   flex-direction: column
@@ -446,10 +465,17 @@ input:focus {
 .location_form button {
   border-color: transparent;
     cursor: pointer;
-    color: #a82973;
     background: transparent;
     margin: 0 10px 5px 0;
     border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #ffab9d;
+    color: #000;
+}
+
+.location_form button svg{
+  font-size: 18px;
 }
 
 .orders {
@@ -478,12 +504,13 @@ input:focus {
 }
 
 .orders span{
-  font-size: 16px;
+  font-size: 13px;
     margin-left: 15px;
 }
 
 .orders svg{
-  font-size: 20px;
+  font-size: 18px;
+    height: 17px;
 }
 
 .orders:hover .update_field{
@@ -503,6 +530,10 @@ input:focus {
   border-radius: 0;
   color: #fff;
   font-size: 14px;
+}
+
+.delete-alert button{
+  color: #000;
 }
 
 .loadingAnimation {
