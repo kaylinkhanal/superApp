@@ -83,7 +83,7 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-  const { ordersDetails } = useSelector(state => state.location)
+  const { ordersDetails,senderCoordinates,receiverCoordinates } = useSelector(state => state.location)
   const { id } = useSelector(state => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -129,7 +129,7 @@ const Order = () => {
             .required()
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          const formFields = { ...ordersDetails, ...values, senderId: id }
+          const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates,senderCoordinates }
           const res = await axios.post(
             `http://localhost:5000/orders`,
             formFields
