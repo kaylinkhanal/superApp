@@ -28,12 +28,10 @@ const Login = () => {
   let { state } = useLocation()
   const triggerLogin = async values => {
     try {
-      const res = await axios.post(`http://localhost:5000/login`, {
-        ...values,
-        userRole
-      })
+      const res = await axios.post(`http://localhost:5000/login`, { ...values, userRole })
+      console.log(res.data)
       if (res.status == 200) {
-        dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }))
+        dispatch(setLoginDetails({ id: res.data.id, token: res.data.token, username: res.data.username }))
         dispatch(setAlertMessages(res.data.message))
         dispatch(apiResStatus(true))
         if (state?.onSuccessNavigation === '/order') {

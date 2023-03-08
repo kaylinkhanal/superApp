@@ -546,3 +546,7 @@ input:focus {
 .gm-style .gm-style-iw-c{
   top: -40px
 }
+
+.gm-style-iw.gm-style-iw-c {
+  max-width: 250px !important;
+}

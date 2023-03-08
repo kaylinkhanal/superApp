@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { assignUserRole } from "../redux/reducers/userSlice";
-import CustomCard from "../components/cards/customCard";
+import { assignUserRole } from "../../redux/reducers/userSlice";
+import CustomCard from "../../components/cards/customCard";
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
 

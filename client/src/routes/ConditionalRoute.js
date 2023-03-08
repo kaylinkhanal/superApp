@@ -1,20 +1,20 @@
 import { Routes, Route } from "react-router-dom";
 import GettingStarted from "../containers/gettingStarted";
 import Home from "../containers/home";
-import Roles from "../containers/roles";
-import SendOrders from "../containers/sendOrders";
+import Roles from "../containers/sharedScreens/roles";
+import SendOrders from "../containers/user/sendOrders";
 import RiderHome from "../containers/rider/riderHome";
 import Login from "../containers/auth/login";
 import Register from "../containers/auth/register";
-import Order from "../containers/order";
+import Order from "../containers/user/order";
 
 import { useSelector } from "react-redux";
 
 const ConditionalRoute = () => {
   const { userRole, firstTimeUser, token } = useSelector((state) => state.user);
-  if (userRole === "rider" ) {
+  if (userRole === "rider") {
     return <RiderRoutes />;
-  } else if (userRole === "user" ) {
+  } else if (userRole === "user") {
     return <UserRoutes />;
   } else if (firstTimeUser) {
     return <FirstUserRoutes />;
@@ -48,7 +48,7 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-  
+
     </Routes>
   );
 };
