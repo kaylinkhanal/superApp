@@ -2,21 +2,17 @@ import React, { useState, useRef } from "react";
 import {
 	GoogleMap,
 	useJsApiLoader,
-	Marker,
 	Autocomplete,
-	InfoWindow
 } from "@react-google-maps/api";
-import {
-	setSenderCoordinates,
-	setReceiverCoordinates,
-	setOrdersDetails,
-} from "../redux/reducers/locationSlice";
-import OrderList from "./sharedScreens/orderList"
+import { setOrdersDetails } from "../../redux/reducers/locationSlice";
+import OrderList from "../sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import LoadingCircle from "../components/loadingCircle";
+
+import LoadingCircle from "../../components/loadingCircle";
+import UserMarker from "../../components/map/userMarker";
+import RiderMarker from "../../components/map/riderMarker";
+import LocationForm from "../../components/map/locationForm";
 
 const containerStyle = {
 	width: "100%",
@@ -29,10 +25,9 @@ const center = {
 };
 
 const SendOrders = () => {
-	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
-	const { selectedCardDetails } = useSelector((state) => state.order)
+	const { ordersDetails } = useSelector((state) => state.location);
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
-	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole=='rider'? false: true);
+	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
@@ -67,27 +62,27 @@ const SendOrders = () => {
 		setMap(null);
 	}, []);
 
-	const assignSenderLocation = (e) => {
-		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-		dispatch(setSenderCoordinates(cordinates));
-		fetch(
-			`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
-		)
-			.then((res) => res.json())
-			.then((data) => setSenderAddress(data.features[0].properties.formatted));
-	};
+	// const assignSenderLocation = (e) => {
+	// 	const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+	// 	dispatch(setSenderCoordinates(cordinates));
+	// 	fetch(
+	// 		`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+	// 	)
+	// 		.then((res) => res.json())
+	// 		.then((data) => setSenderAddress(data.features[0].properties.formatted));
+	// };
 
-	const assignReceiverLocation = (e) => {
-		const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-		dispatch(setReceiverCoordinates(cordinates));
-		fetch(
-			`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
-		)
-			.then((res) => res.json())
-			.then((data) =>
-				setReceiverAddress(data.features[0].properties.formatted)
-			);
-	};
+	// const assignReceiverLocation = (e) => {
+	// 	const cordinates = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+	// 	dispatch(setReceiverCoordinates(cordinates));
+	// 	fetch(
+	// 		`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latLng.lat()}&lon=${e.latLng.lng()}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+	// 	)
+	// 		.then((res) => res.json())
+	// 		.then((data) =>
+	// 			setReceiverAddress(data.features[0].properties.formatted)
+	// 		);
+	// };
 
 	const handleOrderNavigation = () => {
 		dispatch(setOrdersDetails({ receiverAddress, senderAddress, receiverName, receiverPhoneNumber }))
@@ -99,77 +94,21 @@ const SendOrders = () => {
 	};
 
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-	const CustomMarker = (props) => {
-		return (
-			<Marker
-				draggable={props.draggable}
-				onDragEnd={(e) => props.label == 'sender' ? assignSenderLocation(e) : assignReceiverLocation(e)}
-				icon={props.icon}
-				position={props.position}
-			/>
-		)
-	}
+
 
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-				{userRole === 'rider' && (
-					<>
-						<InfoWindow
-							position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-								<p>{selectedCardDetails?.senderAddress}</p>
-								<CustomMarker
-									label="sender"
-									draggable={false}
-									icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-								/>
-							</div>
-						</InfoWindow>
+				<RiderMarker />
 
-						<InfoWindow
-							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-								<p>{selectedCardDetails?.receiverAddress}</p>
-								<CustomMarker
-									label="rider"
-									draggable={false}
-									icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-								/>
-							</div>
-						</InfoWindow>
-					</>
-				)}
-
-				{userRole !== 'rider' && isSenderFormActive ? (
-					<CustomMarker
-						label="sender"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
-					/>
-				) : (
-					<>
-					{userRole !== 'rider' && (
-						<CustomMarker
-						label="rider"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-					)}
-					</>
-				)}
+				<UserMarker isSenderFormActive={isSenderFormActive} />
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
 
 			<div className="location_map">
-				{userRole === 'user' &&
+				<LocationForm isSenderFormActive={isSenderFormActive} handleOrderNavigation={handleOrderNavigation} />
+				{/* {userRole === 'user' &&
 					<div className="location_form">
 						{isSenderFormActive ? (
 							<>
@@ -208,7 +147,7 @@ const SendOrders = () => {
 							</>
 						)}
 					</div>
-				}
+				} */}
 
 				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
 				<div style={{ overflow: 'hidden' }}>

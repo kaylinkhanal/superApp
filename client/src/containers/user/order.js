@@ -5,12 +5,12 @@ import * as Yup from 'yup'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import NavBar from '../components/header/navBar'
+import NavBar from '../../components/header/navBar'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import { setAlertMessages, apiResStatus } from '../redux/reducers/notifySlice'
+import { setAlertMessages, apiResStatus } from '../../redux/reducers/notifySlice'
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
