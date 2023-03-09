@@ -1,10 +1,25 @@
 const express=require('express')
 const router=express.Router()
 const Orders = require("../models/orders")
-router.post('/orders', async (req, res) => {
+const multer  = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../client/src/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.body.senderId + '_'+ Math.ceil(Math.random()*123232) + '.' + file.mimetype.split('/')[1])
+  }
+})
+
+const upload = multer({ storage: storage })
+
+
+
+router.post('/orders', upload.single('orderImage'), async (req, res) => {
     try {
       //condt newOrders = await Orders.create(req.body)
-      const newOrders = new Orders(req.body);
+      const updatedFields = {...req.body, ordersImageName: req.file.filename}
+      const newOrders = new Orders(updatedFields);
       await newOrders.save().then(data => {
         if (data) {
           res.status(200).json({ message: "Your Order is on the way" })

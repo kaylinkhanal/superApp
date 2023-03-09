@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Formik, Form, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
@@ -83,7 +83,8 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
+  const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
+  const [orderImage, setOrderImage] = useState(null)
 	const { id } = useSelector(state => state.user)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
@@ -129,11 +130,30 @@ const Order = () => {
 						.required()
 				})}
 				onSubmit={async (values, { setSubmitting }) => {
-					const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates, senderCoordinates }
-					const res = await axios.post(`http://localhost:5000/orders`, formFields)
+          const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates, senderCoordinates }
+          const bodyFormData = new FormData();
+          Object.keys(formFields).map((item)=> {
+            bodyFormData.append(item, formFields[item]);
+          })
+          axios({
+            method: "post",
+            url: "myurl",
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+            .then(function (response) {
+              //handle success
+              console.log(response);
+            })
+            .catch(function (response) {
+              //handle error
+              console.log(response);
+            });
+			
+					// const res = await axios.post(`http://localhost:5000/orders`, formFields)
 
-					console.log(res)
-					console.log(res.data)
+					// console.log(res)
+					// console.log(res.data)
 
 					// if (res.status == 200 && res.data) {
 					//   dispatch(setAlertMessages(res.data))
@@ -191,6 +211,7 @@ const Order = () => {
 							{' '}
 							<KeyboardBackspaceIcon /> <span>Back</span>{' '}
 						</button>
+            <input type="file" onClick={(e)=>setOrderImage(e.target.files[0])}/>
 						<button className="btn" type="submit">
 							<span>Submit</span> <TrendingFlatIcon />
 						</button>

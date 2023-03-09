@@ -12,6 +12,8 @@ app.use(cors())
 app.use(express.json())
 app.use('/', ordersRouter)
 app.use('/', usersRouter)
+
+
 const connectDb = require('./db/connectDb')
 connectDb()
 const port = process.env.PORT
