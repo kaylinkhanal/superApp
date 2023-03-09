@@ -90,7 +90,7 @@ const OrdersCard = (props) => {
 	}
 	return (
 		<>
-			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{backgroundColor: selectedCardDetails._id == props.item._id ? 'aqua': null}} >
+			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{ backgroundColor: selectedCardDetails._id == props.item._id ? 'aqua' : null }} >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
@@ -155,6 +155,7 @@ const OrdersCard = (props) => {
 						</Formik> :
 
 						<>
+							{props.item.ordersImageName && <img src={require('../../uploads/' + props.item.ordersImageName)} style={{ maxHeight: '59px' }} />}
 							<p><i><BookmarkBorderOutlinedIcon /></i> <span>{props.item.category}</span></p>
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>
