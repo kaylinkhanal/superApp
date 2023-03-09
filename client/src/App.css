@@ -1,38 +1,548 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+/* primary-color =  #a82973*/
+
+body {
+  font-size: 14px;
+  line-height: 25px;
+  font-family: 'Comfortaa', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 80%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+section {
+  padding: 70px 0;
+}
+
+button{
+  cursor: pointer;
+}
+
+input {
+  height: 40px;
+  border-radius: 0;
+  border-color: #ccc;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  position: relative;
+  margin: 0 10px;
+  padding: 15px 22px;
+  transition: all 0.2s ease;
+  border: 0;
+  background: transparent;
+  font-family: 'Comfortaa', cursive;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  vertical-align: middle;
+}
+
+.random_btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  display: block;
+}
+
+button.random_btn:hover {
+  color: #a82973;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 28px;
+  background: rgba(255, 171, 157, 0.5);
+  width: 46px;
+  height: 46px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover::before {
+  width: 100%;
+  background: #ffab9d;
+}
+
+.btn svg {
+  height: 13px;
+}
+
+.btn span,
+.btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  background: #a82973 !important;
+  box-shadow: none !important;
+}
+
+.logout{
+  position: absolute;
+    top: 10px;
+    right: 70px;
+}
+
+.logout button{
+  font-size: 14px;
+}
+
+.logout i{
+  font-size: 30px;
+background: rgba(255, 171, 157, 0.5);
+border-radius: 50%;
+margin-right: 5px;
+height: 30px;
+    width: 30px;
+}    
+
+/*landing page */
+.landing_pg{
+  flex-direction: column
+}
+
+.landing_pg,
+.user_role {
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 100vh;
+}
+
+section#role_section {
+  padding: 0;
+}
+
+/* card */
+
+.card {
+  position: relative;
+  cursor: pointer;
+}
+
+.card:hover i {
+  border-color: #a82973;
+  box-shadow: 1px 2px 3px rgb(0 0 0 / 30%);
+}
+
+.card_icon svg {
+  font-size: 75px;
+  color: #ccc;
+  filter: drop-shadow(1px 2px 2px gray);
+  transition: all .5s ease-in-out !important;
+}
+
+.card:hover svg {
+  color: #a82973;
+}
+
+.card_icon {
+  height: 150px;
+  width: 150px;
+  display: block;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  line-height: 198px;
+  transition: all .5s ease;
+  margin-bottom: 15px;
+}
+
+.card_content {
+  font-size: 24px;
+  transition: all .5s ease;
+}
+
+.card_content .btn {
+  padding: 8px 20px;
+}
+
+.card_content .btn::before {
+  height: 35px;
+  width: 35px;
+  left: 10px;
+}
+
+.check {
+  position: absolute;
+  top: 0;
+  right: 26px;
+  z-index: 33;
+  box-shadow: none;
+  background: #fff;
+  border-radius: 50%;
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  opacity: 0;
+  transition: opacity .5s ease;
+  visibility: hidden;
+}
+
+.card:hover .check {
+  opacity: 1;
+  visibility: visible;
+}
+
+h5.card_title.btn {
+  font-size: 16px;
+}
+
+.mapInputForm {
+  position: absolute;
+  top: 7%;
+  left: 0.7%;
+  display: flex;
+  align-items: center;
+  background-color: rgba(102, 102, 204, 0.5);
+  opacity: 1;
+  border-radius: 10px;
+  padding: 15px 15px 15px 15px;
+  text-align: center;
+  display: block;
+  width: 450px;
+  height: auto;
+  justify-content: center;
+}
+
+.form {
+  position: relative;
+  top: 50px;
+  z-index: 1;
+  background: rgb(168 41 119 / 12%);
+  border-radius: 10px;
+  max-width: 360px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form .error {
+  font-size: 12px;
+  color: red;
+}
+
+.form h1 {
+  font-weight: bold;
+  color: #a82973;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.role_h1 {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #a82973;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 50px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.p {
+  padding: 0px 10px 0px 20px;
+  font-family: "Comfortaa", cursive;
+  font-size: 14px;
+  text-align: left;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 5px;
+  padding: 0px 15p;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Comfortaa", cursive;
+}
+
+input.checkboxline {
+  display: inline-block;
+  width: auto !important;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.button {
+  width: 120px;
+  height: auto;
+  padding: 5px;
+  margin: 5px 5px 5px 5px;
+  border-radius: 8px;
+  border: 2px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
   color: white;
+  background-color: #a82973;
+  text-align: center;
+  vertical-align: baseline;
 }
 
-.App-link {
-  color: #61dafb;
+.dropDown {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  border-radius: 5px;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Comfortaa", cursive;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.descriptionInput {
+  height: 100px;
+}
+
+.inputField {
+  width: 400px;
+  height: 25px;
+  padding: 5px 15px 5px 20px;
+  border-radius: 8px;
+  border-color: blue;
+  border: 2px;
+  margin-bottom: 10px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 17px;
+  color: black;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.validationPrompt {
+  font-size: 10px;
+}
+
+.checkbox {
+  color: #a82973;
+}
+
+.costumCard {
+  width: 500px;
+}
+
+.homePageCard {
+  display: grid;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  margin: 10px 10px 10px 10px;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: #a82973;
+  text-align: center;
+  vertical-align: center;
+}
+
+.user_home {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.user_home img {
+  object-fit: contain;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.user_home h1 {
+  color: #a82973;
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.user_home h4 {
+  margin-bottom: 20px;
+}
+
+
+
+/* loaction map*/
+.location{
+  position: relative;
+}
+
+.location .btn {
+  position: absolute;
+  top: 10px;
+  left: 90px;
+}
+
+.location_map {
+  position: absolute;
+  top: 65px;
+  left: 11px;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  border-radius: 5px;
+  display: block;
+  width: auto;
+  height: auto;
+  justify-content: center;
+  max-width: 350px;
+  width: 350px;
+  /* overflow: hidden; */
+}
+
+input:focus {
+  outline: 0;
+}
+
+.location_form {
+  position: relative;
+  flex-direction: row;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  /* width: 0; */
+  transition: all .3s ease-in-out;
+  margin-bottom: 10px;
+  /* visibility: hidden; */
+  /* opacity: 0; */
+}
+
+.location_map.active .location_form {
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+/* 
+.location_map.active>button {
+  display: none;
+} */
+
+.location_map input {
+  padding: 10px;
+  margin-bottom: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: rgba(255, 255, 255, .8);
+  margin-bottom: 10px;
+}
+
+.location_form button {
+  border-color: transparent;
+    cursor: pointer;
+    background: transparent;
+    margin: 0 10px 5px 0;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #ffab9d;
+    color: #000;
+}
+
+.location_form button svg{
+  font-size: 18px;
+}
+
+.orders {
+  background: rgb(0 0 0 / 50%);
+  margin-bottom: 5px;
+  color: #fff;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 30%);
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden ;
+}
+
+.update_field {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: -40px;
+    top: 0;
+    background: #000;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    transition: all .3s ease-in-out;
+}
+
+.orders span{
+  font-size: 13px;
+    margin-left: 15px;
+}
+
+.orders svg{
+  font-size: 18px;
+    height: 17px;
+}
+
+.orders:hover .update_field{
+  opacity: 1;
+  right: 0;
+  visibility: visible;
+}
+
+.order_content input,
+.order_content .dropDown {
+  padding: 5px;
+  height: 35px;
+  border: 0;
+  background-color: transparent;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #979696;
+  border-radius: 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+.delete-alert button{
+  color: #000;
+}
+
+.loadingAnimation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.gm-style .gm-style-iw-tc,
+.gm-style .gm-style-iw-c{
+  top: -40px
 }
