@@ -3,6 +3,7 @@ import { Formik, Form, useField } from "formik";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {DateTime} from "luxon";
 
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -88,6 +89,11 @@ const OrdersCard = (props) => {
 	const handleClose = () => {
 		setIsDeleteConfirmPopup(false)
 	}
+
+	const luxonDate = DateTime.fromISO(props.item.pickupDate, { zone: "utc" });
+	const month = luxonDate.setLocale("en-US").toFormat("LLLL");
+	const dayOfWeek = luxonDate.setLocale("en-US").toFormat("cccc");
+    const dayOfMonth = luxonDate.setLocale("en-US").toFormat("dd");
 	return (
 		<>
 			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{backgroundColor: selectedCardDetails._id == props.item._id ? 'aqua': null}} >
@@ -158,7 +164,7 @@ const OrdersCard = (props) => {
 							<p><i><BookmarkBorderOutlinedIcon /></i> <span>{props.item.category}</span></p>
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>
-							<p><CalendarMonthOutlinedIcon /> <span>{props.item.pickupDate}</span></p>
+							<p><CalendarMonthOutlinedIcon /> <span>{`${dayOfWeek}, ${dayOfMonth} ${month}`}</span></p>
 						</>
 					}
 				</div>
