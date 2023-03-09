@@ -1,6 +1,8 @@
 const express=require('express')
 const router=express.Router()
 const Orders = require("../models/orders")
+const {DateTime} = require("luxon")
+
 router.post('/orders', async (req, res) => {
     try {
       //condt newOrders = await Orders.create(req.body)
@@ -29,7 +31,6 @@ router.post('/orders', async (req, res) => {
       const ordersList = await Orders.find().skip(skipStartPages).limit(req.query.size)
       res.json({ordersList,totalItem})
     } catch (err) {
-      console.log(err)
       res.status(500).json({ message: err })
     }
   })
