@@ -14,7 +14,7 @@ app.use('/', ordersRouter)
 app.use('/', usersRouter)
 const connectDb = require('./db/connectDb')
 connectDb()
-const port = process.env.PORT
+const port = process.env.PORT || 5000
 
 require('dotenv').config()
 
