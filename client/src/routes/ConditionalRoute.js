@@ -9,12 +9,13 @@ import Register from "../containers/auth/register";
 import Order from "../containers/order";
 
 import { useSelector } from "react-redux";
+import SwitchRole from "../containers/auth/switchUser";
 
 const ConditionalRoute = () => {
   const { userRole, firstTimeUser, token } = useSelector((state) => state.user);
-  if (userRole === "rider" ) {
+  if (userRole === "rider") {
     return <RiderRoutes />;
-  } else if (userRole === "user" ) {
+  } else if (userRole === "user") {
     return <UserRoutes />;
   } else if (firstTimeUser) {
     return <FirstUserRoutes />;
@@ -48,7 +49,7 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-  
+      <Route path="/switch-user" element={<SwitchRole />}></Route>
     </Routes>
   );
 };

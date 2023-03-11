@@ -141,7 +141,12 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <div className="logout">
+
+
+          <div className="logout" style={{ display: 'flex' }}>
+            <div className="switch_user">
+              <h3>switch user</h3>
+            </div>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

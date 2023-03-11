@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setAlertMessages,
   apiResStatus
@@ -23,6 +23,7 @@ const DynamicForm = props => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [stepCount, setStepCount] = useState(1)
+  const { id } = useSelector(state => state.user)
   const schema = Yup.object().shape({
     fullName: Yup.string()
       .min(5, 'Too Short')
@@ -79,13 +80,23 @@ const DynamicForm = props => {
 
   const submitFormData = async values => {
     const updatedValues = { ...values, ...props.additionalFields }
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedValues)
+    let requestOptions
+    if (props.isEdit) {
+      requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      }
+    } else {
+      requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedValues)
+      }
     }
+
     const res = await fetch(
-      `http://localhost:5000` + props.apiEndpoint,
+      `http://localhost:5000/${props.apiEndpoint}/${id}`,
       requestOptions
     )
     debugger
@@ -103,7 +114,7 @@ const DynamicForm = props => {
     <Formik
       initialValues={{}}
       onSubmit={values => submitFormData(values)}
-      //  validationSchema={schema}
+    //  validationSchema={schema}
     >
       {({ errors, touched, values }) => (
         <div className="form">

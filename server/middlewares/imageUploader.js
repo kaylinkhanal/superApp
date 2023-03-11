@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
 
         cb(null, file.originalname.split('.')[0] + '_' + Math.ceil(Math.random() * 123232) + '.' + file.mimetype.split('/')[1])
-        console.log('jkj', req.body.senderId)
     }
 })
 
