@@ -1,4 +1,5 @@
 import * as React from "react";
+import Logout from "./logoutMenu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,47 +8,24 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import LoginIcon from "@mui/icons-material/Login";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setLoginDetails } from "../../redux/reducers/userSlice";
+import { useDispatch } from "react-redux";
 const pages = ["Home", "Order", "Track My Order", "Contact US"];
-const settings = ["Profile", "Account", "My Orders", "Logout"];
+
 
 const NavBar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoggedIn, username } = useSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const handleCloseUserMenu = (e) => {
-    debugger;
-    if (e.target.textContent == "Logout") {
-      dispatch(setLoginDetails());
-      navigate("/")
-    }
-
-    setAnchorElUser(null);
-  };
-
   return (
     <AppBar position="static" className="navbar">
       <Container maxWidth="xl">
@@ -141,44 +119,7 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <div className="logout">
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title={isLoggedIn ? "Open settings" : "Login"}>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {isLoggedIn ? (
-                    <>
-                      <i><AccountCircleIcon /></i> {username}
-                    </>
-
-                  ) : (
-                    <i><LoginIcon onClick={() => navigate("/login")} /></i>
-                  )}
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={isLoggedIn ? Boolean(anchorElUser) : false}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </div>
+          <Logout />
         </Toolbar>
       </Container>
     </AppBar>

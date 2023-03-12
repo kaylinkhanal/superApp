@@ -33,7 +33,7 @@ const Login = () => {
         userRole
       })
       if (res.status == 200) {
-        dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }))
+        dispatch(setLoginDetails({ id: res.data.id, token: res.data.token, username: res.data.username }))
         dispatch(setAlertMessages(res.data.message))
         dispatch(apiResStatus(true))
         if (state?.onSuccessNavigation === '/order') {
