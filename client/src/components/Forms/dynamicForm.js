@@ -2,27 +2,25 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
-import {
-  setAlertMessages,
-  apiResStatus
-} from '../../redux/reducers/notifySlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { assignUserRole } from "../../redux/reducers/userSlice"
+import { setAlertMessages, apiResStatus } from '../../redux/reducers/notifySlice'
 import '../../containers/auth/authForm.css'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
-import Snackbar from '../alerts/snackBar'
 import {
-  Button,
-  TextField,
   Select,
   MenuItem,
   InputLabel,
-  Grid
 } from '@mui/material'
 
-const DynamicForm = props => {
+const DynamicForm = (props) => {
+  const { id } = useSelector(state => state.user)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [stepCount, setStepCount] = useState(1)
+
+
   const schema = Yup.object().shape({
     fullName: Yup.string()
       .min(5, 'Too Short')
@@ -48,6 +46,9 @@ const DynamicForm = props => {
   })
 
   const DetermineFieldType = ({ item }) => {
+    const [vehicleOption, setVehicleOption] = useState('')
+    console.log(vehicleOption)
+
     if (item.type === 'dropdown') {
       return (
         <>
@@ -56,12 +57,13 @@ const DynamicForm = props => {
             labelId="vehicleTypeLabel"
             id="vehicleType"
             name="vehicleType"
+            type={item.type}
+            value={vehicleOption}
+            onChange={(e) => setVehicleOption(e.target.value)}
           >
             {item.options.map((item, id) => {
               return (
-                <MenuItem key={id} value={item}>
-                  {item}
-                </MenuItem>
+                <MenuItem key={id} value={item}>{item}</MenuItem>
               )
             })}
           </Select>
@@ -79,23 +81,30 @@ const DynamicForm = props => {
 
   const submitFormData = async values => {
     const updatedValues = { ...values, ...props.additionalFields }
-    const requestOptions = {
-      method: 'POST',
+    let requestOptions = {
+      method: !props.updateRole ? 'POST' : 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedValues)
+      body: JSON.stringify(!props.updateRole ? updatedValues
+        : values, { userRole: 'user' ? 'rider' : 'user' })
     }
+
     const res = await fetch(
-      `http://localhost:5000` + props.apiEndpoint,
+      `http://localhost:5000${props.apiEndpoint}/${props.updateRole ? id : ''}`,
       requestOptions
     )
-    debugger
+
     const data = await res.json()
     navigate(props.onSuccessNavigation)
+
     if (res.status && data.message) {
       dispatch(setAlertMessages(data.message))
       dispatch(apiResStatus(true))
     } else {
       dispatch(apiResStatus(false))
+    }
+
+    if (props.updateRole) {
+      dispatch(assignUserRole(''))
     }
   }
 
@@ -103,7 +112,7 @@ const DynamicForm = props => {
     <Formik
       initialValues={{}}
       onSubmit={values => submitFormData(values)}
-      //  validationSchema={schema}
+    //  validationSchema={schema}
     >
       {({ errors, touched, values }) => (
         <div className="form">

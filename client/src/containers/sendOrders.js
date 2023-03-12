@@ -32,12 +32,12 @@ const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
 	const { selectedCardDetails } = useSelector((state) => state.order)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
-	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole=='rider'? false: true);
+	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
 	const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
-
+	// console.log('@@', process.env.REACT_APP_GOOGLE_MAPS_API_KEY, process.env.REACT_APP_API_URL)
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -154,14 +154,14 @@ const SendOrders = () => {
 					/>
 				) : (
 					<>
-					{userRole !== 'rider' && (
-						<CustomMarker
-						label="rider"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-					)}
+						{userRole !== 'rider' && (
+							<CustomMarker
+								label="rider"
+								draggable={true}
+								icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+								position={receiverCoordinates.lat ? receiverCoordinates : center}
+							/>
+						)}
 					</>
 				)}
 
