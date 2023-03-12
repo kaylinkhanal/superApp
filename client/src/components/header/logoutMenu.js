@@ -13,7 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { resetLoginDetails, setLoginDetails } from "../../redux/reducers/userSlice";
 const settings = ["Profile", "Account", "My Orders", "Switch User", "Logout"];
 
-const Logout = () => {
+const Logout = (props) => {
+    console.log(props)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLoggedIn, username } = useSelector((state) => state.user);
@@ -30,13 +31,8 @@ const Logout = () => {
             dispatch(setLoginDetails(''));
             navigate("/")
         } else if (e.target.textContent == "Switch User") {
-            dispatch(resetLoginDetails())
-            navigate("/")
+            navigate("/switch-role")
         }
-
-        // if (e.target.textContent == "Switch User") {
-        //     dispatch(setIsFirstTimeUser(true));
-        // }
 
         setAnchorElUser(null);
     };

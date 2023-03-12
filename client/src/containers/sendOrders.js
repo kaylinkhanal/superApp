@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import Logout from "../components/header/logoutMenu";
 
 const containerStyle = {
 	width: "100%",
@@ -32,7 +33,7 @@ const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
 	const { selectedCardDetails } = useSelector((state) => state.order)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
-	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole=='rider'? false: true);
+	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
@@ -154,19 +155,21 @@ const SendOrders = () => {
 					/>
 				) : (
 					<>
-					{userRole !== 'rider' && (
-						<CustomMarker
-						label="rider"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-					)}
+						{userRole !== 'rider' && (
+							<CustomMarker
+								label="rider"
+								draggable={true}
+								icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+								position={receiverCoordinates.lat ? receiverCoordinates : center}
+							/>
+						)}
 					</>
 				)}
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
+			<Logout />
 
 			<div className="location_map">
 				{userRole === 'user' &&
@@ -210,7 +213,7 @@ const SendOrders = () => {
 					</div>
 				}
 
-				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
+				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen && userRole === 'user' ? 'Check your orders' : !isOrderListOpen && userRole === 'rider' ? 'All Orders' : 'Close'}</span></button>
 				<div style={{ overflow: 'hidden' }}>
 					<div className="order_list" style={!isOrderListOpen ? {
 						transition: `transform 250ms ease-in-out`,
