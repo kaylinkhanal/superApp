@@ -17,8 +17,7 @@ const upload = multer({ storage: storage })
 
 router.post('/orders', upload.single('orderImage'), async (req, res) => {
     try {
-      //condt newOrders = await Orders.create(req.body)
-      const updatedFields = {...req.body, ordersImageName: req.file.filename}
+      const updatedFields = {...req.body, receiverCoordinates: JSON.parse(req.body?.receiverCoordinates),senderCoordinates: JSON.parse(req.body?.senderCoordinates),ordersImageName: req.file.filename}
       const newOrders = new Orders(updatedFields);
       await newOrders.save().then(data => {
         if (data) {

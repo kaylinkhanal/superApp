@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import './authForm.css'
-import { setLoginDetails } from '../../redux/reducers/userSlice'
+import { setLoginDetails,assignUserRole } from '../../redux/reducers/userSlice'
 import {
   setAlertMessages,
   apiResStatus
@@ -36,6 +36,7 @@ const Login = () => {
         dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }))
         dispatch(setAlertMessages(res.data.message))
         dispatch(apiResStatus(true))
+        dispatch(assignUserRole(res.data.userRole));
         if (state?.onSuccessNavigation === '/order') {
           navigate('/order')
         } else {

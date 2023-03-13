@@ -130,23 +130,22 @@ const Order = () => {
 						.required()
 				})}
 				onSubmit={async (values, { setSubmitting }) => {
-          const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates, senderCoordinates }
+          const formFields = { ...ordersDetails, ...values, senderId: id, receiverCoordinates: JSON.stringify(receiverCoordinates), senderCoordinates: JSON.stringify(senderCoordinates) }
           const bodyFormData = new FormData();
           Object.keys(formFields).map((item)=> {
-            bodyFormData.append(item, formFields[item]);
+              bodyFormData.append(item, formFields[item]);
           })
+          bodyFormData.append('orderImage', orderImage)
           axios({
             method: "post",
-            url: "myurl",
+            url: "http://localhost:5000/orders",
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })
             .then(function (response) {
-              //handle success
               console.log(response);
             })
             .catch(function (response) {
-              //handle error
               console.log(response);
             });
 			
@@ -211,7 +210,7 @@ const Order = () => {
 							{' '}
 							<KeyboardBackspaceIcon /> <span>Back</span>{' '}
 						</button>
-            <input type="file" onClick={(e)=>setOrderImage(e.target.files[0])}/>
+            <input type="file" onChange={(e)=>setOrderImage(e.target.files[0])}/>
 						<button className="btn" type="submit">
 							<span>Submit</span> <TrendingFlatIcon />
 						</button>
