@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
     //first we need check if the req.body.loginKey's value exist in the db
     const data = await Users.findOne({
       [fieldKey]: req.body.loginKey,
-      userRole: req.body.userRole
+      // userRole: req.body.userRole
     })
     //if data is there, it means we found a document in db with that particular phoneNumber
     if (data) {
@@ -45,7 +45,8 @@ router.post('/login', async (req, res) => {
           res.json({
             message: 'Login Success!!',
             token,
-            id: data._id
+            id: data._id,
+            userRole: data.userRole
           })
         } else {
           res.status(401).json({

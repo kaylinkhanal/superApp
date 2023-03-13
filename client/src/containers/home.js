@@ -1,22 +1,24 @@
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ShareImg from "../images/share.svg"
+import axios from 'axios'
 import { Link } from 'react-router-dom';
+import EcomCard from "../components/cards/ecomCard"
 const Home = () => {
-	const [name, setName] = useState("hi");
-
+	const [productList, setProductList] = useState([])
+	const fetchProducts = async()=> {
+		const res = await axios.get(`http://localhost:5000/products`)
+		setProductList(res.data.productList)
+	}
+	useEffect(()=>{
+		fetchProducts()
+	},[])
 	return (
-		<section id="home">
-			<div className="user_home">
-				<img src={ShareImg}></img>
-				<h1>Hi, we're SuperApp.</h1>
-
-				<h4>"Send your order or take a ride with us"</h4>
-				<Link className="btn" to="/send-orders"><span>Send Orders</span><TrendingFlatIcon /></Link>
-
-				<button className="btn"><span>Ride</span><TrendingFlatIcon /></button>
-			</div>
-		</section>
+		<>
+		{productList.length>0 && productList.map((item)=>{
+			return <EcomCard item={item}/>
+		})}
+		</>
 	)
 }
 

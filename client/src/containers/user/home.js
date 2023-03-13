@@ -8,13 +8,9 @@ const Home =()=> {
 
   
   return (
-    <div className="App">
-        <NavBar/>
-        <Link to='/send-orders'>send orders</Link>
-        <button onClick={()=> myInputRef.current.focus()}>ride</button>
-        <input ref={myInputRef}  onKeyUp={(e)=> console.log(e)} placeholder="Enter a name" />
+    <div>
+      hi
     </div>
-    
   );
 }
 

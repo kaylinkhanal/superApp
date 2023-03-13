@@ -71,6 +71,7 @@ const MySelect = ({ label, ...props }) => {
 
 
 const OrdersCard = (props) => {
+	console.log(props.item.ordersImageName,"@@")
 	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
 	const dispatch = useDispatch()
@@ -155,6 +156,7 @@ const OrdersCard = (props) => {
 						</Formik> :
 
 						<>
+						<img src={require('../../uploads/'+ props.item.ordersImageName)} width={50} height={50}/>
 							<p><i><BookmarkBorderOutlinedIcon /></i> <span>{props.item.category}</span></p>
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>

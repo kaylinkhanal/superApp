@@ -4,7 +4,9 @@ import {
 	useJsApiLoader,
 	Marker,
 	Autocomplete,
-	InfoWindow
+	InfoWindow,
+	DirectionsRenderer,
+	DirectionsService
 } from "@react-google-maps/api";
 import {
 	setSenderCoordinates,
@@ -37,7 +39,7 @@ const SendOrders = () => {
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
 	const [receiverName, setReceiverName] = useState(ordersDetails?.receiverName);
-
+	const [response, setResponse] = useState(null)
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoaded } = useJsApiLoader({
@@ -110,48 +112,63 @@ const SendOrders = () => {
 		)
 	}
 
+
+
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
+              
 				{userRole === 'rider' && (
 					<>
-						<InfoWindow
-							position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-								<p>{selectedCardDetails?.senderAddress}</p>
-								<CustomMarker
-									label="sender"
-									draggable={false}
-									icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-								/>
-							</div>
-						</InfoWindow>
+						<DirectionsService
+						options={{ 
+							destination:Object.values(selectedCardDetails.receiverCoordinates).join(','), 
+							origin: Object.values(selectedCardDetails.senderCoordinates).join(','), 
+							travelMode: 'DRIVING'
+						}}
+						callback={(response)=>setResponse(response)}
+						/>
 
-						<InfoWindow
-							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-								<p>{selectedCardDetails?.receiverAddress}</p>
-								<CustomMarker
-									label="rider"
-									draggable={false}
-									icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-								/>
-							</div>
-						</InfoWindow>
+					{
+					response !== null && (
+						<DirectionsRenderer
+						options={{ 
+							directions: response
+						}}
+						/>
+					)
+					}
+					<>
+					<InfoWindow
+						position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
+					>
+						<div style={{ background: `white` }}>
+							<p>{selectedCardDetails?.senderAddress}</p>
+						</div>
+					</InfoWindow>
+
+					<InfoWindow
+						position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
+					>
+						<div style={{ background: `white` }}>
+							<p>{selectedCardDetails?.receiverAddress}</p>
+						</div>
+					</InfoWindow>
+						</>
 					</>
+					
 				)}
 
 				{userRole !== 'rider' && isSenderFormActive ? (
+					<>
+					
 					<CustomMarker
 						label="sender"
 						draggable={true}
 						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
 						position={senderCoordinates.lat ? senderCoordinates : center}
 					/>
+					</>
 				) : (
 					<>
 					{userRole !== 'rider' && (
