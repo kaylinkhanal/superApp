@@ -118,12 +118,12 @@ const SendOrders = () => {
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
               
-				{userRole === 'rider' && (
+				{userRole === 'rider' && selectedCardDetails?.receiverCoordinates && (
 					<>
 						<DirectionsService
 						options={{ 
-							destination:Object.values(selectedCardDetails.receiverCoordinates).join(','), 
-							origin: Object.values(selectedCardDetails.senderCoordinates).join(','), 
+							destination:Object.values(selectedCardDetails?.receiverCoordinates).join(','), 
+							origin: Object.values(selectedCardDetails?.senderCoordinates).join(','), 
 							travelMode: 'DRIVING'
 						}}
 						callback={(response)=>setResponse(response)}
