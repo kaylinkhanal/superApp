@@ -119,7 +119,7 @@ const SendOrders = () => {
 							position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 						>
 							<div style={{ background: `white` }}>
-								<p>{selectedCardDetails?.senderAddress}</p>
+								<p>{selectedCardDetails?.senderAddress.split('').slice(0, 50).join(' ')}</p>
 								<CustomMarker
 									label="sender"
 									draggable={false}
@@ -134,6 +134,8 @@ const SendOrders = () => {
 						>
 							<div style={{ background: `white` }}>
 								<p>{selectedCardDetails?.receiverAddress}</p>
+								<p>Receiver Name: {selectedCardDetails?.receiverName}</p>
+								<p>Contact Number: {selectedCardDetails?.receiverPhoneNumber}</p>
 								<CustomMarker
 									label="rider"
 									draggable={false}
