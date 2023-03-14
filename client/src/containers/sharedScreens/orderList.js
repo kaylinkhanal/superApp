@@ -27,10 +27,13 @@ const OrderList = () => {
 
     return (
         <div>
+            
             <Scrollbars style={{ height: 300, borderRadius: '10px' }} >
-                {orderList.length > 0 && orderList.map((item, id) => {
+                {orderList.length > 0 ?( orderList.map((item, id) => {
                     return <OrdersCard item={item} fetchOrders={fetchOrders} />
-                })}
+                })): (
+                    <h3>No orders found</h3>
+                  )}
             </Scrollbars>
             <Stack spacing={2}>
                 <Pagination count={totalItem} onChange={(e) => fetchOrders(e.target.textContent)} size="small" />
