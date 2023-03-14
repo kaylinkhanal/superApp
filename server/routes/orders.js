@@ -22,15 +22,25 @@ router.post('/orders', upload.orderImageUpload, async (req, res) => {
 
 router.get('/orders', async (req, res) => {
   try {
+    // console.log(req.query)
+    var regexp = new RegExp("^" + req.query.search);
+
     const skipStartPages = req.query.size * (req.query.page - 1)
     let totalItem = await Orders.find().count()
+
     if (totalItem % req.query.size != 0) {
       totalItem = Math.ceil((totalItem / req.query.size))
     } else {
       totalItem = (totalItem / req.query.size)
     }
     //we find all the orders for that particular user who requested the orders list 
-    const ordersList = await Orders.find().skip(skipStartPages).limit(req.query.size)
+    let ordersList
+    if (req.query.search) {
+      ordersList = await Orders.find({ itemName: regexp }).skip(skipStartPages).limit(req.query.size)
+    } else {
+      ordersList = await Orders.find().skip(skipStartPages).limit(req.query.size)
+    }
+    // console.log(ordersList)
     res.json({ ordersList, totalItem })
   } catch (err) {
     console.log(err)

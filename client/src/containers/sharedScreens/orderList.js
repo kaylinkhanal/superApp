@@ -5,14 +5,17 @@ import { useSelector } from "react-redux"
 import axios from "axios";
 import OrdersCard from "../../components/cards/ordersCard";
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import Search from "../../components/search";
 
 const OrderList = () => {
     const { id, userRole } = useSelector(state => state.user)
     const [orderList, setOrderList] = useState([])
     const [totalItem, setTotalItem] = useState(0)
-    const fetchOrders = async (page) => {
+    const fetchOrders = async (page, key) => {
         let res
-        if (userRole == 'rider') {
+        if (key) {
+            res = await fetch(`http://localhost:5000/orders?search=${key}`)
+        } else if (userRole == 'rider') {
             res = await axios.get(`http://localhost:5000/orders?page=${page}&size=5`)
         } else {
             res = await axios.get(`http://localhost:5000/orders/${id}?page=${page}&size=5`)
@@ -27,8 +30,9 @@ const OrderList = () => {
 
     return (
         <div>
+            <Search fetchOrders={fetchOrders} />
             <Scrollbars style={{ height: 300, borderRadius: '10px' }} >
-                {orderList.length > 0 && orderList.map((item, id) => {
+                {orderList?.length > 0 && orderList.map((item, id) => {
                     return <OrdersCard item={item} fetchOrders={fetchOrders} />
                 })}
             </Scrollbars>
