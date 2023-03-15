@@ -144,6 +144,8 @@ const SendOrders = () => {
 							>
 								<div style={{ background: `white` }}>
 									<p>{selectedCardDetails?.senderAddress}</p>
+									<p>Sender Name: {selectedCardDetails?.senderDetails.fullName}</p>
+									<p>Contact Number: {selectedCardDetails?.senderDetails.phoneNumber}</p>
 								</div>
 							</InfoWindow>
 

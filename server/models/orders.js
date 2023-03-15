@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+// const Users = require("../models/users")
 
 const ordersSchema = new mongoose.Schema({
   receiverAddress: { type: String, require: true },
@@ -7,7 +8,7 @@ const ordersSchema = new mongoose.Schema({
   receiverPhoneNumber: { type: Number, required: true },
   itemName: { type: String, required: true },
   category: { type: String, required: true },
-  senderId: { type: String, required: true },
+  senderDetails: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   weight: { type: Number, required: true },
   itemDescription: { type: String, required: true },
   pickupDate: { type: Date, required: true },
