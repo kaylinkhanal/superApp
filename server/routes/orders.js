@@ -18,11 +18,7 @@ const storage = multer.diskStorage({
   },
 })
 
-const OrderController = require('../controllers/orderControllers')
-
-router.post('/orders', OrderController.PostOrder)
-
-router.get('/orders', OrderController.GetOrder)
+const upload = multer({ storage: storage })
 
 router.post('/orders', upload.single('orderImage'), async (req, res) => {
   try {

@@ -1,11 +1,27 @@
 const express = require('express')
 const router = express.Router()
-const productController = require('../controllers/productControllers.js')
 
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 const Products = require('../models/products')
 
-router.post('/products', productController.PostProduct)
+router.post('/products', async (req, res) => {
+  try {
+    await Products.create(req.body)
+  } catch (err) {
+    console.log('err' + err)
+  }
+})
 
-router.get('/products', productController.GetProduct)
+router.get('/products', async (req, res) => {
+  try {
+    const productList = await Products.find()
+    res.json({
+      productList,
+    })
+  } catch (err) {
+    console.log('err' + err)
+  }
+})
 
 module.exports = router
