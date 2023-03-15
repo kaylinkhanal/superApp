@@ -143,7 +143,7 @@ const SendOrders = () => {
 						position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 					>
 						<div style={{ background: `white` }}>
-							<p>{selectedCardDetails?.senderAddress}</p>
+						Sender Address:	<p>{selectedCardDetails?.senderAddress}</p>
 						</div>
 					</InfoWindow>
 
@@ -151,7 +151,7 @@ const SendOrders = () => {
 						position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
 					>
 						<div style={{ background: `white` }}>
-							<p>{selectedCardDetails?.receiverAddress}</p>
+						Receiver Address:	<p>{selectedCardDetails?.receiverAddress}</p>
 						</div>
 					</InfoWindow>
 						</>

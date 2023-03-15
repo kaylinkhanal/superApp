@@ -3,7 +3,7 @@ server/node_modules
 
 server/package-lock.json
 client/package-lock.json
-
+client/src/uploads
 .DS_Store
 
 .env
