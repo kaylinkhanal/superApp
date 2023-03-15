@@ -34,7 +34,7 @@ const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
 	const { selectedCardDetails } = useSelector((state) => state.order)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
-	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole=='rider'? false: true);
+	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
 	const [receiverAddress, setReceiverAddress] = useState(ordersDetails?.receiverAddress);
 	const [receiverPhoneNumber, setReceiverPhoneNumber] = useState(ordersDetails?.receiverPhoneNumber);
@@ -117,68 +117,69 @@ const SendOrders = () => {
 	return isLoaded ? (
 		<>
 			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-              
+
 				{userRole === 'rider' && selectedCardDetails?.receiverCoordinates && (
 					<>
 						<DirectionsService
-						options={{ 
-							destination:Object.values(selectedCardDetails?.receiverCoordinates).join(','), 
-							origin: Object.values(selectedCardDetails?.senderCoordinates).join(','), 
-							travelMode: 'DRIVING'
-						}}
-						callback={(response)=>setResponse(response)}
+							options={{
+								destination: Object.values(selectedCardDetails?.receiverCoordinates).join(','),
+								origin: Object.values(selectedCardDetails?.senderCoordinates).join(','),
+								travelMode: 'DRIVING'
+							}}
+							callback={(response) => setResponse(response)}
 						/>
 
-					{
-					response !== null && (
-						<DirectionsRenderer
-						options={{ 
-							directions: response
-						}}
-						/>
-					)
-					}
-					<>
-					<InfoWindow
-						position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-					>
-						<div style={{ background: `white` }}>
-							<p>{selectedCardDetails?.senderAddress}</p>
-						</div>
-					</InfoWindow>
+						{
+							response !== null && (
+								<DirectionsRenderer
+									options={{
+										directions: response
+									}}
+								/>
+							)
+						}
+						<>
+							<InfoWindow
+								position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
+							>
+								<div style={{ background: `white` }}>
+									<p>{selectedCardDetails?.senderAddress}</p>
+								</div>
+							</InfoWindow>
 
-					<InfoWindow
-						position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-					>
-						<div style={{ background: `white` }}>
-							<p>{selectedCardDetails?.receiverAddress}</p>
-						</div>
-					</InfoWindow>
+							<InfoWindow
+								position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
+							>
+								<div style={{ background: `white` }}>
+									<p>{selectedCardDetails?.receiverAddress}</p>
+									<p>Receiver Name: {selectedCardDetails?.receiverName}</p>
+									<p>Contact Number: {selectedCardDetails?.receiverPhoneNumber}</p>
+								</div>
+							</InfoWindow>
 						</>
 					</>
-					
+
 				)}
 
 				{userRole !== 'rider' && isSenderFormActive ? (
 					<>
-					
-					<CustomMarker
-						label="sender"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
-						position={senderCoordinates.lat ? senderCoordinates : center}
-					/>
+						<CustomMarker
+							label="sender"
+							draggable={true}
+							icon={{ url: "https://cdn-icons-png.flaticon.com/512/3477/3477419.png", scaledSize: new window.google.maps.Size(40, 40) }}
+							position={senderCoordinates.lat ? senderCoordinates : center}
+						/>
 					</>
 				) : (
 					<>
-					{userRole !== 'rider' && (
-						<CustomMarker
-						label="rider"
-						draggable={true}
-						icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
-						position={receiverCoordinates.lat ? receiverCoordinates : center}
-					/>
-					)}
+						{userRole !== 'rider' && (
+							<CustomMarker
+								label="rider"
+								draggable={true}
+								icon={{ url: "https://cdn-icons-png.flaticon.com/512/4218/4218645.png", scaledSize: new window.google.maps.Size(37, 37) }}
+								position={receiverCoordinates.lat ? receiverCoordinates : center}
+							/>
+						)}
 					</>
 				)}
 
@@ -227,7 +228,15 @@ const SendOrders = () => {
 					</div>
 				}
 
-				<button onClick={() => setIsOrderListOpen(!isOrderListOpen)} className="btn" style={{ margin: '0 0 8px 0 ' }}><span>{!isOrderListOpen ? 'Check your orders' : 'Close'}</span></button>
+				<button
+					onClick={() => setIsOrderListOpen(!isOrderListOpen)}
+					className="btn"
+					style={{ margin: '0 0 8px 0 ' }}>
+					<span>
+						{!isOrderListOpen && userRole === 'user' ? 'Check your orders' :
+							!isOrderListOpen && userRole === 'rider' ? 'All Orders' : 'Close'}
+					</span>
+				</button>
 				<div style={{ overflow: 'hidden' }}>
 					<div className="order_list" style={!isOrderListOpen ? {
 						transition: `transform 250ms ease-in-out`,

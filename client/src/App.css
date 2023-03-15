@@ -546,3 +546,12 @@ input:focus {
 .gm-style .gm-style-iw-c{
   top: -40px
 }
+
+.gm-style-iw.gm-style-iw-c {
+  width: 200px;
+  max-width: 200px !important;
+}
+
+.gm-style-iw.gm-style-iw-c p{
+  margin-bottom: 5px;
+}
