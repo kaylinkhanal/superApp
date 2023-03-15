@@ -20,7 +20,7 @@ const OrderList = () => {
         } else {
             res = await axios.get(`http://localhost:5000/orders/${id}?page=${page}&size=5`)
         }
-        console.log(res.data)
+        setOrderList(res?.data?.ordersList)
     }
     useEffect(() => {
         //we fetch list of orders in the initial load
@@ -29,11 +29,14 @@ const OrderList = () => {
 
     return (
         <div>
+            {JSON.stringify(orderList)}
             <Search fetchOrders={fetchOrders} />
             <Scrollbars style={{ height: 300, borderRadius: '10px' }} >
-                {orderList.length > 0 && orderList.map((item, id) => {
+                {orderList?.length > 0 ?( orderList.map((item, id) => {
                     return <OrdersCard item={item} fetchOrders={fetchOrders} />
-                })}
+                })): (
+                    <h3>No orders found</h3>
+                  )}
             </Scrollbars>
             <Stack spacing={2}>
                 <Pagination count={totalItem} onChange={(e) => fetchOrders(e.target.textContent)} size="small" />
