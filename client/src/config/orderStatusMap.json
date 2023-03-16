@@ -1,0 +1,7 @@
+{
+    "-1": {"status":"rejected"},
+    "0" : {"status":"pending", "message":"Ready to go to sender's place?"},
+    "1" : {"status":"reachedRiderHome", "message":"Did you pick up the order?"},
+    "2":  {"status":"accepted", "message":"Deliver to receiver?"},
+    "3":  {"status":"delivered", "message":"Have you deliverd?"}
+}

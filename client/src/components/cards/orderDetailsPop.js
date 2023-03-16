@@ -49,7 +49,7 @@ const OrderDetailsPop = (props) => {
                     <strong>Receiver Name</strong>: {props.item.receiverName}<br />
                     <strong>Receiver Phone Number</strong>: {props.item.receiverPhoneNumber}<br />
                     <strong>Sender Address</strong>: {props.item.senderAddress}<br />
-                    <strong>Sender Details</strong>: {props.item.senderDetails}<br />
+                    {/* <strong>Sender Details</strong>: {JSON.stringify(props.item.senderDetails)}<br /> */}
                     <strong>Weight</strong>: {props.item.weight}<br />
                 </Typography>
             </Popover>

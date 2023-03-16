@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	GoogleMap,
 	useJsApiLoader,
@@ -6,13 +6,16 @@ import {
 	Autocomplete,
 	InfoWindow,
 	DirectionsRenderer,
+	Circle,
 	DirectionsService
 } from "@react-google-maps/api";
+import { io } from 'socket.io-client';
 import {
 	setSenderCoordinates,
 	setReceiverCoordinates,
 	setOrdersDetails,
 } from "../redux/reducers/locationSlice";
+
 import OrderList from "./sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +27,7 @@ const containerStyle = {
 	width: "100%",
 	height: "100vh",
 };
-
+const socket = io(process.env.REACT_APP_API_URL);
 const center = {
 	lat: 27.685616312450417,
 	lng: 85.34456349960001,
@@ -51,6 +54,15 @@ const SendOrders = () => {
 
 	const [map, setMap] = React.useState(null);
 
+	useEffect(() => {
+		socket.on('connection');
+		// socket.on('greetings',(anythingkataibata)=>{
+		// 	console.log(anythingkataibata)
+		// })
+		return () => {
+			socket.off('connection');
+		};
+	})
 	const onLoad = React.useCallback(function callback(map) {
 		navigator.geolocation.getCurrentPosition((position) => {
 			let lat = position.coords.latitude;
@@ -112,13 +124,33 @@ const SendOrders = () => {
 		)
 	}
 
+	const handleAcceptance = ()=>{
+		socket.emit("greetings", "hi") 
+	}
+
+const options = {
+	strokeColor: '#FF0000',
+	strokeOpacity: 0.8,
+	strokeWeight: 2,
+	fillColor: '#FF0000',
+	fillOpacity: 0.35,
+	clickable: false,
+	draggable: false,
+	editable: false,
+	visible: true,
+	radius: 10,
+	zIndex: 1
+  }
 
 
 	return isLoaded ? (
 		<>
-			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
-
-				{userRole === 'rider' && selectedCardDetails?.receiverCoordinates && (
+			<GoogleMap mapContainerStyle={containerStyle} center={center}  zoom={14.5} onLoad={onLoad} onUnmount={onUnmount}>
+				<Circle
+				center={center}
+				options={options}
+				/>
+				{userRole === 'rider' && selectedCardDetails && selectedCardDetails?.receiverCoordinates && (
 					<>
 						<DirectionsService
 							options={{
@@ -143,12 +175,14 @@ const SendOrders = () => {
 								position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 							>
 								<div style={{ background: `white` }}>
-									<p>{selectedCardDetails?.senderAddress}</p>
-									<p>Sender Name: {selectedCardDetails?.senderDetails.fullName}</p>
-									<p>Contact Number: {selectedCardDetails?.senderDetails.phoneNumber}</p>
+									Accept order from sender's place?
+									<button onClick={()=> handleAcceptance()}>Yes</button>
+									{/* <p>{selectedCardDetails?.senderAddress}</p> */}
+									{/* <p>Sender Name: {selectedCardDetails?.senderDetails.fullName}</p>
+									<p>Contact Number: {selectedCardDetails?.senderDetails.phoneNumber}</p> */}
 								</div>
 							</InfoWindow>
-
+{/* 
 							<InfoWindow
 								position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
 							>
@@ -158,6 +192,7 @@ const SendOrders = () => {
 									<p>Contact Number: {selectedCardDetails?.receiverPhoneNumber}</p>
 								</div>
 							</InfoWindow>
+					 */}
 						</>
 					</>
 

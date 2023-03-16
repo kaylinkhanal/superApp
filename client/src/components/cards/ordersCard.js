@@ -3,7 +3,7 @@ import { Formik, Form, useField } from "formik";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { io } from 'socket.io-client';
+
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
@@ -14,7 +14,7 @@ import { setAlertMessages, apiResStatus } from "../../redux/reducers/notifySlice
 import { setOrdersDetails } from "../../redux/reducers/orderSlice"
 import DeleteAlert from '../alerts/deleteAlert';
 import OrderDetailsPop from './orderDetailsPop';
-const socket = io(process.env.REACT_APP_API_URL);
+
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
 	// which we can spread on <input> and alse replace ErrorMessage entirely.
@@ -73,16 +73,7 @@ const MySelect = ({ label, ...props }) => {
 const OrdersCard = (props) => {
 	console.log(props.item)
 
-	useEffect(() => {
 
-		socket.on('connection');
-		// socket.on('greetings',(anythingkataibata)=>{
-		// 	console.log(anythingkataibata)
-		// })
-		return () => {
-			socket.off('connection');
-		};
-	})
 	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
 	const dispatch = useDispatch()
