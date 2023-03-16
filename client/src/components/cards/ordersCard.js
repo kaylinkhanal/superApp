@@ -164,7 +164,9 @@ const OrdersCard = (props) => {
 						</Formik> :
 
 						<>
-						<img src={require('../../uploads/'+ props.item.ordersImageName)} width={50} height={50}/>
+						{props?.item?.ordersImageName ? (
+						<img src={require('../../../src/uploads/'+ props.item.ordersImageName)} width={50} height={50}/>
+						) : 'no image'}
 							<p><i><BookmarkBorderOutlinedIcon /></i> <span>{props.item.category}</span></p>
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>
