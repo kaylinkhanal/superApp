@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
-/* primary-color =  #a82973*/
+/* primary-color =  var(--background)*/
 
 body {
   font-size: 14px;
@@ -70,7 +70,7 @@ input {
 }
 
 button.random_btn:hover {
-  color: #a82973;
+  color: var(--background);
 }
 
 .btn::before {
@@ -80,7 +80,7 @@ button.random_btn:hover {
   left: 0;
   display: block;
   border-radius: 28px;
-  background: rgba(255, 171, 157, 0.5);
+  background: rgba(var(--accent-light), 0.5);
   width: 46px;
   height: 46px;
   transition: all 0.3s ease;
@@ -88,7 +88,7 @@ button.random_btn:hover {
 
 .btn:hover::before {
   width: 100%;
-  background: #ffab9d;
+  background: var(--accent);
 }
 
 .btn svg {
@@ -102,7 +102,7 @@ button.random_btn:hover {
 }
 
 header {
-  background: #a82973 !important;
+  background: var(--background) !important;
   box-shadow: none !important;
 }
 
@@ -118,7 +118,7 @@ header {
 
 .logout i{
   font-size: 30px;
-background: rgba(255, 171, 157, 0.5);
+background: rgba(255, 255, 255, 0.2);
 border-radius: 50%;
 margin-right: 5px;
 height: 30px;
@@ -153,7 +153,7 @@ section#role_section {
 }
 
 .card:hover i {
-  border-color: #a82973;
+  border-color: var(--background);
   box-shadow: 1px 2px 3px rgb(0 0 0 / 30%);
 }
 
@@ -165,7 +165,7 @@ section#role_section {
 }
 
 .card:hover svg {
-  color: #a82973;
+  color: var(--background);
 }
 
 .card_icon {
@@ -241,7 +241,7 @@ h5.card_title.btn {
   position: relative;
   top: 50px;
   z-index: 1;
-  background: rgb(168 41 119 / 12%);
+  background:  rgba(var(--accent-light), 0.12);
   border-radius: 10px;
   max-width: 360px;
   margin: 0 auto;
@@ -255,7 +255,7 @@ h5.card_title.btn {
 
 .form h1 {
   font-weight: bold;
-  color: #a82973;
+  color: var(--background);
   text-align: center;
 }
 
@@ -263,7 +263,7 @@ h5.card_title.btn {
   position: relative;
   text-align: center;
   margin-bottom: 20px;
-  color: #a82973;
+  color: var(--background);
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 50px;
@@ -307,7 +307,7 @@ input.checkboxline {
   font-size: 15px;
   font-weight: bold;
   color: white;
-  background-color: #a82973;
+  background-color: var(--background);
   text-align: center;
   vertical-align: baseline;
 }
@@ -349,7 +349,7 @@ input.checkboxline {
 }
 
 .checkbox {
-  color: #a82973;
+  color: var(--background);
 }
 
 .costumCard {
@@ -366,7 +366,7 @@ input.checkboxline {
   font-size: 20px;
   font-weight: bold;
   color: white;
-  background-color: #a82973;
+  background-color: var(--background);
   text-align: center;
   vertical-align: center;
 }
@@ -384,7 +384,7 @@ input.checkboxline {
 }
 
 .user_home h1 {
-  color: #a82973;
+  color: var(--background);
   font-size: 30px;
   line-height: 36px;
 }
@@ -580,5 +580,5 @@ input:focus {
 
 .view_more:hover{
   background: none;
-  color: #a82973;
+  color: var(--background);
 }

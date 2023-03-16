@@ -104,7 +104,7 @@ const OrdersCard = (props) => {
 		<>
 
 			{/* <button onClick={()=> socket.emit('greetings', 'hi')}>Send hi to server</button> */}
-			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{ backgroundColor: selectedCardDetails._id == props.item._id ? '#a82973' : null }} >
+			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{ backgroundColor: selectedCardDetails._id == props.item._id ? 'var(--background)' : null }} >
 				{!isEdit &&
 					<div className='update_field'>
 						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
