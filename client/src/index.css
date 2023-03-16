@@ -17,12 +17,12 @@ code {
   --text-primary: black;
   --text-secondary: #fff;
   --accent: #ffab9d;
-  --accent-light: 168, 41, 115
+  --accent-light: 255, 171, 157
 }
 [data-theme='blue'] {
-  --background: #1878d9;
+  --background: #5C51B7;
   --text-primary: black;
   --text-secondary: #fff;
-  --accent: #26a2f1;
-  --accent-light: 24,120, 217;
+  --accent: #387AFF;
+  --accent-light: 56,122, 255;
 }
