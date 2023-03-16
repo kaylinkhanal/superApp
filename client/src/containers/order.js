@@ -137,7 +137,7 @@ const Order = () => {
 					bodyFormData.append('orderImage', orderImage)
 					axios({
 						method: "post",
-						url: "http://localhost:5000/orders",
+						url: `${process.env.REACT_APP_BASE_URL}/orders`,
 						data: bodyFormData,
 						headers: { "Content-Type": "multipart/form-data" },
 					})

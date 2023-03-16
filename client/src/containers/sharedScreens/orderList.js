@@ -15,11 +15,11 @@ const OrderList = () => {
     const fetchOrders = async (page, key) => {
         let res
         if (key) {
-            res = await fetch(`http://localhost:5000/orders?search=${key}`)
+            res = await fetch(`process.env.REACT_APP_BASE_URL/orders?search=${key}`)
         } else if (userRole == 'rider') {
-            res = await axios.get(`http://localhost:5000/orders?page=${page}&size=5`)
+            res = await axios.get(`process.env.REACT_APP_BASE_URL/orders?page=${page}&size=5`)
         } else {
-            res = await axios.get(`http://localhost:5000/orders/${id}?page=${page}&size=5`)
+            res = await axios.get(`${process.env.REACT_APP_BASE_URL}/orders/${id}?page=${page}&size=5`)
         }
         setOrderList(res?.data?.ordersList)
         setTotalItem(res?.data?.totalItem)
