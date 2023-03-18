@@ -2,24 +2,21 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setAlertMessages,
   apiResStatus
 } from '../../redux/reducers/notifySlice'
 import '../../containers/auth/authForm.css'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
-import Snackbar from '../alerts/snackBar'
 import {
-  Button,
-  TextField,
   Select,
   MenuItem,
   InputLabel,
-  Grid
 } from '@mui/material'
 
 const DynamicForm = props => {
+  const { userRole } = useSelector(state => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [stepCount, setStepCount] = useState(1)
@@ -103,10 +100,10 @@ const DynamicForm = props => {
     <Formik
       initialValues={{}}
       onSubmit={values => submitFormData(values)}
-      //  validationSchema={schema}
+    //  validationSchema={schema}
     >
       {({ errors, touched, values }) => (
-        <div className="form">
+        <div className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
           <Form>
             {props.firstPageFields.map((item, id) => {
               return (

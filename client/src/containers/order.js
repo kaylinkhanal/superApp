@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
 import { Formik, Form, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import styled from '@emotion/styled'
@@ -85,7 +84,7 @@ const MySelect = ({ label, ...props }) => {
 const Order = () => {
 	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
 	const [orderImage, setOrderImage] = useState(null)
-	const { id } = useSelector(state => state.user)
+	const { id, userRole } = useSelector(state => state.user)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	return (
@@ -149,22 +148,11 @@ const Order = () => {
 							console.log(response);
 						});
 
-					// const res = await axios.post(`http://localhost:5000/orders`, formFields)
-
-					// console.log(res)
-					// console.log(res.data)
-
-					// if (res.status == 200 && res.data) {
-					//   dispatch(setAlertMessages(res.data))
-					//   dispatch(apiResStatus(true))
-					// } else {
-					//   dispatch(apiResStatus(false))
-					// }
 				}}
 			>
 				<div className="authForm">
 					<h1 className="h1">Create a new order</h1>
-					<Form className="form">
+					<Form className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
 						<MyTextInput name="itemName" type="text" placeholder="Item name" />
 						<MySelect label="" name="category" className="dropDown">
 							<option value="">Select a category</option>

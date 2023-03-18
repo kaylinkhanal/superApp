@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import './authForm.css'
-import { setLoginDetails,assignUserRole } from '../../redux/reducers/userSlice'
+import { setLoginDetails, assignUserRole } from '../../redux/reducers/userSlice'
 import {
   setAlertMessages,
   apiResStatus
@@ -75,7 +75,7 @@ const Login = () => {
 
             <div className="authForm">
               <h1 className="h1">Login</h1>
-              <div className="form">
+              <div className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
                 {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                 <form noValidate onSubmit={handleSubmit}>
                   {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}

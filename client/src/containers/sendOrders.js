@@ -267,28 +267,31 @@ const options = {
 					</div>
 				}
 
-				<button
-					onClick={() => setIsOrderListOpen(!isOrderListOpen)}
-					className="btn"
-					style={{ margin: '0 0 8px 0 ' }}>
-					<span>
-						{!isOrderListOpen && userRole === 'user' ? 'Check your orders' :
-							!isOrderListOpen && userRole === 'rider' ? 'All Orders' : 'Close'}
-					</span>
-				</button>
-				<div style={{ overflow: 'hidden' }}>
-					<div className="order_list" style={!isOrderListOpen ? {
-						transition: `transform 250ms ease-in-out`,
-						transform: "translateY(-101%)"
-					} : {
-						transition: `transform 250ms ease-in-out`,
-						transform: "translateY(0)"
-					}}>
-						<OrderList />
-					</div>
-				</div>
+				{isLoggedIn &&
+					<>
+						<button
+							onClick={() => setIsOrderListOpen(!isOrderListOpen)}
+							className="btn"
+							style={{ margin: '0 0 8px 0 ' }}>
+							<span>
+								{!isOrderListOpen && userRole === 'user' ? 'Check your orders' :
+									!isOrderListOpen && userRole === 'rider' ? 'All Orders' : 'Close'}
+							</span>
+						</button>
+						<div style={{ overflow: 'hidden' }}>
+							<div className="order_list" style={!isOrderListOpen ? {
+								transition: `transform 250ms ease-in-out`,
+								transform: "translateY(-101%)"
+							} : {
+								transition: `transform 250ms ease-in-out`,
+								transform: "translateY(0)"
+							}}>
+								<OrderList />
+							</div>
+						</div>
+					</>
+				}
 			</div>
-
 		</>
 	) : (
 		<>
