@@ -13,7 +13,6 @@ const io = new Server(server,{
 require('dotenv').config()
 const ordersRouter = require('./routes/orders')
 const usersRouter = require('./routes/users')
-const productsRouter = require('./routes/products')
 
 app.use(cors())
 app.use(express.json())
