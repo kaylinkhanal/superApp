@@ -555,3 +555,30 @@ input:focus {
 .gm-style-iw.gm-style-iw-c p{
   margin-bottom: 5px;
 }
+
+.css-1i0e6f3-MuiModal-root-MuiPopover-root{
+  background: rgba(0, 0, 0, 0.5)
+}
+
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper{
+  max-width: 400px !important;
+}
+
+.css-17ffvgn-MuiTypography-root {
+  font-size: .84rem !important;
+  line-height: 25px !important;
+}
+
+.view_more {
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  height: 40px;
+  width: auto;
+  min-width: 40px !important;
+}
+
+.view_more:hover{
+  background: none;
+  color: #a82973;
+}

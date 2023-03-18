@@ -32,7 +32,7 @@ router.post('/orders', upload.single('orderImage'), async (req, res) => {
 
 router.get('/orders', async (req, res) => {
 	try {
-		console.log(req.query)
+
 		var regexp = new RegExp("^" + req.query.search);
 
 		const skipStartPages = req.query.size * (req.query.page - 1)
@@ -47,9 +47,9 @@ router.get('/orders', async (req, res) => {
 		if (req.query.search) {
 			ordersList = await Orders.find({ itemName: regexp }).skip(skipStartPages).limit(req.query.size)
 		} else {
-			ordersList = await Orders.find().skip(skipStartPages).limit(req.query.size)
+			ordersList = await Orders.find().populate('senderDetails').skip(skipStartPages).limit(req.query.size)
 		}
-		console.log(ordersList)
+		// console.log(ordersList)
 		res.json({ ordersList, totalItem })
 	} catch (err) {
 		console.log(err)
