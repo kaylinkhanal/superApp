@@ -15,7 +15,7 @@ import {
 	setReceiverCoordinates,
 	setOrdersDetails,
 } from "../redux/reducers/locationSlice";
-
+import orderStatusMap from "../config/orderStatusMap.json"
 import OrderList from "./sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,7 @@ const center = {
 
 const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
+	const [orderStatusId, setOrderStatusId] = useState(0)
 	const { selectedCardDetails } = useSelector((state) => state.order)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
 	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
@@ -171,27 +172,28 @@ const options = {
 							)
 						}
 						<>
+						{orderStatusMap[orderStatusId].position  == 'A' ? (
+					<InfoWindow
+					position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
+				>
+					<div style={{ background: `white` }}>
+						{orderStatusMap[orderStatusId]?.message}
+
+						<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
+					</div>
+				</InfoWindow>
+						): (
 							<InfoWindow
-								position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-							>
-								<div style={{ background: `white` }}>
-									Accept order from sender's place?
-									<button onClick={()=> handleAcceptance()}>Yes</button>
-									{/* <p>{selectedCardDetails?.senderAddress}</p> */}
-									{/* <p>Sender Name: {selectedCardDetails?.senderDetails.fullName}</p>
-									<p>Contact Number: {selectedCardDetails?.senderDetails.phoneNumber}</p> */}
-								</div>
-							</InfoWindow>
+							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
+						>
+							<div style={{ background: `white` }}>
+							{orderStatusMap[orderStatusId]?.message}
+							<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
+							</div>
+						</InfoWindow>
+						)}
 {/* 
-							<InfoWindow
-								position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-							>
-								<div style={{ background: `white` }}>
-									<p>{selectedCardDetails?.receiverAddress}</p>
-									<p>Receiver Name: {selectedCardDetails?.receiverName}</p>
-									<p>Contact Number: {selectedCardDetails?.receiverPhoneNumber}</p>
-								</div>
-							</InfoWindow>
+						
 					 */}
 						</>
 					</>

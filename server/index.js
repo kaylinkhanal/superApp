@@ -13,10 +13,14 @@ const io = new Server(server,{
 require('dotenv').config()
 const ordersRouter = require('./routes/orders')
 const usersRouter = require('./routes/users')
+const productsRouter = require('./routes/products')
+
 app.use(cors())
 app.use(express.json())
 app.use('/', ordersRouter)
 app.use('/', usersRouter)
+app.use('/', productsRouter)
+
 const connectDb = require('./db/connectDb')
 connectDb()
 io.on('connection', (socket) => {
