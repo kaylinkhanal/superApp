@@ -11,6 +11,7 @@ const OrderList = () => {
     const { id, userRole } = useSelector(state => state.user)
     const [orderList, setOrderList] = useState([])
     const [totalItem, setTotalItem] = useState(0)
+
     const fetchOrders = async (page, key) => {
         let res
         if (key) {
@@ -21,6 +22,7 @@ const OrderList = () => {
             res = await axios.get(`http://localhost:5000/orders/${id}?page=${page}&size=5`)
         }
         setOrderList(res?.data?.ordersList)
+        setTotalItem(res?.data?.totalItem)
     }
     useEffect(() => {
         //we fetch list of orders in the initial load
@@ -29,14 +31,13 @@ const OrderList = () => {
 
     return (
         <div>
-            {JSON.stringify(orderList)}
             <Search fetchOrders={fetchOrders} />
             <Scrollbars style={{ height: 300, borderRadius: '10px' }} >
-                {orderList?.length > 0 ?( orderList.map((item, id) => {
+                {orderList?.length > 0 ? (orderList.map((item, id) => {
                     return <OrdersCard item={item} fetchOrders={fetchOrders} />
-                })): (
+                })) : (
                     <h3>No orders found</h3>
-                  )}
+                )}
             </Scrollbars>
             <Stack spacing={2}>
                 <Pagination count={totalItem} onChange={(e) => fetchOrders(e.target.textContent)} size="small" />

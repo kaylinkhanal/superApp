@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  selectedCardDetails: {} 
+  selectedCardDetails: {}
 };
 
 const orderSlice = createSlice({
@@ -14,6 +14,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const {setOrdersDetails} =
-orderSlice.actions;
+export const { setOrdersDetails } =
+  orderSlice.actions;
 export default orderSlice.reducer;
