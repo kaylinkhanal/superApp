@@ -82,7 +82,7 @@ const DynamicForm = props => {
       body: JSON.stringify(updatedValues)
     }
     const res = await fetch(
-      `http://localhost:5000` + props.apiEndpoint,
+      `${process.env.REACT_APP_BASE_URL}` + props.apiEndpoint,
       requestOptions
     )
     debugger

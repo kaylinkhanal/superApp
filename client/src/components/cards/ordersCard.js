@@ -110,7 +110,7 @@ const OrdersCard = (props) => {
 							initialValues={props.item}
 							onSubmit={async (values) => {
 								const formFields = { ...ordersDetails, ...values, senderId: id }
-								const res = await axios.put(`http://localhost:5000/orders`, formFields)
+								const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/orders`, formFields)
 								if (res.status && res.data.message && isEdit) {
 									dispatch(setAlertMessages(res.data.message))
 									dispatch(apiResStatus(true))
