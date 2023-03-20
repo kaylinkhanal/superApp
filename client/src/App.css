@@ -526,7 +526,7 @@ input:focus {
   border: 0;
   background-color: transparent;
   margin-bottom: 6px;
-  border-bottom: 1px solid #979696;
+  border-bottom: 1px solid rgba(255,255,255,.04);
   border-radius: 0;
   color: #fff;
   font-size: 14px;
@@ -550,6 +550,8 @@ input:focus {
 .gm-style-iw.gm-style-iw-c {
   width: 200px;
   max-width: 200px !important;
+  padding: 0;
+  background-color: transparent;
 }
 
 .gm-style-iw.gm-style-iw-c p{
@@ -578,7 +580,60 @@ input:focus {
   min-width: 40px !important;
 }
 
+.infobox{
+  padding: 10px;
+  font-size: 14px;
+  color: #fff
+}
+
 .view_more:hover{
   background: none;
   color: var(--background);
+}
+
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
+.gm-style .gm-style-iw-tc::after{
+ background-color: rgba(var(--accent-light), 0.5);
+}
+
+.gm-style-iw-d{
+  overflow: unset !important;
+}
+
+.notification{
+  position: absolute;
+  top: 15px;
+  right: 60px;
+}
+
+.notification button{
+  height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #a82973;
+    border: 0;
+    color: #fff;
+    position: relative;
+}
+
+div#simple-popper {
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+div#simple-popper .css-wudn58 {
+  border: 0;
+    box-shadow: 0 0 7px rgba(0,0,0,.3);
+    margin: 10px 0;
+    padding: 15px;
+}
+
+small.count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#simple-popper .css-ydvacp{
+  box-shadow: 0 0 10px rgba(0,0,0,.3)
 }

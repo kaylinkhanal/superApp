@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import DropNotification from "../components/cards/dropNotification";
 
 const containerStyle = {
 	width: "100%",
@@ -77,8 +78,8 @@ const SendOrders = () => {
 		});
 		// This is just an example of getting and using the map instance!!! don't just blindly copy!
 		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
-
+		// map.fitBounds(bounds);
+		// map.setZoom(zoom)
 		setMap(map);
 	}, []);
 
@@ -117,9 +118,9 @@ const SendOrders = () => {
 		}
 	};
 
-	useEffect(()=>{
+	useEffect(() => {
 		console.log("orderStatusId @@@@@")
-	},[orderStatusId])
+	}, [orderStatusId])
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
 	const CustomMarker = (props) => {
 		return (
@@ -132,49 +133,47 @@ const SendOrders = () => {
 		)
 	}
 
-	const handleAcceptance = ()=>{
-		socket.emit("greetings", "hi") 
+	const handleAcceptance = () => {
+		socket.emit("greetings", "hi")
 	}
 
-const options = {
-	strokeColor: '#FF0000',
-	strokeOpacity: 0.8,
-	strokeWeight: 2,
-	fillColor: '#FF0000',
-	fillOpacity: 0.35,
-	clickable: false,
-	draggable: false,
-	editable: false,
-	visible: true,
-	radius: 10,
-	zIndex: 1
-  }
-  const changeStatus = () => {
-	  //sending current orderDetails to server
-	const ordersDetails = {
-		_id: selectedCardDetails._id,
-		currentOrderstatusId: selectedCardDetails.orderStatusId
+	const options = {
+		strokeColor: '#ec8800',
+		strokeOpacity: 0.7,
+		strokeWeight: 2,
+		fillColor: "#ec8800",
+		fillOpacity: 0.7,
+		clickable: false,
+		draggable: false,
+		editable: false,
+		visible: true,
+		radius: 30,
+		zIndex: 1
 	}
-	socket.emit('orderRequests', ordersDetails)
-	setShouldFetchOrder(true)
-	  //updating orderStatusId in the UI
-	dispatch(changeOrderStatusId())
+	const changeStatus = () => {
+		//sending current orderDetails to server
+		const ordersDetails = {
+			_id: selectedCardDetails._id,
+			currentOrderstatusId: selectedCardDetails.orderStatusId
+		}
+		socket.emit('orderRequests', ordersDetails)
+		setShouldFetchOrder(true)
+		//updating orderStatusId in the UI
+		dispatch(changeOrderStatusId())
+	}
 
-	
-  }
 
-  
-  const shouldResetFetchOrder =(value)=>{ 
-	  console.log(value)
-	  	setShouldFetchOrder(false)
-  }
+	const shouldResetFetchOrder = (value) => {
+		console.log(value)
+		setShouldFetchOrder(false)
+	}
 
 	return isLoaded ? (
 		<>
-			<GoogleMap mapContainerStyle={containerStyle} center={center}  zoom={14.5} onLoad={onLoad} onUnmount={onUnmount}>
+			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16} onLoad={onLoad} onUnmount={onUnmount}>
 				<Circle
-				center={center}
-				options={options}
+					center={center}
+					options={options}
 				/>
 				{userRole === 'rider' && selectedCardDetails && selectedCardDetails?.receiverCoordinates && (
 					<>
@@ -197,38 +196,43 @@ const options = {
 							)
 						} */}
 						<>
-						{orderStatusMap[selectedCardDetails.orderStatusId].position  == 'A' ? (
-					<InfoWindow
-					position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-				>
-					<div style={{ background: `white` }}>
+							{orderStatusMap[selectedCardDetails.orderStatusId].position == 'A' ? (
+								<InfoWindow
+									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
+								>
+									<div className="infobox"
+										style={{ background: 'rgba(var(--accent-light), 0.5)', color: '#fff' }}>
+										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
 
-						{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
-							{ `this is my current order id${selectedCardDetails.orderStatusId}`}
+										<button onClick={() => changeStatus()} style={{
+											background: 'rgb(255 255 255 / 30%)', border: 0, padding: '5px'
+										}}>
+											Yes
+										</button>
+									</div>
+								</InfoWindow>
+							) : (
+								<InfoWindow
+									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
+								>
+									<div className="infobox" style={orderStatusMap[selectedCardDetails.orderStatusId].status == 'delivered' ?
+										{ background: '#357438', color: '#fff' } :
+										{ background: 'var(--accent)', color: '#fff' }}
+									>
+										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
+										{!orderStatusMap[selectedCardDetails.orderStatusId]?.hideButton ? (
+											<button onClick={() => changeStatus()} style={{
+												background: 'rgb(255 255 255 / 30%)', border: 0, padding: '5px'
+											}}>
+												Yes
+											</button>
+										) : null}
 
-						<button onClick={()=> changeStatus()}>Yes</button>
-					</div>
-				</InfoWindow>
-						): (
-							<InfoWindow
-							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-							{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
-							{ `this is my current order id${selectedCardDetails.orderStatusId}`}
-							{!orderStatusMap[selectedCardDetails.orderStatusId]?.hideButton  ? (
-								<button onClick={()=> changeStatus()}>Yes</button>
-							) : null}
-						
-							</div>
-						</InfoWindow>
-						)}
-{/* 
-						
-					 */}
+									</div>
+								</InfoWindow>
+							)}
 						</>
 					</>
-
 				)}
 
 				{userRole !== 'rider' && isSenderFormActive ? (
@@ -255,6 +259,8 @@ const options = {
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
+			{userRole === 'user' && <DropNotification />}
 
 			<div className="location_map">
 				{userRole === 'user' &&
@@ -317,7 +323,7 @@ const options = {
 								transition: `transform 250ms ease-in-out`,
 								transform: "translateY(0)"
 							}}>
-								<OrderList shouldFetchOrder={shouldFetchOrder} shouldResetFetchOrder={shouldResetFetchOrder}/>
+								<OrderList shouldFetchOrder={shouldFetchOrder} shouldResetFetchOrder={shouldResetFetchOrder} />
 							</div>
 						</div>
 					</>
