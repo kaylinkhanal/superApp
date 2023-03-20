@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import DropNotification from "../components/cards/dropNotification";
 
 const containerStyle = {
 	width: "100%",
@@ -137,11 +138,11 @@ const SendOrders = () => {
 	}
 
 	const options = {
-		strokeColor: '#387AFF',
-		strokeOpacity: 1,
+		strokeColor: '#ec8800',
+		strokeOpacity: 0.7,
 		strokeWeight: 2,
-		fillColor: "#387AFF",
-		fillOpacity: 0.5,
+		fillColor: "#ec8800",
+		fillOpacity: 0.7,
 		clickable: false,
 		draggable: false,
 		editable: false,
@@ -216,7 +217,7 @@ const SendOrders = () => {
 								>
 									<div className="infobox" style={orderStatusMap[selectedCardDetails.orderStatusId].status == 'delivered' ?
 										{ background: '#357438', color: '#fff' } :
-										{ background: 'rgba(var(--accent-light), 0.5)', color: '#fff' }}
+										{ background: 'var(--accent)', color: '#fff' }}
 									>
 										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
 										{!orderStatusMap[selectedCardDetails.orderStatusId]?.hideButton ? (
@@ -258,6 +259,8 @@ const SendOrders = () => {
 
 				{/* Child components, such as markers, info windows, etc. */}
 			</GoogleMap>
+
+			{userRole === 'user' && <DropNotification />}
 
 			<div className="location_map">
 				{userRole === 'user' &&

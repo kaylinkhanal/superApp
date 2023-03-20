@@ -599,3 +599,41 @@ input:focus {
 .gm-style-iw-d{
   overflow: unset !important;
 }
+
+.notification{
+  position: absolute;
+  top: 15px;
+  right: 60px;
+}
+
+.notification button{
+  height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #a82973;
+    border: 0;
+    color: #fff;
+    position: relative;
+}
+
+div#simple-popper {
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+div#simple-popper .css-wudn58 {
+  border: 0;
+    box-shadow: 0 0 7px rgba(0,0,0,.3);
+    margin: 10px 0;
+    padding: 15px;
+}
+
+small.count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#simple-popper .css-ydvacp{
+  box-shadow: 0 0 10px rgba(0,0,0,.3)
+}
