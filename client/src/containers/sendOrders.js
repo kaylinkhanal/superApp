@@ -15,6 +15,9 @@ import {
 	setReceiverCoordinates,
 	setOrdersDetails,
 } from "../redux/reducers/locationSlice";
+import {
+	changeOrderStatusId
+} from "../redux/reducers/orderSlice";
 import orderStatusMap from "../config/orderStatusMap.json"
 import OrderList from "./sharedScreens/orderList"
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +30,7 @@ const containerStyle = {
 	width: "100%",
 	height: "100vh",
 };
-const socket = io(process.env.REACT_APP_API_URL);
+const socket = io(process.env.REACT_APP_BASE_URL);
 const center = {
 	lat: 27.685616312450417,
 	lng: 85.34456349960001,
@@ -35,8 +38,9 @@ const center = {
 
 const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
-	const [orderStatusId, setOrderStatusId] = useState(0)
 	const { selectedCardDetails } = useSelector((state) => state.order)
+	const [shouldFetchOrder, setShouldFetchOrder] = useState(false)
+	const [orderStatusId, setOrderStatusId] = useState(selectedCardDetails?.orderStatusId || 0)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
 	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
@@ -113,6 +117,9 @@ const SendOrders = () => {
 		}
 	};
 
+	useEffect(()=>{
+		console.log("orderStatusId @@@@@")
+	},[orderStatusId])
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
 	const CustomMarker = (props) => {
 		return (
@@ -142,7 +149,25 @@ const options = {
 	radius: 10,
 	zIndex: 1
   }
+  const changeStatus = () => {
+	  //sending current orderDetails to server
+	const ordersDetails = {
+		_id: selectedCardDetails._id,
+		currentOrderstatusId: selectedCardDetails.orderStatusId
+	}
+	socket.emit('orderRequests', ordersDetails)
+	setShouldFetchOrder(true)
+	  //updating orderStatusId in the UI
+	dispatch(changeOrderStatusId())
 
+	
+  }
+
+  
+  const shouldResetFetchOrder =(value)=>{ 
+	  console.log(value)
+	  	setShouldFetchOrder(false)
+  }
 
 	return isLoaded ? (
 		<>
@@ -153,16 +178,16 @@ const options = {
 				/>
 				{userRole === 'rider' && selectedCardDetails && selectedCardDetails?.receiverCoordinates && (
 					<>
-						<DirectionsService
+						{/* <DirectionsService
 							options={{
 								destination: Object.values(selectedCardDetails?.receiverCoordinates).join(','),
 								origin: Object.values(selectedCardDetails?.senderCoordinates).join(','),
 								travelMode: 'DRIVING'
 							}}
 							callback={(response) => setResponse(response)}
-						/>
+						/> */}
 
-						{
+						{/* {
 							response !== null && (
 								<DirectionsRenderer
 									options={{
@@ -170,16 +195,18 @@ const options = {
 									}}
 								/>
 							)
-						}
+						} */}
 						<>
-						{orderStatusMap[orderStatusId].position  == 'A' ? (
+						{orderStatusMap[selectedCardDetails.orderStatusId].position  == 'A' ? (
 					<InfoWindow
 					position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 				>
 					<div style={{ background: `white` }}>
-						{orderStatusMap[orderStatusId]?.message}
 
-						<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
+						{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
+							{ `this is my current order id${selectedCardDetails.orderStatusId}`}
+
+						<button onClick={()=> changeStatus()}>Yes</button>
 					</div>
 				</InfoWindow>
 						): (
@@ -187,8 +214,12 @@ const options = {
 							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
 						>
 							<div style={{ background: `white` }}>
-							{orderStatusMap[orderStatusId]?.message}
-							<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
+							{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
+							{ `this is my current order id${selectedCardDetails.orderStatusId}`}
+							{!orderStatusMap[selectedCardDetails.orderStatusId]?.hideButton  ? (
+								<button onClick={()=> changeStatus()}>Yes</button>
+							) : null}
+						
 							</div>
 						</InfoWindow>
 						)}
@@ -286,7 +317,7 @@ const options = {
 								transition: `transform 250ms ease-in-out`,
 								transform: "translateY(0)"
 							}}>
-								<OrderList />
+								<OrderList shouldFetchOrder={shouldFetchOrder} shouldResetFetchOrder={shouldResetFetchOrder}/>
 							</div>
 						</div>
 					</>

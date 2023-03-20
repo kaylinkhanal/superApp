@@ -22,7 +22,6 @@ const PostOrders = async (req, res) => {
 
 const GetOrders = async (req, res) => {
   try {
-    console.log(req.query)
     var regexp = new RegExp('^' + req.query.search)
 
     const skipStartPages = req.query.size * (req.query.page - 1)
@@ -43,7 +42,6 @@ const GetOrders = async (req, res) => {
         .skip(skipStartPages)
         .limit(req.query.size)
     }
-    console.log(ordersList)
     res.json({ ordersList, totalItem })
   } catch (err) {
     console.log(err)

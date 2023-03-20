@@ -71,7 +71,6 @@ const MySelect = ({ label, ...props }) => {
 
 
 const OrdersCard = (props) => {
-	console.log(props.item)
 
 
 	const [isEdit, setIsEdit] = useState(false)
@@ -83,7 +82,7 @@ const OrdersCard = (props) => {
 
 	const { id } = useSelector(state => state.user)
 	const confirmDelete = async (orderId) => {
-		const res = await axios.delete(`${process.env.REACT_APP_API_URL}/orders/${orderId}`)
+		const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/orders/${orderId}`)
 		if (res) props.fetchOrders()
 		setIsDeleteConfirmPopup(false)
 	}
