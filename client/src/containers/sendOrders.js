@@ -22,12 +22,13 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import { changeOrderStatusID } from "../redux/reducers/orderSlice";
 
 const containerStyle = {
 	width: "100%",
 	height: "100vh",
 };
-const socket = io(process.env.REACT_APP_API_URL);
+const socket = io(process.env.REACT_APP_BASE_URL);
 const center = {
 	lat: 27.685616312450417,
 	lng: 85.34456349960001,
@@ -35,8 +36,8 @@ const center = {
 
 const SendOrders = () => {
 	const { senderCoordinates, receiverCoordinates, ordersDetails } = useSelector((state) => state.location);
-	const [orderStatusId, setOrderStatusId] = useState(0)
 	const { selectedCardDetails } = useSelector((state) => state.order)
+	const [shouldFetchOrder, setShouldFetchOrder] = useState(false)
 	const { isLoggedIn, userRole } = useSelector((state) => state.user);
 	const [isSenderFormActive, setIsSenderFormActive] = useState(userRole == 'rider' ? false : true);
 	const [senderAddress, setSenderAddress] = useState(ordersDetails?.senderAddress);
@@ -57,9 +58,7 @@ const SendOrders = () => {
 
 	useEffect(() => {
 		socket.on('connection');
-		// socket.on('greetings',(anythingkataibata)=>{
-		// 	console.log(anythingkataibata)
-		// })
+
 		return () => {
 			socket.off('connection');
 		};
@@ -125,31 +124,41 @@ const SendOrders = () => {
 		)
 	}
 
-	const handleAcceptance = ()=>{
-		socket.emit("greetings", "hi") 
+	const options = {
+		strokeColor: '#FF0000',
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: '#FF0000',
+		fillOpacity: 0.35,
+		clickable: false,
+		draggable: false,
+		editable: false,
+		visible: true,
+		radius: 10,
+		zIndex: 1
 	}
 
-const options = {
-	strokeColor: '#FF0000',
-	strokeOpacity: 0.8,
-	strokeWeight: 2,
-	fillColor: '#FF0000',
-	fillOpacity: 0.35,
-	clickable: false,
-	draggable: false,
-	editable: false,
-	visible: true,
-	radius: 10,
-	zIndex: 1
-  }
+	const changeStatus = () => {
+		const orderDetails = {
+			_id: selectedCardDetails._id,
+			orderStatusId: selectedCardDetails.orderStatusId
+		}
+		socket.emit('orderStatus', orderDetails)
+		dispatch(changeOrderStatusID())
+		setShouldFetchOrder(true)
+	}
+
+	const resetFetchOrder = () => {
+		setShouldFetchOrder(false)
+	}
 
 
 	return isLoaded ? (
 		<>
-			<GoogleMap mapContainerStyle={containerStyle} center={center}  zoom={14.5} onLoad={onLoad} onUnmount={onUnmount}>
+			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14.5} onLoad={onLoad} onUnmount={onUnmount}>
 				<Circle
-				center={center}
-				options={options}
+					center={center}
+					options={options}
 				/>
 				{userRole === 'rider' && selectedCardDetails && selectedCardDetails?.receiverCoordinates && (
 					<>
@@ -172,32 +181,39 @@ const options = {
 							)
 						}
 						<>
-						{orderStatusMap[orderStatusId].position  == 'A' ? (
-					<InfoWindow
-					position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
-				>
-					<div style={{ background: `white` }}>
-						{orderStatusMap[orderStatusId]?.message}
+							{orderStatusMap[selectedCardDetails?.orderStatusId].position == 'A' ? (
+								<InfoWindow
+									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
+								>
+									<div style={{ background: 'rgba(var(--accent-light), 0.3)', padding: '10px' }}>
+										{orderStatusMap[selectedCardDetails?.orderStatusId]?.message}
 
-						<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
-					</div>
-				</InfoWindow>
-						): (
-							<InfoWindow
-							position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
-						>
-							<div style={{ background: `white` }}>
-							{orderStatusMap[orderStatusId]?.message}
-							<button onClick={()=> setOrderStatusId(orderStatusId+ 1)}>Yes</button>
-							</div>
-						</InfoWindow>
-						)}
-{/* 
-						
-					 */}
+										<button onClick={() => changeStatus()}
+											style={{
+												padding: '5px',
+												border: 0, background: 'rgba(255,255,255,.2)'
+											}}
+										>Yes</button>
+									</div>
+								</InfoWindow>
+							) : (
+								<InfoWindow
+									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
+								>
+									<div className={selectedCardDetails?.orderStatusId === 3 ? 'success' : null} style={{ background: selectedCardDetails?.orderStatusId < 3 ? 'rgba(var(--accent-light), 0.3)' : '#306b30', padding: '10px' }}>
+										{selectedCardDetails?.orderStatusId < 3 &&
+											<button onClick={() => changeStatus()}
+												style={{
+													padding: '5px',
+													border: 0, background: 'rgba(255,255,255,.2)'
+												}}
+											>Yes</button>}
+										{orderStatusMap[selectedCardDetails?.orderStatusId]?.message}
+									</div>
+								</InfoWindow>
+							)}
 						</>
 					</>
-
 				)}
 
 				{userRole !== 'rider' && isSenderFormActive ? (
@@ -286,7 +302,7 @@ const options = {
 								transition: `transform 250ms ease-in-out`,
 								transform: "translateY(0)"
 							}}>
-								<OrderList />
+								<OrderList shouldFetchOrder={shouldFetchOrder} resetFetchOrder={resetFetchOrder} />
 							</div>
 						</div>
 					</>

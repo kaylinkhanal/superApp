@@ -7,7 +7,7 @@ import OrdersCard from "../../components/cards/ordersCard";
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import Search from "../../components/search";
 
-const OrderList = () => {
+const OrderList = (props) => {
     const { id, userRole } = useSelector(state => state.user)
     const [orderList, setOrderList] = useState([])
     const [totalItem, setTotalItem] = useState(0)
@@ -15,9 +15,9 @@ const OrderList = () => {
     const fetchOrders = async (page, key) => {
         let res
         if (key) {
-            res = await fetch(`process.env.REACT_APP_BASE_URL/orders?search=${key}`)
+            res = await fetch(`${process.env.REACT_APP_BASE_URL}/orders?search=${key}`)
         } else if (userRole == 'rider') {
-            res = await axios.get(`process.env.REACT_APP_BASE_URL/orders?page=${page}&size=5`)
+            res = await axios.get(`${process.env.REACT_APP_BASE_URL}/orders?page=${page}&size=5`)
         } else {
             res = await axios.get(`${process.env.REACT_APP_BASE_URL}/orders/${id}?page=${page}&size=5`)
         }
@@ -27,7 +27,8 @@ const OrderList = () => {
     useEffect(() => {
         //we fetch list of orders in the initial load
         fetchOrders('1')
-    }, [])
+        props.resetFetchOrder()
+    }, [props.shouldFetchOrder])
 
     return (
         <div>

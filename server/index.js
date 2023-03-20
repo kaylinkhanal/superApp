@@ -4,11 +4,12 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server,{
+const io = new Server(server, {
   cors: {
     origin: "*"
   }
 });
+const Orders = require('./models/orders')
 
 require('dotenv').config()
 const ordersRouter = require('./routes/orders')
@@ -18,17 +19,15 @@ app.use(cors())
 app.use(express.json())
 app.use('/', ordersRouter)
 app.use('/', usersRouter)
-app.use('/', productsRouter)
-
-const connectDb = require('./db/connectDb')
+const connectDb = require('./db/connectDb');
+const { findByIdAndUpdate } = require('./models/orders');
 connectDb()
 io.on('connection', (socket) => {
-  socket.on('greetings',(greetings)=> {
-    console.log(greetings)
-    // //broadcast
-    // io.emit('greetings','hello')
+  socket.on('orderStatus', async (orderStatus) => {
+    console.log(orderStatus)
+    const updateData = await Orders.findByIdAndUpdate(orderStatus._id, { orderStatusId: orderStatus.orderStatusId + 1 })
   })
- 
+
   console.log('a user connected');
 });
 

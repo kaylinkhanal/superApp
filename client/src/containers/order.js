@@ -186,6 +186,9 @@ const Order = () => {
 							<option value="Morning">Morning </option>
 							<option value="Afternoon">Afternoon</option>
 						</MySelect>
+
+						<input type="file" onChange={(e) => setOrderImage(e.target.files[0])} />
+
 						<MyCheckbox name="acceptedTerms" className="checkboxline">
 							I accept the terms and conditions
 						</MyCheckbox>
@@ -198,7 +201,7 @@ const Order = () => {
 							{' '}
 							<KeyboardBackspaceIcon /> <span>Back</span>{' '}
 						</button>
-						<input type="file" onChange={(e) => setOrderImage(e.target.files[0])} />
+
 						<button className="btn" type="submit">
 							<span>Submit</span> <TrendingFlatIcon />
 						</button>

@@ -10,10 +10,13 @@ const orderSlice = createSlice({
   reducers: {
     setOrdersDetails: (state, actions) => {
       state.selectedCardDetails = actions.payload;
+    },
+    changeOrderStatusID: (state, actions) => {
+      state.selectedCardDetails.orderStatusId++
+      console.log(state.selectedCardDetails.orderStatusId)
     }
   },
 });
 
-export const { setOrdersDetails } =
-  orderSlice.actions;
+export const { setOrdersDetails, changeOrderStatusID } = orderSlice.actions;
 export default orderSlice.reducer;

@@ -526,7 +526,7 @@ input:focus {
   border: 0;
   background-color: transparent;
   margin-bottom: 6px;
-  border-bottom: 1px solid #979696;
+  border-bottom: 1px solid rgba(255,255,255,.04);
   border-radius: 0;
   color: #fff;
   font-size: 14px;
@@ -550,6 +550,7 @@ input:focus {
 .gm-style-iw.gm-style-iw-c {
   width: 200px;
   max-width: 200px !important;
+  padding: 0;
 }
 
 .gm-style-iw.gm-style-iw-c p{
@@ -581,4 +582,14 @@ input:focus {
 .view_more:hover{
   background: none;
   color: var(--background);
+}
+
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
+.gm-style .gm-style-iw-tc::after,
+.gm-style-iw.gm-style-iw-c{
+ background-color: rgba(var(--accent-light), 0.3);
+}
+
+.gm-style-iw-d{
+  overflow: unset !important;
 }
