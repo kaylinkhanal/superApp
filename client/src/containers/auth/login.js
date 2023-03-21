@@ -36,7 +36,7 @@ const Login = () => {
         dispatch(setLoginDetails({ id: res.data.id, token: res.data.token }))
         dispatch(setAlertMessages(res.data.message))
         dispatch(apiResStatus(true))
-        dispatch(assignUserRole(res.data.userRole));
+        dispatch(assignUserRole(res.data.userRole))
         if (state?.onSuccessNavigation === '/order') {
           navigate('/order')
         } else {
@@ -75,7 +75,15 @@ const Login = () => {
 
             <div className="authForm">
               <h1 className="h1">Login</h1>
-              <div className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
+              <div
+                className="form"
+                style={{
+                  background:
+                    userRole === 'user'
+                      ? 'rgb(168 41 115 / 12%)'
+                      : 'rgb(96 81 183 / 12%)'
+                }}
+              >
                 {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                 <form noValidate onSubmit={handleSubmit}>
                   {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
@@ -111,6 +119,11 @@ const Login = () => {
                     <spa>Login</spa> <TrendingFlatIcon />
                   </button>
                 </form>
+                <p>
+                  <Link className="link" to="/resetpassword">
+                    Forgot password
+                  </Link>
+                </p>
                 <p style={{ marginTop: '15px', fontSize: '12px' }}>
                   Don't have an account? <Link to="/register">Register</Link>
                 </p>

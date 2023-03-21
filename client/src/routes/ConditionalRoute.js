@@ -1,44 +1,44 @@
-import { Routes, Route } from "react-router-dom";
-import GettingStarted from "../containers/gettingStarted";
-import Home from "../containers/home";
-import Roles from "../containers/roles";
-import SendOrders from "../containers/sendOrders";
-import RiderHome from "../containers/rider/riderHome";
-import Login from "../containers/auth/login";
-import Register from "../containers/auth/register";
-import Order from "../containers/order";
+import { Routes, Route } from 'react-router-dom'
+import GettingStarted from '../containers/gettingStarted'
+import Home from '../containers/home'
+import Roles from '../containers/roles'
+import SendOrders from '../containers/sendOrders'
+import RiderHome from '../containers/rider/riderHome'
+import Login from '../containers/auth/login'
+import Register from '../containers/auth/register'
+import Order from '../containers/order'
+import ResetPassword from '../containers/auth/resetPassword'
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 
 const ConditionalRoute = () => {
-  const { userRole, firstTimeUser, token } = useSelector((state) => state.user);
-  if (userRole === "rider" ) {
-    return <RiderRoutes />;
-  } else if (userRole === "user" ) {
-    return <UserRoutes />;
+  const { userRole, firstTimeUser, token } = useSelector(state => state.user)
+  if (userRole === 'rider') {
+    return <RiderRoutes />
+  } else if (userRole === 'user') {
+    return <UserRoutes />
   } else if (firstTimeUser) {
-    return <FirstUserRoutes />;
+    return <FirstUserRoutes />
   } else {
-    return <DefaulRoutes />;
+    return <DefaulRoutes />
   }
-};
+}
 
 const FirstUserRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<GettingStarted />} />
     </Routes>
-  );
-};
+  )
+}
 
 const DefaulRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Roles />} />
     </Routes>
-  );
-};
-
+  )
+}
 
 const UserRoutes = () => {
   return (
@@ -48,10 +48,10 @@ const UserRoutes = () => {
       <Route path="/send-orders" element={<SendOrders />} />
       <Route path="/register" element={<Register />} />
       <Route path="/order" element={<Order />} />
-  
+      <Route path="/resetpassword" element={<ResetPassword />} />
     </Routes>
-  );
-};
+  )
+}
 
 const RiderRoutes = () => {
   return (
@@ -59,8 +59,9 @@ const RiderRoutes = () => {
       <Route path="/" element={<RiderHome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/resetpassword" element={<ResetPassword />} />
     </Routes>
-  );
-};
+  )
+}
 
-export default ConditionalRoute;
+export default ConditionalRoute
