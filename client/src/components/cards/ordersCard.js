@@ -14,12 +14,12 @@ import { setAlertMessages, apiResStatus } from "../../redux/reducers/notifySlice
 import { setOrdersDetails } from "../../redux/reducers/orderSlice"
 import DeleteAlert from '../alerts/deleteAlert';
 import OrderDetailsPop from './orderDetailsPop';
+import orderStatusMap from '../../config/orderStatusMap.json'
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
 	// which we can spread on <input> and alse replace ErrorMessage entirely.
 	const [field, meta] = useField(props);
-
 	return (
 		<>
 			<label htmlFor={props.id || props.name}>{label}</label>
@@ -71,7 +71,6 @@ const MySelect = ({ label, ...props }) => {
 
 
 const OrdersCard = (props) => {
-
 
 	const [isEdit, setIsEdit] = useState(false)
 	const [isDeleteConfirmPopup, setIsDeleteConfirmPopup] = useState(false)
@@ -165,6 +164,9 @@ const OrdersCard = (props) => {
 							<p><CardGiftcardOutlinedIcon /> <span>{props.item.itemName}</span></p>
 							<p><ScaleOutlinedIcon /> <span>{props.item.weight} kg</span></p>
 							<p><CalendarMonthOutlinedIcon /> <span>{props.item.pickupDate}</span></p>
+							<p><CalendarMonthOutlinedIcon /> <span>{orderStatusMap[props.item.orderStatusId].status}</span></p>
+
+							
 						</>
 					}
 				</div>

@@ -25,10 +25,11 @@ connectDb()
 
 io.on('connection', (socket) => {
   socket.on('orderRequests', async(orderRequests)=> {
-    console.log(orderRequests)
-    const updateData = await Orders.findByIdAndUpdate(orderRequests._id, {orderStatusId: orderRequests.currentOrderstatusId+1})
+    orderRequests.currentOrderstatusId =  orderRequests.currentOrderstatusId + 1
+    const updateData = await Orders.findByIdAndUpdate(orderRequests._id, {orderStatusId: orderRequests.currentOrderstatusId})
     // //broadcast
-    // io.emit('greetings','hello')
+    socket.broadcast.emit('updateOrders',orderRequests)
+    // io.emit('greetings',orderRequests)
   })
   console.log('a user connected');
 });

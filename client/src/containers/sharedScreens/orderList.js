@@ -6,7 +6,8 @@ import axios from "axios";
 import OrdersCard from "../../components/cards/ordersCard";
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import Search from "../../components/search";
-
+import { io } from 'socket.io-client';
+const socket = io(process.env.REACT_APP_BASE_URL);
 const OrderList = (props) => {
     console.log(props.shouldFetchOrder,"@@@")
     const { id, userRole } = useSelector(state => state.user)
@@ -25,11 +26,27 @@ const OrderList = (props) => {
         setOrderList(res?.data?.ordersList)
         setTotalItem(res?.data?.totalItem)
     }
+
+  
     useEffect(() => {
         //we fetch list of orders in the initial load
         fetchOrders('1')
         props.shouldResetFetchOrder("hello")
     }, [props.shouldFetchOrder])
+
+    useEffect(()=>{
+        socket.on('updateOrders',(updatedOrderDetail)=>{
+            if(orderList.length> 0){
+               const updatedlist = orderList.map((item)=>{
+                    if(item._id === updatedOrderDetail._id){
+                      item.orderStatusId = updatedOrderDetail.currentOrderstatusId
+                    }
+                    return item
+                  })
+                  setOrderList(updatedlist)
+            }
+		})
+    })
 
     return (
         <div>

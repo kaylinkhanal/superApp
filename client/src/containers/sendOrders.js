@@ -61,9 +61,7 @@ const SendOrders = () => {
 
 	useEffect(() => {
 		socket.on('connection');
-		// socket.on('greetings',(anythingkataibata)=>{
-		// 	console.log(anythingkataibata)
-		// })
+
 		return () => {
 			socket.off('connection');
 		};
