@@ -114,15 +114,17 @@ header {
 
 .logout button{
   font-size: 14px;
+  height: 30px;
+  width: 30px;
+  background: #fff;
+    text-align: center;
+    line-height: 30px;
+    /* color: #fff; */
 }
 
 .logout i{
   font-size: 30px;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 50%;
-margin-right: 5px;
-height: 30px;
-    width: 30px;
+line-height: 0;
 }    
 
 /*landing page */
