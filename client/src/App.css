@@ -593,7 +593,7 @@ input:focus {
 
 .gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
 .gm-style .gm-style-iw-tc::after{
- background-color: rgba(var(--accent-light), 0.5);
+ background-color: var(--accent-light);
 }
 
 .gm-style-iw-d{

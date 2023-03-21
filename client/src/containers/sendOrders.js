@@ -201,7 +201,7 @@ const SendOrders = () => {
 									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 								>
 									<div className="infobox"
-										style={{ background: 'rgba(var(--accent-light), 0.5)', color: '#fff' }}>
+										style={{ background: 'var(--accent)', color: '#fff' }}>
 										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
 
 										<button onClick={() => changeStatus()} style={{
@@ -216,7 +216,7 @@ const SendOrders = () => {
 									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
 								>
 									<div className="infobox" style={orderStatusMap[selectedCardDetails.orderStatusId].status == 'delivered' ?
-										{ background: '#357438', color: '#fff' } :
+										{ background: '#48954b', color: '#fff' } :
 										{ background: 'var(--accent)', color: '#fff' }}
 									>
 										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
