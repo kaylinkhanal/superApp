@@ -142,7 +142,7 @@ useEffect(()=>{
 						.required()
 				})}
 				onSubmit={async (values, { setSubmitting }) => {
-					const formFields = { ...ordersDetails, ...values, senderDetails: id, receiverCoordinates: JSON.stringify(receiverCoordinates), senderCoordinates: JSON.stringify(senderCoordinates) }
+					const formFields = { ...ordersDetails, ...values, senderDetails: id,weight, price, receiverCoordinates: JSON.stringify(receiverCoordinates), senderCoordinates: JSON.stringify(senderCoordinates) }
 					const bodyFormData = new FormData();
 					Object.keys(formFields).map((item) => {
 						bodyFormData.append(item, formFields[item]);
@@ -166,6 +166,7 @@ useEffect(()=>{
 				<div className="authForm">
 					<h1 className="h1">Create a new order</h1>
 					<Form className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
+					Your distance is: {calulateDistance(senderCoordinates, receiverCoordinates)}
 						<MyTextInput name="itemName" type="text" placeholder="Item name" />
 						<MySelect label="" name="category" className="dropDown">
 							<option value="">Select a category</option>
@@ -176,11 +177,12 @@ useEffect(()=>{
 							<option value="Jewelry">Jewelry</option>
 							<option value="Other">Other</option>
 						</MySelect>
-						<MyTextInput
-							name="weight"
-							type="number"
-							placeholder="Weight (in kg)"
-						/>
+						<input
+                            name="weight"
+                            onChange={(e)=> setWeight(e.target.value)}
+                            type="number"
+                            placeholder="Weight (in kg)"
+                        />
 						<MyTextInput
 							label=""
 							name="itemDescription"
@@ -214,7 +216,7 @@ useEffect(()=>{
 							{' '}
 							<KeyboardBackspaceIcon /> <span>Back</span>{' '}
 						</button>
-						
+						Your total Price is: {price}
 						<button className="btn" type="submit">
 							<span>Submit</span> <TrendingFlatIcon />
 						</button>
