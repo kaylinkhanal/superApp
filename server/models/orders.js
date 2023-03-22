@@ -16,7 +16,8 @@ const ordersSchema = new mongoose.Schema({
   pickUpTime: { type: String, required: true },
   senderCoordinates: { type: Object, required: true },
   receiverCoordinates: { type: Object, required: true },
-  ordersImageName: { type: String }
+  ordersImageName: { type: String },
+  distance:{ type: mongoose.Types.Decimal128 },
 })
 
 const Orders = mongoose.model('Orders', ordersSchema)

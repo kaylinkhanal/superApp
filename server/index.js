@@ -31,7 +31,6 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('updateOrders',orderRequests)
     // io.emit('greetings',orderRequests)
   })
-  console.log('a user connected');
 });
 
 

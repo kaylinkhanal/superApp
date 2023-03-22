@@ -17,7 +17,7 @@ const OrderList = (props) => {
     const fetchOrders = async (page, key) => {
         let res
         if (key) {
-            res = await fetch(`${process.env.REACT_APP_BASE_URL}/orders?search=${key}`)
+            res = await axios.get(`${process.env.REACT_APP_BASE_URL}/orders?search=${key}&page=${page}&size=5`)
         } else if (userRole == 'rider') {
             res = await axios.get(`${process.env.REACT_APP_BASE_URL}/orders?page=${page}&size=5`)
         } else {

@@ -10,6 +10,7 @@ import axios from 'axios'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { setAlertMessages, apiResStatus } from '../redux/reducers/notifySlice'
+import calulateDistance from "../utils/calculateDistance"
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -84,9 +85,21 @@ const MySelect = ({ label, ...props }) => {
 const Order = () => {
 	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
 	const [orderImage, setOrderImage] = useState(null)
+	const [weight, setWeight] = useState(0)
+	const [price, setPrice] = useState(0)
 	const { id, userRole } = useSelector(state => state.user)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
+
+	const calculatePrice = ()=>{
+				const distance = calulateDistance(senderCoordinates, receiverCoordinates)
+				const perUnitPrice = 100
+				const price = distance * perUnitPrice * weight
+				setPrice(price)
+	}
+useEffect(()=>{
+	calculatePrice()
+},[weight])
 	return (
 		<>
 			<NavBar />

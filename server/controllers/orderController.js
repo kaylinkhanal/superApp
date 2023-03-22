@@ -37,11 +37,13 @@ const GetOrders = async (req, res) => {
       ordersList = await Orders.find({ itemName: regexp })
         .skip(skipStartPages)
         .limit(req.query.size)
+
     } else {
       ordersList = await Orders.find()
         .skip(skipStartPages)
         .limit(req.query.size)
     }
+
     res.json({ ordersList, totalItem })
   } catch (err) {
     console.log(err)
