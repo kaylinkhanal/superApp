@@ -22,7 +22,7 @@ const PostOrders = async (req, res) => {
 
 const GetOrders = async (req, res) => {
   try {
-    var regexp = new RegExp('^' + req.query.search)
+    var regexp = new RegExp('^' + req.query.search, 'i')
 
     const skipStartPages = req.query.size * (req.query.page - 1)
     let totalItem = await Orders.find().count()
@@ -34,12 +34,14 @@ const GetOrders = async (req, res) => {
     //we find all the orders for that particular user who requested the orders list
     let ordersList
     if (req.query.search) {
-      ordersList = await Orders.find({ itemName: regexp })
+      ordersList = await Orders.find({
+        $or: [{ itemName: regexp }, { category: regexp }],
+      })
         .skip(skipStartPages)
         .limit(req.query.size)
-
     } else {
       ordersList = await Orders.find()
+        .populate('senderDetails')
         .skip(skipStartPages)
         .limit(req.query.size)
     }
