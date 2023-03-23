@@ -78,6 +78,7 @@ const OrdersCard = (props) => {
 
 	const { ordersDetails } = useSelector(state => state.location)
 	const { selectedCardDetails } = useSelector(state => state.order)
+	const { userRole } = useSelector(state => state.user)
 
 	const { id } = useSelector(state => state.user)
 	const confirmDelete = async (orderId) => {
@@ -96,8 +97,12 @@ const OrdersCard = (props) => {
 			<div onClick={() => dispatch(setOrdersDetails(props.item))} className="orders" style={{ backgroundColor: selectedCardDetails._id == props.item._id ? 'var(--background)' : null }} >
 				{!isEdit &&
 					<div className='update_field'>
-						<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
-						<button className='random_btn' onClick={() => setIsDeleteConfirmPopup(true)}><DeleteOutlineOutlinedIcon /></button>
+						{userRole === 'user' &&
+							<>
+								<button className='random_btn' onClick={() => setIsEdit(!isEdit)}><EditOutlinedIcon /></button>
+								<button className='random_btn' onClick={() => setIsDeleteConfirmPopup(true)}><DeleteOutlineOutlinedIcon /></button>
+							</>
+						}
 						<OrderDetailsPop item={props.item} />
 					</div>
 				}
@@ -166,7 +171,7 @@ const OrdersCard = (props) => {
 							<p><CalendarMonthOutlinedIcon /> <span>{props.item.pickupDate}</span></p>
 							<p><CalendarMonthOutlinedIcon /> <span>{orderStatusMap[props.item.orderStatusId].status}</span></p>
 
-							
+
 						</>
 					}
 				</div>
