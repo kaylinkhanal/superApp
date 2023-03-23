@@ -10,20 +10,29 @@ require('dotenv').config()
 
 const PostRegister = async (req, res) => {
   try {
-    //we generate hash(encrpyted password) using bcrypt
-    // check https://github.com/kelektiv/node.bcrypt.js#:~:text=(myPlaintextPassword%2C-,saltRounds,-).then
-    bcrypt.hash(req.body.password, saltRounds).then(async function(hash) {
-      //we set passowrd as new hashed password and save it into db using Save or create
-      req.body.password = hash
-      const data = await Users.create(req.body)
-      if (data) {
-        res.json({
-          message: 'Registration successful!!'
-        })
-      } else {
-        res.send('Regsitration failed')
-      }
-    })
+    const dupUser = await Users.find({ email: req.body.email, phoneNumber: req.body.phoneNumber, userName: req.body.userName });
+    console.log(dupUser)
+    if (dupUser) {
+      res.status(409).json({
+        errmsg: "User already exist. Please use unique	email, phoneNumber, username",
+      });
+    } else {
+      //we generate hash(encrpyted password) using bcrypt
+      // check https://github.com/kelektiv/node.bcrypt.js#:~:text=(myPlaintextPassword%2C-,saltRounds,-).then
+      bcrypt.hash(req.body.password, saltRounds).then(async function (hash) {
+        //we set passowrd as new hashed password and save it into db using Save or create
+        req.body.password = hash
+        const data = await Users.create(req.body)
+        if (data) {
+          res.json({
+            message: 'Registration successful!!'
+          })
+        } else {
+          res.send('Regsitration failed')
+        }
+      })
+    }
+
   } catch (err) {
     console.log('err' + err)
   }
@@ -41,7 +50,7 @@ const PostLogin = async (req, res) => {
     //if data is there, it means we found a document in db with that particular phoneNumber
     if (data) {
       //we now compare the password(bcrypt lib decypts and compares itself) in db with the one we typed in UI
-      bcrypt.compare(req.body.password, data.password, function(err, result) {
+      bcrypt.compare(req.body.password, data.password, function (err, result) {
         if (result) {
           res.json({
             message: 'Login Success!!',
@@ -144,7 +153,7 @@ const VerifyOtp = async (req, res) => {
 
 const ModifyPassword = async (req, res) => {
   // console.log(req.body)
-  bcrypt.hash(req.body.password, saltRounds).then(async function(hash) {
+  bcrypt.hash(req.body.password, saltRounds).then(async function (hash) {
     // console.log(req.body.password, req.body._id)
     req.body.password = hash
     // console.log(req.body.password, hash)
