@@ -10,7 +10,7 @@ import axios from 'axios'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { setAlertMessages, apiResStatus } from '../redux/reducers/notifySlice'
-import calulateDistance from "../utils/calculateDistance"
+import calulateDistance from '../utils/calculateDistance'
 
 const MyTextInput = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -83,23 +83,24 @@ const MySelect = ({ label, ...props }) => {
 
 // And now we can use these
 const Order = () => {
-	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(state => state.location)
+	const { ordersDetails, senderCoordinates, receiverCoordinates } = useSelector(
+		(state) => state.location
+	)
 	const [orderImage, setOrderImage] = useState(null)
 	const [weight, setWeight] = useState(0)
 	const [price, setPrice] = useState(0)
-	const { id, userRole } = useSelector(state => state.user)
+	const { id, userRole } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-
-	const calculatePrice = ()=>{
-				const distance = calulateDistance(senderCoordinates, receiverCoordinates)
-				const perUnitPrice = 100
-				const price = distance * perUnitPrice * weight
-				setPrice(price)
+	const distance = calulateDistance(senderCoordinates, receiverCoordinates)
+	const calculatePrice = () => {
+		const perUnitPrice = 100
+		const price = distance * perUnitPrice * weight
+		setPrice(price)
 	}
-useEffect(()=>{
-	calculatePrice()
-},[weight])
+	useEffect(() => {
+		calculatePrice()
+	}, [weight])
 	return (
 		<>
 			<NavBar />
@@ -108,10 +109,6 @@ useEffect(()=>{
 				validationSchema={Yup.object({
 					itemName: Yup.string()
 						.min(3, 'Must be 3 characters or more')
-						.required('Required'),
-					weight: Yup.string()
-						.min(1, 'Should be over 1 kg')
-						.max(100, 'Should be under 100 kg')
 						.required('Required'),
 					itemDescription: Yup.string()
 						.min(25, 'Must be 25 characters or more')
@@ -130,7 +127,7 @@ useEffect(()=>{
 								'Electronics',
 								'HomeAppliance',
 								'Food',
-								'Jewelry'
+								'Jewelry',
 							],
 							'Invalid Item Type'
 						)
@@ -139,34 +136,56 @@ useEffect(()=>{
 						// specify the set of valid values for job type
 						// @see http://bit.ly/yup-mixed-oneOf
 						.oneOf(['Morning', 'Afternoon'], 'Invalid Time ')
-						.required()
+						.required(),
 				})}
 				onSubmit={async (values, { setSubmitting }) => {
-					const formFields = { ...ordersDetails, ...values, senderDetails: id,weight, price, receiverCoordinates: JSON.stringify(receiverCoordinates), senderCoordinates: JSON.stringify(senderCoordinates) }
-					const bodyFormData = new FormData();
+					const formFields = {
+						...ordersDetails,
+						...values,
+						senderDetails: id,
+						weight,
+						price,
+						distance,
+						receiverCoordinates: JSON.stringify(receiverCoordinates),
+						senderCoordinates: JSON.stringify(senderCoordinates),
+					}
+					const bodyFormData = new FormData()
 					Object.keys(formFields).map((item) => {
-						bodyFormData.append(item, formFields[item]);
+						bodyFormData.append(item, formFields[item])
 					})
 					bodyFormData.append('orderImage', orderImage)
 					axios({
-						method: "post",
+						method: 'post',
 						url: `${process.env.REACT_APP_BASE_URL}/orders`,
 						data: bodyFormData,
-						headers: { "Content-Type": "multipart/form-data" },
+						headers: { 'Content-Type': 'multipart/form-data' },
 					})
 						.then(function (response) {
-							console.log(response);
+							if (response.status === 200) {
+								navigate('/send-orders')
+								dispatch(setAlertMessages(response.data.message))
+								dispatch(apiResStatus(true))
+							}
+							console.log(response)
 						})
 						.catch(function (response) {
-							console.log(response);
-						});
-
+							console.log(response)
+						})
 				}}
 			>
 				<div className="authForm">
 					<h1 className="h1">Create a new order</h1>
-					<Form className="form" style={{ background: userRole === 'user' ? 'rgb(168 41 115 / 12%)' : 'rgb(96 81 183 / 12%)' }}>
-					Your distance is: {calulateDistance(senderCoordinates, receiverCoordinates)}
+					<Form
+						className="form"
+						style={{
+							background:
+								userRole === 'user'
+									? 'rgb(168 41 115 / 12%)'
+									: 'rgb(96 81 183 / 12%)',
+						}}
+					>
+						Your distance is:{' '}
+						{calulateDistance(senderCoordinates, receiverCoordinates)}
 						<MyTextInput name="itemName" type="text" placeholder="Item name" />
 						<MySelect label="" name="category" className="dropDown">
 							<option value="">Select a category</option>
@@ -178,11 +197,12 @@ useEffect(()=>{
 							<option value="Other">Other</option>
 						</MySelect>
 						<input
-                            name="weight"
-                            onChange={(e)=> setWeight(e.target.value)}
-                            type="number"
-                            placeholder="Weight (in kg)"
-                        />
+							name="weight"
+							onChange={(e) => setWeight(e.target.value)}
+							type="number"
+							placeholder="Weight (in kg)"
+						/>
+						Your total Price is: {price}
 						<MyTextInput
 							label=""
 							name="itemDescription"
@@ -201,13 +221,13 @@ useEffect(()=>{
 							<option value="Morning">Morning </option>
 							<option value="Afternoon">Afternoon</option>
 						</MySelect>
-
-						<input type="file" onChange={(e) => setOrderImage(e.target.files[0])} />
-
+						<input
+							type="file"
+							onChange={(e) => setOrderImage(e.target.files[0])}
+						/>
 						<MyCheckbox name="acceptedTerms" className="checkboxline">
 							I accept the terms and conditions
 						</MyCheckbox>
-
 						<button
 							className="btn"
 							type="submit"
@@ -216,7 +236,6 @@ useEffect(()=>{
 							{' '}
 							<KeyboardBackspaceIcon /> <span>Back</span>{' '}
 						</button>
-						Your total Price is: {price}
 						<button className="btn" type="submit">
 							<span>Submit</span> <TrendingFlatIcon />
 						</button>

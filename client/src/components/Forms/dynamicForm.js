@@ -87,11 +87,14 @@ const DynamicForm = props => {
     )
     debugger
     const data = await res.json()
-    navigate(props.onSuccessNavigation)
+
+    // 
     if (res.status && data.message) {
+      navigate(props.onSuccessNavigation)
       dispatch(setAlertMessages(data.message))
       dispatch(apiResStatus(true))
     } else {
+      dispatch(setAlertMessages(data.errmsg))
       dispatch(apiResStatus(false))
     }
   }
