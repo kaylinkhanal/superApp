@@ -12,12 +12,13 @@ const ordersSchema = new mongoose.Schema({
   weight: { type: Number, required: true },
   itemDescription: { type: String, required: true },
   pickupDate: { type: Date, required: true },
-  orderStatusId: { type: Number, default: 0},
+  orderStatusId: { type: Number, default: 0 },
   pickUpTime: { type: String, required: true },
   senderCoordinates: { type: Object, required: true },
   receiverCoordinates: { type: Object, required: true },
   ordersImageName: { type: String },
-  distance:{ type: mongoose.Types.Decimal128 },
+  distance: { type: mongoose.Types.Decimal128 },
+  price: { type: Number }
 })
 
 const Orders = mongoose.model('Orders', ordersSchema)

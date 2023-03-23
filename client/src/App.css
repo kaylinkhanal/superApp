@@ -29,7 +29,7 @@ section {
   padding: 70px 0;
 }
 
-button {
+button{
   cursor: pointer;
 }
 
@@ -74,7 +74,7 @@ button.random_btn:hover {
 }
 
 .btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -106,30 +106,28 @@ header {
   box-shadow: none !important;
 }
 
-.logout {
+.logout{
   position: absolute;
-  top: 10px;
-  right: 70px;
+    top: 10px;
+    right: 70px;
 }
 
-.logout button {
+.logout button{
   font-size: 14px;
-  height: 30px;
-  width: 30px;
-  background: #fff;
-  text-align: center;
-  line-height: 30px;
-  /* color: #fff; */
 }
 
-.logout i {
+.logout i{
   font-size: 30px;
-  line-height: 0;
-}
+background: rgba(255, 255, 255, 0.2);
+border-radius: 50%;
+margin-right: 5px;
+height: 30px;
+    width: 30px;
+}    
 
 /*landing page */
-.landing_pg {
-  flex-direction: column;
+.landing_pg{
+  flex-direction: column
 }
 
 .landing_pg,
@@ -163,7 +161,7 @@ section#role_section {
   font-size: 75px;
   color: #ccc;
   filter: drop-shadow(1px 2px 2px gray);
-  transition: all 0.5s ease-in-out !important;
+  transition: all .5s ease-in-out !important;
 }
 
 .card:hover svg {
@@ -177,13 +175,13 @@ section#role_section {
   border-radius: 50%;
   border: 3px solid #ccc;
   line-height: 198px;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
   margin-bottom: 15px;
 }
 
 .card_content {
   font-size: 24px;
-  transition: all 0.5s ease;
+  transition: all .5s ease;
 }
 
 .card_content .btn {
@@ -209,7 +207,7 @@ section#role_section {
   width: 20px;
   line-height: 20px;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity .5s ease;
   visibility: hidden;
 }
 
@@ -243,17 +241,11 @@ h5.card_title.btn {
   position: relative;
   top: 50px;
   z-index: 1;
-  background: rgba(var(--accent-light), 0.12);
+  background:  rgba(var(--accent-light), 0.12);
   border-radius: 10px;
   max-width: 360px;
   margin: 0 auto;
-
-  display: grid;
-  place-content: center;
-  align-items: center;
-  text-align: center;
-  vertical-align: middle;
-  justify-content: center;
+  text-align: left;
 }
 
 .form .error {
@@ -279,7 +271,7 @@ h5.card_title.btn {
 
 .p {
   padding: 0px 10px 0px 20px;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
   font-size: 14px;
   text-align: left;
 }
@@ -294,7 +286,7 @@ h5.card_title.btn {
   padding: 0px 15p;
   box-sizing: border-box;
   font-size: 14px;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
 }
 
 input.checkboxline {
@@ -330,7 +322,7 @@ input.checkboxline {
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
 }
 
 .descriptionInput {
@@ -401,8 +393,10 @@ input.checkboxline {
   margin-bottom: 20px;
 }
 
+
+
 /* loaction map*/
-.location {
+.location{
   position: relative;
 }
 
@@ -440,7 +434,7 @@ input:focus {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   /* width: 0; */
-  transition: all 0.3s ease-in-out;
+  transition: all .3s ease-in-out;
   margin-bottom: 10px;
   /* visibility: hidden; */
   /* opacity: 0; */
@@ -464,23 +458,23 @@ input:focus {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, .8);
   margin-bottom: 10px;
 }
 
 .location_form button {
   border-color: transparent;
-  cursor: pointer;
-  background: transparent;
-  margin: 0 10px 5px 0;
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  background: #ffab9d;
-  color: #000;
+    cursor: pointer;
+    background: transparent;
+    margin: 0 10px 5px 0;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #ffab9d;
+    color: #000;
 }
 
-.location_form button svg {
+.location_form button svg{
   font-size: 18px;
 }
 
@@ -492,34 +486,34 @@ input:focus {
   padding: 10px;
   border-radius: 10px;
   position: relative;
-  overflow: hidden;
+  overflow: hidden ;
 }
 
 .update_field {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  right: -40px;
-  top: 0;
-  background: #000;
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  transition: all 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: -40px;
+    top: 0;
+    background: #000;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    transition: all .3s ease-in-out;
 }
 
-.orders span {
+.orders span{
   font-size: 13px;
-  margin-left: 15px;
+    margin-left: 15px;
 }
 
-.orders svg {
+.orders svg{
   font-size: 18px;
-  height: 17px;
+    height: 17px;
 }
 
-.orders:hover .update_field {
+.orders:hover .update_field{
   opacity: 1;
   right: 0;
   visibility: visible;
@@ -532,13 +526,13 @@ input:focus {
   border: 0;
   background-color: transparent;
   margin-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255,255,255,.04);
   border-radius: 0;
   color: #fff;
   font-size: 14px;
 }
 
-.delete-alert button {
+.delete-alert button{
   color: #000;
 }
 
@@ -549,8 +543,8 @@ input:focus {
 }
 
 .gm-style .gm-style-iw-tc,
-.gm-style .gm-style-iw-c {
-  top: -40px;
+.gm-style .gm-style-iw-c{
+  top: -40px
 }
 
 .gm-style-iw.gm-style-iw-c {
@@ -560,20 +554,20 @@ input:focus {
   background-color: transparent;
 }
 
-.gm-style-iw.gm-style-iw-c p {
+.gm-style-iw.gm-style-iw-c p{
   margin-bottom: 5px;
 }
 
-.css-1i0e6f3-MuiModal-root-MuiPopover-root {
-  background: rgba(0, 0, 0, 0.5);
+.css-1i0e6f3-MuiModal-root-MuiPopover-root{
+  background: rgba(0, 0, 0, 0.5)
 }
 
-.css-3bmhjh-MuiPaper-root-MuiPopover-paper {
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper{
   max-width: 400px !important;
 }
 
 .css-17ffvgn-MuiTypography-root {
-  font-size: 0.84rem !important;
+  font-size: .84rem !important;
   line-height: 25px !important;
 }
 
@@ -586,23 +580,60 @@ input:focus {
   min-width: 40px !important;
 }
 
-.infobox {
+.infobox{
   padding: 10px;
   font-size: 14px;
-  color: #fff;
+  color: #fff
 }
 
-.view_more:hover {
+.view_more:hover{
   background: none;
   color: var(--background);
 }
 
-.gm-style .gm-style-iw-d::-webkit-scrollbar-track,
-.gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
-.gm-style .gm-style-iw-tc::after {
-  background-color: rgba(var(--accent-light), 0.5);
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
+.gm-style .gm-style-iw-tc::after{
+ background-color: var(--accent-light);
 }
 
-.gm-style-iw-d {
+.gm-style-iw-d{
   overflow: unset !important;
+}
+
+.notification{
+  position: absolute;
+  top: 15px;
+  right: 60px;
+}
+
+.notification button{
+  height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #a82973;
+    border: 0;
+    color: #fff;
+    position: relative;
+}
+
+div#simple-popper {
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+div#simple-popper .css-wudn58 {
+  border: 0;
+    box-shadow: 0 0 7px rgba(0,0,0,.3);
+    margin: 10px 0;
+    padding: 15px;
+}
+
+small.count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#simple-popper .css-ydvacp{
+  box-shadow: 0 0 10px rgba(0,0,0,.3)
 }

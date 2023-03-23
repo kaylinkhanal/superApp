@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingCircle from "../components/loadingCircle";
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler'
 
 const containerStyle = {
 	width: "100%",
@@ -116,7 +117,6 @@ const SendOrders = () => {
 	};
 
 	useEffect(() => {
-		console.log("orderStatusId @@@@@")
 	}, [orderStatusId])
 	const [isOrderListOpen, setIsOrderListOpen] = useState(false);
 	const CustomMarker = (props) => {
@@ -135,16 +135,16 @@ const SendOrders = () => {
 	}
 
 	const options = {
-		strokeColor: '#387AFF',
+		strokeColor: '#388AF6',
 		strokeOpacity: 1,
 		strokeWeight: 2,
-		fillColor: "#387AFF",
+		fillColor: "#388AF6",
 		fillOpacity: 0.5,
 		clickable: false,
 		draggable: false,
 		editable: false,
 		visible: true,
-		radius: 30,
+		radius: 40,
 		zIndex: 1
 	}
 	const changeStatus = () => {
@@ -198,7 +198,7 @@ const SendOrders = () => {
 									position={selectedCardDetails.senderCoordinates?.lat ? selectedCardDetails.senderCoordinates : center}
 								>
 									<div className="infobox"
-										style={{ background: 'rgba(var(--accent-light), 0.5)', color: '#fff' }}>
+										style={{ background: 'var(--accent)', color: '#fff' }}>
 										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
 
 										<button onClick={() => changeStatus()} style={{
@@ -206,6 +206,7 @@ const SendOrders = () => {
 										}}>
 											Yes
 										</button>
+										
 									</div>
 								</InfoWindow>
 							) : (
@@ -213,8 +214,8 @@ const SendOrders = () => {
 									position={selectedCardDetails.receiverCoordinates?.lat ? selectedCardDetails.receiverCoordinates : center}
 								>
 									<div className="infobox" style={orderStatusMap[selectedCardDetails.orderStatusId].status == 'delivered' ?
-										{ background: '#357438', color: '#fff' } :
-										{ background: 'rgba(var(--accent-light), 0.5)', color: '#fff' }}
+										{ background: '#409a44', color: '#fff' } :
+										{ background: 'var(--accent)', color: '#fff' }}
 									>
 										{orderStatusMap[selectedCardDetails.orderStatusId]?.message}
 										{!orderStatusMap[selectedCardDetails.orderStatusId]?.hideButton ? (
