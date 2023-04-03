@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-
+import ConditionalRoute from "./routes/ConditionalRoute"
+import Snackbar from "./components/alerts/snackBar"
+import "./App.css"
+import { useState } from "react";
+import { useSelector } from "react-redux";
 function App() {
+  const { userRole } = useSelector(state => state.user)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" data-theme={userRole === 'rider' ? 'blue' : 'pink'}>
+      <ConditionalRoute />
+      <Snackbar />
     </div>
   );
 }

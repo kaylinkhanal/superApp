@@ -7,7 +7,8 @@
 
 # testing
 /coverage
-
+.env
+/src/uploads
 # production
 /build
 
